@@ -27,22 +27,22 @@ const Sidebar = ({ isOpen, onMouseLeaveSidebar }: SidebarProps) => {
   </NavLink>
 
   {/* LABEL CĂN GIỮA */}
-  <div className="text-xs font-bold text-gray-500 uppercase tracking-wide border-b pb-1 text-center">
+  <div className="text-xs font-extrabold text-gray-500 uppercase tracking-wide border-b pb-1 text-center">
     Nhật ký vận hành
   </div>
 
   {/* DANH MỤC */}
-  <ul className="space-y-3 text-sm font-medium">
+  <ul className="space-y-3 text-sm font-extrabold">
     <li>
       <NavLink
-        to="/lovevien"
+        to="/danhsach"
         className={({ isActive }) =>
           isActive
             ? "text-blue-600 font-semibold"
             : "text-gray-700 hover:text-blue-600"
         }
       >
-        Lò Vê Viên
+        Danh Sách Biểu Mẫu
       </NavLink>
     </li>
   </ul>
