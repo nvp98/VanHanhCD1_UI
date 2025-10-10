@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import { useOutletContext } from "react-router-dom";
 import clsx from "clsx";
+import AlertMessage from "../../components/AlertMessage";
+import Loading from "../../components/Loading";
 
 type OutletContextType = { isSidebarOpen: boolean };
 
@@ -79,6 +81,7 @@ const BM_LoVeVien: React.FC = () => {
   const [toDate, setToDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [warning, setWarning] = useState<string | null>(null);
   useEffect(() => {
     fetch("/Tag.xlsx")
       .then(res => res.arrayBuffer())
@@ -111,15 +114,29 @@ const BM_LoVeVien: React.FC = () => {
         console.error("Lỗi khi gọi API VeVien:", error);
       });
   }, []);
+
+
+  useEffect(() => {
+    if (warning) {
+      const timer = setTimeout(() => setWarning(null), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [warning]);
+
   const handleSearch = async () => {
     if (!fromDate || !toDate) {
-      alert("Vui lòng chọn đầy đủ thời gian");
+      //alert("Vui lòng chọn đầy đủ thời gian");
+      setWarning("⚠️Chọn đầy đủ thời gian");
+      return;
+    }
+    else if (fromDate >= toDate) {
+      setWarning("❌ Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
       return;
     }
 
     const from = fromDate;
     const to = toDate;
-
+    setWarning(null);
     setLoading(true); // bắt đầu loading
 
     try {
@@ -137,44 +154,48 @@ const BM_LoVeVien: React.FC = () => {
   };
 
 
-const handleExportExcel = async () => {
-  if (!fromDate || !toDate) {
-    alert("Vui lòng chọn thời gian trước khi xuất Excel");
-    return;
-  }
+  const handleExportExcel = async () => {
+    if (!fromDate || !toDate) {
+      setWarning("⚠️Chọn đầy đủ thời gian");
+      return;
+    }
+    else if (fromDate >= toDate) {
+      setWarning("❌ Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
+      return;
+    }
+    setWarning(null);
+    setExporting(true);
 
-  setExporting(true);
+    try {
+      const res = await fetch(`${baseUrl}/api/VeVien/export?from=${fromDate}&to=${toDate}`);
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
 
-  try {
-    const res = await fetch(`${baseUrl}/api/VeVien/export?from=${fromDate}&to=${toDate}`);
-    const blob = await res.blob();
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
+      // Format ngày
+      const formatDate = (dateStr: string) => {
+        const d = new Date(dateStr);
+        const dd = d.getDate().toString().padStart(2, "0");
+        const mm = (d.getMonth() + 1).toString().padStart(2, "0");
+        const yyyy = d.getFullYear();
+        return `${dd}-${mm}-${yyyy}`;
+      };
 
-    // Format ngày
-    const formatDate = (dateStr: string) => {
-      const d = new Date(dateStr);
-      const dd = d.getDate().toString().padStart(2, "0");
-      const mm = (d.getMonth() + 1).toString().padStart(2, "0");
-      const yyyy = d.getFullYear();
-      return `${dd}-${mm}-${yyyy}`;
-    };
+      const fromStr = formatDate(fromDate);
+      const toStr = formatDate(toDate);
 
-    const fromStr = formatDate(fromDate);
-    const toStr = formatDate(toDate);
-
-    link.href = url;
-    link.download = `BM.13-QT.05.03_NKVH_LoNungVeVien_${fromStr}_đến_${toStr}.xlsx`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  } catch (error) {
-    console.error("Lỗi khi xuất Excel:", error);
-    alert("Có lỗi khi xuất Excel");
-  } finally {
-    setExporting(false);
-  }
-};
+      link.href = url;
+      link.download = `BM.13-QT.05.03_NKVH_LoNungVeVien_${fromStr}_đến_${toStr}.xlsx`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Lỗi khi xuất Excel:", error);
+      alert("Có lỗi khi xuất Excel");
+    } finally {
+      setExporting(false);
+    }
+  };
 
 
 
@@ -438,19 +459,25 @@ const handleExportExcel = async () => {
       </div>
       {loading && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center">
-          <div className="bg-white px-6 py-4 rounded shadow text-lg font-semibold">
-            Đang tải dữ liệu, vui lòng chờ...
-          </div>
+          <Loading />
         </div>
       )}
       {(loading || exporting) && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center">
-          <div className="bg-white px-6 py-4 rounded shadow text-lg font-semibold">
-            {loading ? "Đang tải dữ liệu, vui lòng chờ..." : "Đang xuất file Excel..."}
-          </div>
+          {loading
+            ?
+            <Loading />
+            :
+            <Loading />
+          }
         </div>
       )}
 
+      {warning &&
+        <div className="fixed inset-0 z-50 flex items-start justify-end mt-12">
+          <AlertMessage type="Vui lòng" message={warning} />
+        </div>
+      }
     </section>
 
   );
