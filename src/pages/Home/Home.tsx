@@ -32,7 +32,7 @@ const Home = () => {
           <p className="mt-4 text-lg leading-6 text-skin-muted">Hòa Phát là Tập đoàn sản xuất công nghiệp hàng đầu Việt Nam. Khởi đầu từ một Công ty chuyên buôn bán các loại máy xây dựng từ tháng 8/1992.</p>
           <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-start">
             <div className="space-y-4 sm:space-y-0 sm:inline-grid  sm:gap-5">
-              <a href="#" className="text-skin-inverted bg-skin-button-accent hover:bg-skin-button-accent-hover flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm sm:px-8"> Xem biểu mẫu </a>
+              <a href="/thieuketveviens" className="text-skin-inverted bg-skin-button-accent hover:bg-skin-button-accent-hover flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm sm:px-8"> Xem biểu mẫu </a>
             </div>
           </div>
         </div>
