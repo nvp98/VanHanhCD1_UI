@@ -12,79 +12,79 @@ const sectionRowData = [
   {
     section: "Bao hơi cao áp",
     rows: [
-      { label: "Áp suất" },
-      { label: "Mức nước trên" },
-      { label: "Mức nước dưới" },
+      { label: "Áp suất (mpa)" },
+      { label: "Mức nước trên (mm)" },
+      { label: "Mức nước dưới (mm)" },
     ]
   },
   {
     section: "Hơi chính bộ quá nhiệt cao áp",
     rows: [
-      { label: "Áp suất" },
-      { label: "Nhiệt độ" },
-      { label: "Lưu lượng" },
+      { label: "Áp suất (mpa)" },
+      { label: "Nhiệt độ  (°C)" },
+      { label: "Lưu lượng (m3/h)" },
     ]
   },
 
   {
     section: "Nước giảm nhiệt",
     rows: [
-      { label: "Lưu lượng" },
+      { label: "Lưu lượng (m3/h)" },
     ]
   },
 
   {
     section: "Bao hơi thấp áp",
     rows: [
-      { label: "Áp suất" },
-      { label: "Mức nước trên" },
-      { label: "Mức nước dưới" },
+      { label: "Áp suất (mpa)" },
+      { label: "Mức nước trên (mm)" },
+      { label: "Mức nước dưới (mm)" },
     ]
   },
   {
     section: "Hơi bù bộ quá nhiệt thấp áp",
     rows: [
-      { label: "Áp suất" },
-      { label: "Nhiệt độ" },
-      { label: "Lưu lượng" },
+      { label: "Áp suất (mpa)" },
+      { label: "Nhiệt độ (°C)" },
+      { label: "Lưu lượng (m3/h)" },
     ]
   },
   {
     section: "Nước cấp nồi hơi áp suất cao",
     rows: [
-      { label: "Áp suất" },
-      { label: "Nhiệt độ" },
-      { label: "Lưu lượng" },
+      { label: "Áp suất (mpa)" },
+      { label: "Nhiệt độ (°C)" },
+      { label: "Lưu lượng (m3/h)" },
     ]
   },
   {
     section: "Nước cấp nồi hơi áp suất thấp",
     rows: [
-      { label: "Áp suất" },
-      { label: "Nhiệt độ trước TKT" },
-      { label: "Nhiệt độ  sau TKT" },
-      { label: "Lưu lượng" },
+      { label: "Áp suất (Kpa)" },
+      { label: "Nhiệt độ trước TKT (°C)" },
+      { label: "Nhiệt độ sau TKT (°C)" },
+      { label: "Lưu lượng (m3/h)" },
     ]
   },
   {
     section: "Khí khói nóng đầu vào cao",
     rows: [
-      { label: "Nhiệt độ" },
-      { label: "Áp suất" },
+      { label: "Nhiệt độ (°C)" },
+      { label: "Áp suất (Kpa)" },
     ]
   },
   {
     section: "Khí khói nó ng đầu vào thấp",
     rows: [
-      { label: "Nhiệt độ" },
-      { label: "Áp suất" },
+      { label: "Nhiệt độ (°C)" },
+      { label: "Áp suất (Kpa)" },
     ]
   },
   {
     section: "Khí khói nóng sau TKT thấp",
     rows: [
-      { label: "Nhiệt độ" },
-      { label: "Áp suất" },
+      { label: "Nhiệt độ (°C)" },
+      { label: "Áp suất (Kpa)" },
     ]
   },
 ]

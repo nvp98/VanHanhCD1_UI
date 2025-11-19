@@ -229,7 +229,7 @@ const BM_LoDoLoMit1: React.FC = () => {
         const display = tag || label;
 
         const rowCells = [
-            <td key={`${label}-symbol`} className="sticky left-[13.5rem] bg-white border px-2 py-1 text-xs">{display}</td>
+            <td key={`${label}-symbol`} className="sticky left-[14.9rem] bg-white border px-2 py-1 text-xs">{display}</td>
         ];
 
         // them du lieu vao
@@ -300,7 +300,7 @@ const BM_LoDoLoMit1: React.FC = () => {
                                         {row.label}
                                     </td>
                                 )}
-                                <td className="sticky left-[8.9rem] bg-white border px-2 py-1">{label}</td>
+                                <td className="sticky left-[10.9rem] bg-white border px-2 py-1">{label}</td>
                                 {renderTagCellWithData(tag)}
                             </tr>
                         );
@@ -411,7 +411,7 @@ const BM_LoDoLoMit1: React.FC = () => {
                                 <th className="border px-4 py-2 sticky left-[62px] z-30 bg-gray-100 whitespace-nowrap" colSpan={2}>
                                     Vị trí đo / Thời gian
                                 </th>
-                                <th className="border px-4 py-2 sticky left-[13.5rem] z-30 bg-gray-100">Ký hiệu</th>
+                                <th className="border px-4 py-2 sticky left-[14.9rem] z-30 bg-gray-100">Ký hiệu</th>
                                 {/* th time */}
                                 {dataColumns.map((time, idx) => (
                                     <th

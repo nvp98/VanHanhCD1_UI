@@ -19,69 +19,69 @@ const sectionRowData = [
   {
     section: "MGGH-1.1",
     rows: [
-      { label: "Nhiệt độ KK trước" },
-      { label: "Nhiệt độ KK sau" },
+      { label: "Nhiệt độ KK trước (°C)" },
+      { label: "Nhiệt độ KK sau  (°C)" },
     ]
   },
 
   {
     section: "MGGH-1.2",
     rows: [
-      { label: "Nhiệt độ KK trước" },
-      { label: "Nhiệt độ KK sau" },
+      { label: "Nhiệt độ KK trước (°C)" },
+      { label: "Nhiệt độ KK sau (°C)" },
     ]
   },
 
   {
     section: "MGGH-2",
     rows: [
-      { label: "Nhiệt độ KK trước" },
-      { label: "Nhiệt độ KK sau" },
+      { label: "Nhiệt độ KK trước (°C)" },
+      { label: "Nhiệt độ KK sau (°C)" },
     ]
   },
   {
     section: "Lọc bụi tĩnh điện ướt",
     rows: [
-      { label: "Dòng điện MBA A" },
-      { label: "Dòng điện MBA B" },
-      { label: "Áp suất KK đầu vào" },
-      { label: "Dòng điện MBA C" },
-      { label: "Dòng điện MBA D" },
+      { label: "Dòng điện MBA A (mA)" },
+      { label: "Dòng điện MBA B (mA)" },
+      { label: "Áp suất KK đầu vào (mA)" },
+      { label: "Dòng điện MBA C (mA)" },
+      { label: "Dòng điện MBA D (mA)" },
     ]
   },
   {
     section: "Bình ngưng",
     rows: [
-      { label: "Nhiệt độ KK trước" },
-      { label: "Nhiệt độ KK sau" },
+      { label: "Nhiệt độ KK trước (°C)" },
+      { label: "Nhiệt độ KK sau (°C)" },
       { label: "pH nước" },
     ]
   },
   {
     section: "Buồng đốt",
     rows: [
-      { label: "Áp suất buồng  1" },
-      { label: "Số 1 TE401" },
-      { label: "Áp suất buồng  2" },
-      { label: "Số 2 TE402" },
-      { label: "Áp suất buồng  3" },
-      { label: "Số 3 TE403" },
-      { label: "Áp suất buồng  4" },
-      { label: "Số 4 TE404" },
+      { label: "Áp suất buồng 1 (Kpa)" },
+      { label: "Số 1 TE401 (°C)" },
+      { label: "Áp suất buồng 2 (Kpa)" },
+      { label: "Số 2 TE402 (°C)" },
+      { label: "Áp suất buồng 3 (Kpa)" },
+      { label: "Số 3 TE403 (°C)" },
+      { label: "Áp suất buồng 4 (Kpa)" },
+      { label: "Số 4 TE404 (°C)" },
     ]
   },
   {
     section: "GGH - SCR",
     rows: [
-      { label: "Nhiệt độ vào  xúc tác" },
-      { label: "Nhiệt độ ra  xúc tác " },
-      { label: "Áp suất ra bộ xúc tác" },
-      { label: "Áp suất khí than" },
-      { label: "Áp suất khí NH3" },
-      { label: "Nhiệt độ khí NH3" },
-      { label: "NH3 Thoát ra" },
-      { label: "Dòng điện (max)" },
-      { label: "% van  cửa gió" },
+      { label: "Nhiệt độ vào  xúc tác (°C)" },
+      { label: "Nhiệt độ ra  xúc tác (°C)" },
+      { label: "Áp suất ra bộ xúc tác (Kpa)" },
+      { label: "Áp suất khí than (Kpa)" },
+      { label: "Áp suất khí NH3 (Kpa)" },
+      { label: "Nhiệt độ khí NH3 (°C)" },
+      { label: "NH3 Thoát ra (ppm)" },
+      { label: "Dòng điện (A)" },
+      { label: "% van  cửa gió (%)" },
     ]
   },
 ]

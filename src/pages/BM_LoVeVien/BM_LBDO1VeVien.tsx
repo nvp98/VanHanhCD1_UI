@@ -10,13 +10,13 @@ type OutletContextType = { isSidebarOpen: boolean };
 
 const sectionRowData = [
     {
-        section: "Góc mở cửa gió"
+        section: "Góc mở cửa gió (%)"
     },
     {
-        section: "Tần số"
+        section: "Tần số (Hz)"
     },
     {
-        section: "Nhiệt độ",
+        section: "Nhiệt độ (°C)",
         rows: [
             { label: "Đầu khói vào" },
             { label: "Cuộn dây" },
@@ -25,7 +25,7 @@ const sectionRowData = [
         ],
     },
     {
-        section: "Áp suất",
+        section: "Áp suất (Kpa)",
         rows: [
             { label: "Đầu vào" },
             { label: "Đầu ra" },
@@ -33,21 +33,21 @@ const sectionRowData = [
         ],
     },
     {
-        section: "Độ rung",
+        section: "Độ rung (mm/s)",
         rows: [
             { label: "Gối đỡ động cơ", children: ["Trước", "Sau"] },
             { label: "Gối đỡ quạt", children: ["Trước", "Sau"] },
         ],
     },
     {
-        section: "Công suất",
+        section: "Công suất (KW)",
     },
     {
-        section: "Dòng điện",
+        section: "Dòng điện (A)",
     },
     {
         section: "Hệ thống dầu",
-        rows: [{ label: "Áp suất" }]
+        rows: [{ label: "Áp suất (Kpa)" }]
     }
 ]
 

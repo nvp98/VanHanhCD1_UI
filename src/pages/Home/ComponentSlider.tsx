@@ -57,7 +57,7 @@ const ComponentSlider: React.FC = () => {
     };
 
     useEffect(() => {
-        const interval = setInterval(() => slide(1), 3000);
+        const interval = setInterval(() => slide(1), 5000);
         return () => clearInterval(interval);
     }, [index]);
 

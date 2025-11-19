@@ -12,39 +12,39 @@ const sectionRowData = [
   {
     section: "Bơm nước cấp tuần hoàn",
     rows: [
-      { label: "Dòng điện bơm tuần hoàn 1" },
-      { label: "Dòng điện bơm tuần hoàn 2" },
-      { label: "Dòng điện bơm tuần hoàn 3" },
-      { label: "Áp suất nước nước làm mát" },
-      { label: "Lưu lượng nước đi làm mát" },
-      { label: "Nhiệt độ nước cấp làm mát" },
+      { label: "Dòng điện bơm tuần hoàn 1 (A)" },
+      { label: "Dòng điện bơm tuần hoàn 2 (A)" },
+      { label: "Dòng điện bơm tuần hoàn 3 (A)" },
+      { label: "Áp suất nước nước làm mát (mpa)" },
+      { label: "Lưu lượng nước đi làm mát (m3/h)" },
+      { label: "Nhiệt độ nước cấp làm mát (°C)" },
     ]
   },
   {
     section: "Bơm nước làm mát",
     rows: [
-      { label: "Dòng điện bơm số 1" },
-      { label: "Dòng điện bơm số 2" },
-      { label: "Dòng điện bơm số 3" },
-      { label: "Lưu lượng nước hồi về" },
-      { label: "Nhiệt độ nước làm mát hồi về" },
+      { label: "Dòng điện bơm số 1 (A)" },
+      { label: "Dòng điện bơm số 2 (A)" },
+      { label: "Dòng điện bơm số 3 (A)" },
+      { label: "Lưu lượng nước hồi về (m3/h)" },
+      { label: "Nhiệt độ nước làm mát hồi về (°C)" },
     ]
   },
   {
     section: "Bơm nước sản xuất",
     rows: [
-      { label: "Dòng điện bơm số 1" },
-      { label: "Dòng điện bơm số 2" },
-      { label: "Dòng điện bơm số 3" },
-      { label: "Áp suất nước đi phục sản xuất" },
-      { label: "Lưu lượng nước" },
+      { label: "Dòng điện bơm số 1 (A)" },
+      { label: "Dòng điện bơm số 2 (A)" },
+      { label: "Dòng điện bơm số 3 (A)" },
+      { label: "Áp suất nước đi phục sản xuất (mpa)" },
+      { label: "Lưu lượng nước (m3/h)" },
     ]
   },
   {
     section: "Quạt làm mát",
     rows: [
-      { label: "Dòng điện" },
-      { label: "Dòng điện" },
+      { label: "Dòng điện (A)" },
+      { label: "Dòng điện (A)" },
     ]
   },
 ]

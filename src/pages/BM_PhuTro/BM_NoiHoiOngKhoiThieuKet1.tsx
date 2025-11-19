@@ -12,76 +12,76 @@ const sectionRowData = [
     {
         section: "Bao hơi ống khói",
         rows: [
-            { label: "Áp suất" },
-            { label: "Mức nước trên" },
-            { label: "Mức nước dưới" },
+            { label: "Áp suất (mpa)" },
+            { label: "Mức nước trên (mm)" },
+            { label: "Mức nước dưới (mm)" },
         ]
     },
     {
         section: "Hơi chính bộ quá nhiệt ống khói",
         rows: [
-            { label: "Áp suất" },
-            { label: "Nhiệt độ" },
-            { label: "Lưu lượng" },
+            { label: "Áp suất (mpa)" },
+            { label: "Nhiệt độ (°C)" },
+            { label: "Lưu lượng (m3/h)" },
         ]
     },
     {
         section: "Nước cấp nồi hơi áp suất cao",
         rows: [
-            { label: "Áp suất" },
-            { label: "Nhiệt độ cấp" },
-            { label: "Lưu lượng" },
-            { label: "Nhiệt độ TKT" },
-            { label: "Áp suất sau TKT" },
+            { label: "Áp suất (mpa)" },
+            { label: "Nhiệt độ cấp (°C)" },
+            { label: "Lưu lượng (m3/h)" },
+            { label: "Nhiệt độ TKT (°C)" },
+            { label: "Áp suất sau TKT (mpa)" },
         ]
     },
     {
         section: "Khí khói nóng đầu bộ quá nhiệt 1",
         rows: [
-            { label: "Áp suất" },
-            { label: "Nhiệt độ" },
+            { label: "Áp suất (Kpa)" },
+            { label: "Nhiệt độ (°C)" },
         ]
     },
     {
         section: "Khí khói nóng đầu bộ quá nhiệt 2",
         rows: [
-            { label: "Áp suất" },
-            { label: "Nhiệt độ" },
+            { label: "Áp suất (Kpa)" },
+            { label: "Nhiệt độ (°C)" },
         ]
     },
     {
         section: "Khí khói nóng đầu ra bộ TKT 1",
         rows: [
-            { label: "Nhiệt độ" },
-            { label: "Áp suất" },
+            { label: "Nhiệt độ (°C)" },
+            { label: "Áp suất (Kpa)" },
         ]
     },
     {
         section: "Khí khói nóng đầu ra bộ TKT 2",
         rows: [
-            { label: "Nhiệt độ" },
-            { label: "Áp suất" },
+            { label: "Nhiệt độ (°C)" },
+            { label: "Áp suất (Kpa)" },
         ]
     },
     {
         section: "Quạt tuần hoàn nồi hơi làm mát vòng",
         rows: [
-            { label: "Dòng điện" },
-            { label: "Tốc độ động cơ" },
-            { label: "Nhiệt độ gối trước  động cơ"},
-            { label: "Nhiệt độ gối sau động cơ"},
-            { label: "Nhiệt độ cuộn dây pha A" },
-            { label: "Nhiệt độ cuộn dây pha B" },
-            { label: "Nhiệt độ cuộn dây pha C" },
-            { label: "Độ rung gối trước động cơ" },
-            { label: "Độ rung gối sau động cơ" },
-            { label: "Nhiệt độ tủ biến tần" },
-            { label: "Nhiệt độ gối trước quạt" },
-            { label: "Nhiệt độ gối sau quạt" },
-            { label: "Độ rung gối trước bầu quạt (trục X)" },
-            { label: "Độ rung gối trước bầu quạt (trục Y)" },
-            { label: "Độ rung gối sau bầu quạt (trục X)" },
-            { label: "Độ rung gối sau bầu quạt (trục Y)" },
+            { label: "Dòng điện (A)" },
+            { label: "Tốc độ động cơ (mrp/min)" },
+            { label: "Nhiệt độ gối trước  động cơ (°C)"},
+            { label: "Nhiệt độ gối sau động cơ (°C)"},
+            { label: "Nhiệt độ cuộn dây pha A (°C)" },
+            { label: "Nhiệt độ cuộn dây pha B (°C)" },
+            { label: "Nhiệt độ cuộn dây pha C (°C)" },
+            { label: "Độ rung gối trước động cơ (mm/s)" },
+            { label: "Độ rung gối sau động cơ (mm/s)" },
+            { label: "Nhiệt độ tủ biến tần (°C)" },
+            { label: "Nhiệt độ gối trước quạt (°C)" },
+            { label: "Nhiệt độ gối sau quạt (°C)" },
+            { label: "Độ rung gối trước bầu quạt (trục X) (mm/s)" },
+            { label: "Độ rung gối trước bầu quạt (trục Y) (mm/s)" },
+            { label: "Độ rung gối sau bầu quạt (trục X) (mm/s)" },
+            { label: "Độ rung gối sau bầu quạt (trục Y) (mm/s)" },
         ]
     },
 ]

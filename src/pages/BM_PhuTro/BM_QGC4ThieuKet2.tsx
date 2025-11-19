@@ -27,16 +27,16 @@ const sectionRowData: SectionType[] = [
         section: "Cosφ"
     },
     {
-        section: "Áp suất khí khói đầu vào"
+        section: "Áp suất khí khói đầu vào (Kpa)"
     },
     {
-        section: "Nhiệt độ khí khói đầu vào"
+        section: "Nhiệt độ khí khói đầu vào (°C)"
     },
     {
         section: "Van cửa gió vào (%)"
     },
     {
-        section: "Nhiệt độ",
+        section: "Nhiệt độ (°C)",
         rows: [
             { label: "Nhiệt độ stato động cơ", children: ["TISA233", "TISA235", "TISA237"] },
             { label: "Nhiệt độ bạc động cơ gối số", children: ["TISA231", "TISA232"] },
@@ -45,7 +45,7 @@ const sectionRowData: SectionType[] = [
 
     },
     {
-        section: "Độ rung  (mm/s)",
+        section: "Độ rung (mm/s)",
         rows: [
             { label: "Động cơ gối 1", children: ["Ngang TISA207X", "Dọc TISA207Y"] },
             { label: "Động cơ gối 2", children: ["Ngang TISA208X", "Dọc TISA208Y"] },
@@ -56,8 +56,8 @@ const sectionRowData: SectionType[] = [
     {
         section: "Hệ thống dầu",
         rows: [
-            { label: "Áp suất dầu bôi trơn" },
-            { label: "Nhiệt độ dầu cấp (0C)" },
+            { label: "Áp suất dầu bôi trơn (Kpa)" },
+            { label: "Nhiệt độ dầu cấp (°C)" },
             { label: "Mức thùng dầu (%)" },
         ],
     },

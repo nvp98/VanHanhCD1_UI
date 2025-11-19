@@ -19,10 +19,10 @@ type SectionType = {
 
 const sectionPhoiLieuRowData = [
     {
-        section: "Góc mở cửa gió"
+        section: "Góc mở cửa gió (%)"
     },
     {
-        section: "Nhiệt độ",
+        section: "Nhiệt độ (°C)",
         rows: [
             { label: "Đầu khói vào" },
             { label: "Cuộn dây" },
@@ -31,7 +31,7 @@ const sectionPhoiLieuRowData = [
         ],
     },
     {
-        section: "Áp suất",
+        section: "Áp suất (Kpa)",
         rows: [
             { label: "Đầu vào" },
             { label: "Đầu ra" },
@@ -39,23 +39,23 @@ const sectionPhoiLieuRowData = [
         ],
     },
     {
-        section: "Độ rung",
+        section: "Độ rung (mm/s)",
         rows: [
             { label: "Gối đỡ quạt gió", children: ["Trước x/y", "Sau x/y"] },
         ],
     },
     {
-        section: "Nồng độ bụi",
+        section: "Nồng độ bụi (mg/Nm3)",
         rows: [{ label: "Vào" }, { label: "Ra" }]
     }
 ]
 
 const sectionBanLuocRowData = [
     {
-        section: "Góc mở cửa gió"
+        section: "Góc mở cửa gió (%)"
     },
     {
-        section: "Nhiệt độ",
+        section: "Nhiệt độ (°C)",
         rows: [
             { label: "Đầu khói vào" },
             { label: "Cuộn dây" },
@@ -64,7 +64,7 @@ const sectionBanLuocRowData = [
         ],
     },
     {
-        section: "Áp suất",
+        section: "Áp suất (Kpa)",
         rows: [
             { label: "Đầu vào" },
             { label: "Đầu ra" },
@@ -72,16 +72,16 @@ const sectionBanLuocRowData = [
         ],
     },
     {
-        section: "Độ rung",
+        section: "Độ rung (mm/s)",
         rows: [
             { label: "Gối đỡ quạt gió", children: ["Trước x/y", "Sau x/y"] },
         ],
     },
     {
-        section: "Dòng điện"
+        section: "Dòng điện (A)"
     },
     {
-        section: "Nồng độ bụi",
+        section: "Nồng độ bụi (mg/Nm3)",
         rows: [{ label: "Vào" }, { label: "Ra" }]
     }
 ]
@@ -290,7 +290,7 @@ const BM_LBMTPLieuBLuocVeVien: React.FC = () => {
                                     <td
 
                                         rowSpan={row.children?.length}
-                                        className="sticky left-[7.5rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
+                                        className="sticky left-[8rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
                                     >
                                         {row.label}
                                     </td>
@@ -318,7 +318,7 @@ const BM_LBMTPLieuBLuocVeVien: React.FC = () => {
                                 </td>
                             )}
                             <td
-                                className="sticky left-[7.5rem] bg-white font-semibold border px-2 py-1"
+                                className="sticky left-[8rem] bg-white font-semibold border px-2 py-1"
                                 colSpan={2}
                             >
                                 {row.label}

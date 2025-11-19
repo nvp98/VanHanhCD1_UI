@@ -22,7 +22,7 @@ const sectionPhoiLieuRowData = [
         section: "Góc mở cửa gió"
     },
     {
-        section: "Nhiệt độ",
+        section: "Nhiệt độ (°C)",
         rows: [
             { label: "Đầu khói vào" },
             { label: "Cuộn dây", children: ["Pha A", "Pha B", "Pha C"] },
@@ -31,33 +31,33 @@ const sectionPhoiLieuRowData = [
         ],
     },
     {
-        section: "Áp suất",
+        section: "Áp suất (Kpa)",
         rows: [
             { label: "Đầu vào" },
             { label: "Đầu ra" },
         ],
     },
     {
-        section: "Độ rung",
+        section: "Độ rung (mm)",
         rows: [
             { label: "Gối đỡ quạt gió", children: ["Trước x", "Trước y", "Sau x", "Sau y"] },
         ],
     },
     {
-        section: "Góc mở cửa gió"
+        section: "Góc mở cửa gió (%)"
     },
     {
-        section: "Nồng độ bụi",
+        section: "Nồng độ bụi (mg/Nm3)",
         rows: [{ label: "Vào" }, { label: "Ra" }]
     }
 ]
 
 const sectionBanLuocRowData = [
     {
-        section: "Góc mở cửa gió"
+        section: "Góc mở cửa gió (%)"
     },
     {
-        section: "Nhiệt độ",
+        section: "Nhiệt độ (°C)",
         rows: [
             { label: "Đầu khói vào" },
             { label: "Cuộn dây", children: ["Pha A", "Pha B", "Pha C"] },
@@ -66,23 +66,23 @@ const sectionBanLuocRowData = [
         ],
     },
     {
-        section: "Áp suất",
+        section: "Áp suất (Kpa)",
         rows: [
             { label: "Đầu vào" },
             { label: "Đầu ra" },
         ],
     },
     {
-        section: "Độ rung",
+        section: "Độ rung (mm/s)",
         rows: [
             { label: "Gối đỡ quạt gió", children: ["Trước x", "Trước y", "Sau x", "Sau y"] },
         ],
     },
     {
-        section: "Dòng điện"
+        section: "Dòng điện (A)"
     },
     {
-        section: "Nồng độ bụi",
+        section: "Nồng độ bụi (mg/Nm3)",
         rows: [{ label: "Vào" }, { label: "Ra" }]
     }
 ]
@@ -218,7 +218,7 @@ const BM_LBMTDuoiMay1: React.FC = () => {
         const display = tag || label;
 
         const rowCells = [
-            <td key={`${label}-symbol`} className="sticky left-[12rem] bg-white border px-2 py-1 text-xs">{display}</td>
+            <td key={`${label}-symbol`} className="sticky left-[13.4rem] bg-white border px-2 py-1 text-xs">{display}</td>
         ];
 
         // them du lieu vao
@@ -293,12 +293,12 @@ const BM_LBMTDuoiMay1: React.FC = () => {
                                     <td
 
                                         rowSpan={row.children?.length}
-                                        className="sticky left-[6.9rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
+                                        className="sticky left-[7.9rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
                                     >
                                         {row.label}
                                     </td>
                                 )}
-                                <td className="sticky left-[9.3rem] bg-white border px-2 py-1">{label}</td>
+                                <td className="sticky left-[10.9rem] bg-white border px-2 py-1">{label}</td>
                                 {renderTagCellWithData(tag)}
                             </tr>
                         );
@@ -321,7 +321,7 @@ const BM_LBMTDuoiMay1: React.FC = () => {
                                 </td>
                             )}
                             <td
-                                className="sticky left-[6.9rem] bg-white font-semibold border px-2 py-1"
+                                className="sticky left-[7.9rem] bg-white font-semibold border px-2 py-1"
                                 colSpan={2}
                             >
                                 {row.label}
@@ -410,7 +410,7 @@ const BM_LBMTDuoiMay1: React.FC = () => {
                                 <th className="border px-4 py-2 sticky left-[62px] z-30 bg-gray-100 " colSpan={3}>
                                     Vị trí đo / Thời gian
                                 </th>
-                                <th className="border px-4 py-2 sticky left-[12rem] z-30 bg-gray-100">Ký hiệu</th>
+                                <th className="border px-4 py-2 sticky left-[13.4rem] z-30 bg-gray-100">Ký hiệu</th>
                                 {/* th time */}
                                 {dataColumns.map((time, idx) => (
                                     <th

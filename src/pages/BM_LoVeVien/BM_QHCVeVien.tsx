@@ -16,16 +16,16 @@ const sectionRowData = [
         section: "Dòng điện (A)"
     },
     {
-        section: "Áp suất khí khói đầu vào"
+        section: "Áp suất khí khói đầu vào (Kpa)"
     },
     {
-        section: "Nhiệt độ khí khói đầu vào"
+        section: "Nhiệt độ khí khói đầu vào (°C)"
     },
     {
         section: "Van cửa gió vào (%)"
     },
     {
-        section: "Nhiệt độ",
+        section: "Nhiệt độ (°C)",
         rows: [
             { label: "Nhiệt độ stato động cơ", children: ["1", "2", "3"] },
             { label: "Nhiệt độ gối động cơ", children: ["1", "2"] },

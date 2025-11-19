@@ -12,56 +12,56 @@ const sectionRowData = [
   {
     section: "Nước ngưng",
     rows: [
-      { label: "Lưu lượng" },
+      { label: "Lưu lượng (T/h)" },
     ]
   },
   {
     section: "Cân băng áp",
     rows: [
-      { label: "Nhiệt độ" },
+      { label: "Nhiệt độ (°C)" },
     ]
   },
   {
-    section: "Công suất Tuabine",
+    section: "Công suất Tuabine (MW)",
   },
   {
     section: "Hơi chính",
     rows: [
-      { label: "Nhiệt độ" },
-      { label: "Áp suất" },
-      { label: "Lưu lượng" },
+      { label: "Nhiệt độ (°C)" },
+      { label: "Áp suất (mpa)" },
+      { label: "Lưu lượng (T/h)" },
     ]
   },
   {
-    section: "Nhiệt độ hơi thoát",
+    section: "Nhiệt độ hơi thoát (°C)",
   },
   {
     section: "Hơi bù",
     rows: [
-      { label: "Nhiệt độ" },
-      { label: "Áp suất" },
-      { label: "Lưu lượng" },
+      { label: "Nhiệt độ (°C)" },
+      { label: "Áp suất (mpa)" },
+      { label: "Lưu lượng (T/h)" },
     ]
   },
   {
     section: "Dầu",
     rows: [
-      { label: "Nhiệt độ dầu bôi trơn" },
-      { label: "Áp suất dầu điều khiển" },
+      { label: "Nhiệt độ dầu bôi trơn (°C)" },
+      { label: "Áp suất dầu điều khiển (Kpa)" },
     ]
   },
   {
     section: "Độ rung gối tuabin",
     rows: [
-      { label: "Độ dịch trục max" },
-      { label: "Gối 1 XISA201X" },
-      { label: "Gối 1 XISA201Y" },
-      { label: "Gối 2 XISA202X" },
-      { label: "Gối 2 XISA202Y" },
+      { label: "Độ dịch trục max (mm)" },
+      { label: "Gối 1 XISA201X (µm)" },
+      { label: "Gối 1 XISA201Y (µm)" },
+      { label: "Gối 2 XISA202X (µm)" },
+      { label: "Gối 2 XISA202Y (µm)" },
     ]
   },
   {
-    section: "Nhiệt độ gối Tuabin",
+    section: "Nhiệt độ gối Tuabin (°C)",
     rows: [
       { label: "Gối 1 TISA209" },
       { label: "Gối 1 TISA2010" },
@@ -70,7 +70,7 @@ const sectionRowData = [
     ]
   },
   {
-    section: "Nhiệt bạc chặn",
+    section: "Nhiệt bạc chặn (°C)",
     rows: [
       { label: "TISA  201" },
       { label: "TISA  202" },
@@ -79,7 +79,7 @@ const sectionRowData = [
     ]
   },
   {
-    section: "Nhiệt độ gối Bộ ly hợp",
+    section: "Nhiệt độ gối Bộ ly hợp (°C)",
     rows: [
       { label: "Gối 1 TISA224" },
       { label: "Gối 2 TISA217" },
@@ -88,7 +88,7 @@ const sectionRowData = [
     ]
   },
   {
-    section: "Độ rung gối Bộ ly hợp",
+    section: "Độ rung gối Bộ ly hợp (µm)",
     rows: [
       { label: "Gối 1 XISA203X" },
       { label: "Gối 1 XISA203Y" },

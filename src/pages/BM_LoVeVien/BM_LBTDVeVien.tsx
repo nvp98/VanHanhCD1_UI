@@ -23,14 +23,14 @@ const sectionRowData = [
     ]
   },
   {
-    section: "Nhiệt độ sứ cực âm",
+    section: "Nhiệt độ sứ cực âm (°C)",
     rows: [
       { label: "Bên 1" },
       { label: "Bên 2" }
     ]
   },
   {
-    section: "Nhiệt độ khí khói",
+    section: "Nhiệt độ khí khói (°C)",
     rows: [
       { label: "Đầu vào" },
       { label: "Đầu ra" }
@@ -44,7 +44,7 @@ const sectionRowData = [
     ]
   },
   {
-    section: "Áp suất",
+    section: "Áp suất (Kpa)",
     rows: [
       { label: "Đầu vào" },
       { label: "Đầu ra" }
