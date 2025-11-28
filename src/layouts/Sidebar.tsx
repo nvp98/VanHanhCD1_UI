@@ -55,7 +55,7 @@ const Sidebar = ({ isOpen, onMouseLeaveSidebar }: SidebarProps) => {
       iconInactive: iconDocument,
     },
     {
-      to: "/thieuketvevien",
+      to: "/luyencocs",
       label: "Luyện Cốc",
       iconActive: iconDocumentWhite,
       iconInactive: iconDocument,
