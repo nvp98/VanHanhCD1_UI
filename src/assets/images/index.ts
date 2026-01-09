@@ -15,6 +15,8 @@ import anToanNam from "./antoan_5.png"
 import anToanSau from "./antoan_6.png"
 import iconRight from "./iconright.png" 
 import iconLeft from "./iconleft.png"
+import iconEquipment from "./equipment.png"
+import iconEquipmentWhite from "./equipment-white.png"
 export const images = {
   logoHP,
   backgroundHP,
@@ -33,4 +35,6 @@ export const images = {
   iconRight,
   iconLeft,
   iconDocumentWhite,
+  iconEquipment,
+  iconEquipmentWhite
 };

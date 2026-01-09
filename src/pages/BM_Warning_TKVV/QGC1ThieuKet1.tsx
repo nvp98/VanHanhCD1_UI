@@ -1,127 +1,70 @@
-import React, { Children, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import { useOutletContext } from "react-router-dom";
 import clsx from "clsx";
-import AlertMessage from "../../components/AlertMessage";
-import Loading from "../../components/Loading";
-
+import { QUATGIO1_CONFIG, QUATGIO1_SECTION } from "../../config/QuatGioPhuTroConfig";
+import FlowDashboardChart from "../../components/DashboardChart";
 type OutletContextType = { isSidebarOpen: boolean };
-type RowType = {
-    label: string;
-    children?: string[];
+
+type MinValue = {
+    id: number;
+    tagName: string;
+    thoiGian: string;
+    giaTri: number;
 };
 
-type SectionType = {
-    section: string;
-    rows?: RowType[];
-};
 
-
-const sectionPhoiLieuRowData = [
-    {
-        section: "Góc mở cửa gió"
-    },
-    {
-        section: "Nhiệt độ (°C)",
-        rows: [
-            { label: "Đầu khói vào" },
-            { label: "Cuộn dây", children: ["Pha A", "Pha B", "Pha C"] },
-            { label: "Gối đỡ động cơ", children: ["Trước", "Sau"] },
-            { label: "Gối đỡ quạt", children: ["Trước", "Sau"] }
-        ],
-    },
-    {
-        section: "Áp suất (Kpa)",
-        rows: [
-            { label: "Đầu vào" },
-            { label: "Đầu ra" },
-        ],
-    },
-    {
-        section: "Độ rung (mm)",
-        rows: [
-            { label: "Gối đỡ quạt gió", children: ["Trước x", "Trước y", "Sau x", "Sau y"] },
-        ],
-    },
-    {
-        section: "Góc mở cửa gió (%)"
-    },
-    {
-        section: "Nồng độ bụi (mg/Nm3)",
-        rows: [{ label: "Vào" }, { label: "Ra" }]
-    }
-]
-
-const sectionBanLuocRowData = [
-    {
-        section: "Góc mở cửa gió (%)"
-    },
-    {
-        section: "Nhiệt độ (°C)",
-        rows: [
-            { label: "Đầu khói vào" },
-            { label: "Cuộn dây", children: ["Pha A", "Pha B", "Pha C"] },
-            { label: "Gối đỡ động cơ", children: ["Trước", "Sau"] },
-            { label: "Gối đỡ quạt", children: ["Trước", "Sau"] }
-        ],
-    },
-    {
-        section: "Áp suất (Kpa)",
-        rows: [
-            { label: "Đầu vào" },
-            { label: "Đầu ra" },
-        ],
-    },
-    {
-        section: "Độ rung (mm/s)",
-        rows: [
-            { label: "Gối đỡ quạt gió", children: ["Trước x", "Trước y", "Sau x", "Sau y"] },
-        ],
-    },
-    {
-        section: "Dòng điện (A)"
-    },
-    {
-        section: "Nồng độ bụi (mg/Nm3)",
-        rows: [{ label: "Vào" }, { label: "Ra" }]
-    }
-]
-
-
-
-const BM_LBMTDuoiMay1: React.FC = () => {
+const QGC1ThieuKet1: React.FC = () => {
     const baseURL = import.meta.env.VITE_API_BASE_URL;
-    const apiURL = baseURL + "/api/LocBuiMoiTruongDuoiMayMot";
     const { isSidebarOpen } = useOutletContext<OutletContextType>();
     const [tagSymbolMap, setTagSymbolMap] = useState<Map<string, string>>(new Map());
+    const [tagUnitMap, setTagUnitMap] = useState<Map<string, string>>(new Map());
+    const [tagWarningMap, setTagWarningMap] = useState<Map<string, number>>(new Map());
+    const [tagRiskyMap, setTagRiskyMap] = useState<Map<string, number>>(new Map());
     const [dataRows, setDataRows] = useState<any[]>([]);
     const [dataColumns, setDataColumns] = useState<string[]>([]);
     const [fromDate, setFromDate] = useState("");
     const [toDate, setToDate] = useState("");
     const [loading, setLoading] = useState(false);
-    const [warning, setWarning] = useState<string | null>(null);
     const [exporting, setExporting] = useState(false);
+    const [tagMinValue, setTagMinValue] = useState<MinValue[]>([]);
     const tagIndex = { current: 0 };
-
+    const [visible, setVisible] = useState({
+        table: true,
+        chart: false,
+    });
     useEffect(() => {
-        fetch("/TagLBMT.xlsx")
+        fetch("/TagWarning.xlsx")
             .then(res => res.arrayBuffer())
             .then(buffer => {
                 const workbook = XLSX.read(buffer, { type: "buffer" });
-                const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                const sheet = workbook.Sheets[workbook.SheetNames[8]];
                 const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 }) as string[][];
                 const map = new Map<string, string>();
+                const mapUnit = new Map<string, string>();
+                const mapWarning = new Map<string, number>();
+                const mapRiskly = new Map<string, number>();
                 rows.forEach(row => {
-                    const tag = row[4];
-                    const symbol = row[5];
+                    const tag = row[3];
+                    const symbol = row[4];
+                    const unit = row[5];
+                    const warning = row[6];
+                    const riskly = row[7];
                     if (tag && symbol) map.set(tag.trim(), symbol.trim());
+                    if (tag && unit) mapUnit.set(tag.trim(), unit.trim());
+                    if (tag && warning) mapWarning.set(tag, parseFloat(warning));
+                    if (tag && riskly) mapRiskly.set(tag, parseFloat(riskly));
                 });
-                setTagSymbolMap(map)
+                setTagSymbolMap(map);
+                setTagUnitMap(mapUnit);
+                setTagWarningMap(mapWarning);
+                setTagRiskyMap(mapRiskly);
+
             });
     }, []);
 
     useEffect(() => {
-        fetch(`${apiURL}/last-24h`)
+        fetch(`${baseURL}/api/QuatGioMot/last-24h`)
             .then(res => res.json())
             .then(data => {
                 setDataRows(data);
@@ -133,31 +76,18 @@ const BM_LBMTDuoiMay1: React.FC = () => {
             })
     }, [])
 
-    useEffect(() => {
-        if (warning) {
-            const timer = setTimeout(() => setWarning(null), 2000);
-            return () => clearTimeout(timer);
-        }
-    }, [warning]);
-
     const handleSearch = async () => {
         if (!fromDate || !toDate) {
-            //alert("Vui lòng chọn đầy đủ thời gian");
-            setWarning("⚠️Chọn đầy đủ thời gian");
-            return;
-        }
-        else if (fromDate >= toDate) {
-            setWarning("❌ Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
+            alert("Vui lòng chọn đầy đủ thời gian");
             return;
         }
 
         const from = fromDate;
         const to = toDate;
-        setWarning(null);
         setLoading(true);
 
         try {
-            const res = await fetch(`${apiURL}/search?from=${from}&to=${to}`);
+            const res = await fetch(`${baseURL}/api/QuatGioMot/search?from=${from}&to=${to}`);
             const data = await res.json();
             setDataRows(data);
             const times = data.map((time: any) => time.ThoiGian).filter(Boolean);
@@ -169,22 +99,30 @@ const BM_LBMTDuoiMay1: React.FC = () => {
         }
     };
 
+    useEffect(() => {
+        fetch(`${baseURL}/api/QuatGioMot/min-value`)
+            .then(res => res.json())
+            .then(data => {
+                setTagMinValue(data);
+
+                // const times = data.map((time: any) => time.ThoiGian).filter(Boolean);
+                // setDataColumns(times);
+            })
+            .catch(error => {
+                console.error("Lỗi khi gọi API:", error);
+            })
+    }, [])
+
     const handleExportExcel = async () => {
         if (!fromDate || !toDate) {
-            //alert("Vui lòng chọn đầy đủ thời gian");
-            setWarning("⚠️Chọn đầy đủ thời gian");
-            return;
-        }
-        else if (fromDate >= toDate) {
-            setWarning("❌ Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
+            alert("Vui lòng chọn thời gian trước khi xuất Excel");
             return;
         }
 
-        setWarning(null);
         setExporting(true);
 
         try {
-            const res = await fetch(`${apiURL}/export?from=${fromDate}&to=${toDate}`);
+            const res = await fetch(`${baseURL}/api/QuatGioMot/export?from=${fromDate}&to=${toDate}`);
             const blob = await res.blob();
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement("a");
@@ -201,7 +139,7 @@ const BM_LBMTDuoiMay1: React.FC = () => {
             const toStr = formatDate(toDate);
 
             link.href = url;
-            link.download = `BM.13-QT.05.03_NKVH_LocBuiMoiTruongPhoiLieu&DuoiMay1_${fromStr}_đến_${toStr}.xlsx`;
+            link.download = `BM.01/HD.05.53-19_NKVH_QuatGioChinh1_${fromStr}_đến_${toStr}.xlsx`;
             document.body.appendChild(link);
             link.click();
             link.remove();
@@ -214,19 +152,57 @@ const BM_LBMTDuoiMay1: React.FC = () => {
     };
 
     const renderTagCellWithData = (label: string) => {
-        const tag = tagSymbolMap.get(label);
-        const display = tag || label;
-
+        const tag = tagSymbolMap.get(label) as string;
+        const tagUnit = tagUnitMap.get(label);
+        const tagWarning = tagWarningMap.get(label);
+        const tagRisky = tagRiskyMap.get(label);
+        const display = tagUnit || label;
+        const values =
+            tag
+                ? tagMinValue.find(
+                    d => d.tagName === tag
+                )?.giaTri ?? ""
+                : "";
         const rowCells = [
-            <td key={`${label}-symbol`} className="sticky left-[13.4rem] bg-white border px-2 py-1 text-xs">{display}</td>
+            <td key={`${label}-symbol`} className="sticky left-[12.7rem] bg-white border px-2 py-1 text-xs">{display}</td>,
+            <td key={`${label}`} className="sticky left-[17.2rem] bg-white border px-2 py-1 text-xs">{values}</td>,
+            <td key={`${label}-warning`} className="sticky left-[24rem] bg-white border px-2 py-1 text-xs">{tagWarning}</td>,
+            <td key={`${label}-risky`} className="sticky left-[29rem] bg-white border px-2 py-1 text-xs">{tagRisky}</td>
         ];
+
+        const result: { [key: string]: any } = {
+            [tag]: tagWarning
+        }
+        const resultNguyHiem: { [key: string]: any } = {
+            [tag]: tagRisky
+        }
 
         // them du lieu vao
         for (const time of dataColumns) {
             const row = dataRows.find(r => r.ThoiGian == time);
+
+            //console.log(row);
             const value = tag ? row?.[tag] ?? "" : "";
+            // So sánh value với result[tag] (tức là tagBao)
+            const isEqual = value > result[tag]; // So sánh với tagBao từ result
+            const isNguyeHiem = value > resultNguyHiem[tag];
+            //const isNotEqual = value !== result[tag]; // Kiểm tra khi giá trị khác nhau
+            const isEmpty = value === ""; // Kiểm tra khi value trống
+
+            // Áp dụng các lớp CSS tùy thuộc vào kết quả so sánh
+            let cellClass = "border px-2 py-1 text-xs text-center ";
+
+            // Logic để áp dụng lớp CSS
+            if (isNguyeHiem) {
+                cellClass += " bg-red-100 text-red-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+            }
+            else if (isEqual) {
+                cellClass += " bg-yellow-100 text-yellow-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+            } else if (isEmpty) {
+                cellClass += " bg-gray-100"; // Nếu value trống (ví dụ: màu xám)
+            }
             rowCells.push(
-                <td key={`${tag}-${time}`} className="border px-2 py-1 text-xs text-center">
+                <td key={`${tag}-${time}`} className={cellClass}>
                     {value}
                 </td>
             );
@@ -234,27 +210,21 @@ const BM_LBMTDuoiMay1: React.FC = () => {
         return rowCells;
     };
 
-    const renderNestedRows = (sections: SectionType[], name: string, rowNumber: number): React.ReactNode[] => {
+    const renderNestedRows = (): React.ReactNode[] => {
         const rows: React.ReactNode[] = [];
-        let didRenderName = false;
-        sections.forEach(sec => {
+        QUATGIO1_SECTION.forEach(sec => {
             const tempRowCounter = { current: 0 };
             const rowsWithChildren = sec.rows?.filter(r => r.children) || [];
             const rowsWithoutChildren = sec.rows?.filter(r => !r.children) || [];
             const sectionRowCount = rowsWithChildren.reduce((sum, row) => sum + (row.children?.length || 1), 0) +
                 rowsWithoutChildren.length;
 
-
-
             if (!sec.rows || sec.rows.length === 0) {
                 const tag = `Tag${tagIndex.current++}`;
                 rows.push(
                     <tr key={sec.section} className="text-center text-xs">
-                        {!didRenderName && (<td rowSpan={rowNumber} className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle">
-                            {name}
-                        </td>)}
                         <td
-                            className="sticky left-[4rem] bg-white border px-2 py-1 font-semibold align-middle"
+                            className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle"
                             colSpan={3}
                         >
                             {sec.section}
@@ -263,7 +233,6 @@ const BM_LBMTDuoiMay1: React.FC = () => {
                         {renderTagCellWithData(tag)}
                     </tr>
                 );
-                if (!didRenderName) didRenderName = true;
                 return;
             }
 
@@ -278,13 +247,11 @@ const BM_LBMTDuoiMay1: React.FC = () => {
                                 key={`${sec.section}-${row.label}-${index}`}
                                 className="text-center text-xs hover:bg-white-50"
                             >
-
-
                                 {tempRowCounter.current === 0 && (
                                     <td
                                         rowSpan={sectionRowCount}
 
-                                        className="sticky left-[3.9rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
+                                        className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
                                     >
                                         {sec.section}
                                     </td>
@@ -293,12 +260,12 @@ const BM_LBMTDuoiMay1: React.FC = () => {
                                     <td
 
                                         rowSpan={row.children?.length}
-                                        className="sticky left-[7.9rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
+                                        className="sticky left-[3.9rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
                                     >
                                         {row.label}
                                     </td>
                                 )}
-                                <td className="sticky left-[10.9rem] bg-white border px-2 py-1">{label}</td>
+                                <td className="sticky left-[8.9rem] bg-white border px-2 py-1">{label}</td>
                                 {renderTagCellWithData(tag)}
                             </tr>
                         );
@@ -311,17 +278,16 @@ const BM_LBMTDuoiMay1: React.FC = () => {
                             key={`${sec.section}-${row.label}`}
                             className="text-center text-xs"
                         >
-
                             {tempRowCounter.current === 0 && (
                                 <td
                                     rowSpan={sectionRowCount}
-                                    className="sticky left-[3.9rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
+                                    className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
                                 >
                                     {sec.section}
                                 </td>
                             )}
                             <td
-                                className="sticky left-[7.9rem] bg-white font-semibold border px-2 py-1"
+                                className="sticky left-[3.9rem] bg-white font-semibold border px-2 py-1 whitespace-nowrap"
                                 colSpan={2}
                             >
                                 {row.label}
@@ -356,10 +322,14 @@ const BM_LBMTDuoiMay1: React.FC = () => {
                     <div className="absolute right-0 top-1/2 -translate-y-1/2 flex gap-2">
                         <button
                             className="bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow hover:shadow-md transition"
-                            onClick={handleExportExcel}
-                            disabled={exporting}
+                            onClick={() =>
+                                setVisible(prev => ({
+                                    table: !prev.table,
+                                    chart: !prev.chart,
+                                }))
+                            }
                         >
-                            {exporting ? "Đang xuất..." : "📥 Xuất Excel"}
+                            {visible.chart ? "Xem Bảng" : "Xem Đồ Thị"}
                         </button>
                     </div>
                     {/* Nút xuất file bên phải */}
@@ -367,7 +337,7 @@ const BM_LBMTDuoiMay1: React.FC = () => {
                     {/* Tiêu đề và bộ lọc thời gian ở giữa */}
                     <div className="flex flex-col items-center gap-3">
                         <h1 className="text-2xl font-bold text-gray-800 text-center">
-                            Nhật ký vận hành Lọc Bụi Môi Trường Phối Liệu Và Đuôi Máy 1
+                            Quạt Gió 1 Thiêu Kết 1
                         </h1>
 
                         <div className="flex flex-wrap justify-center items-end gap-4">
@@ -402,16 +372,18 @@ const BM_LBMTDuoiMay1: React.FC = () => {
                 {/* Tiêu đề + filter + nút export */}
 
                 {/* Bảng dữ liệu */}
-                <div className="border rounded-xl overflow-x-auto max-w-full  max-h-[60vh]">
+                {visible.table && <div className="border rounded-xl overflow-x-auto max-w-full  max-h-[60vh]">
                     <table className="min-w-full table-auto text-sm border-collapse border border-gray-300 bg-white">
                         <thead className="bg-gray-100 text-gray-800 text-center sticky top-0 z-20">
                             <tr>
                                 <th className="border px-4 py-2 sticky left-0 z-30 bg-gray-100">Mục</th>
-                                <th className="border px-4 py-2 sticky left-[62px] z-30 bg-gray-100 " colSpan={3}>
+                                <th className="border px-4 py-2 sticky left-[62px] z-30 bg-gray-100 whitespace-nowrap" colSpan={2}>
                                     Vị trí đo / Thời gian
                                 </th>
-                                <th className="border px-4 py-2 sticky left-[13.4rem] z-30 bg-gray-100">Ký hiệu</th>
-                                {/* th time */}
+                                <th className="border px-4 py-2 sticky left-[12.4rem] z-30 bg-gray-100 whitespace-nowrap">Đơn Vị</th>
+                                <th className="border px-4 py-2 sticky left-[17.2rem] z-30 bg-gray-100  whitespace-nowrap">MIN 3 Tháng</th>
+                                <th className="border px-4 py-2 sticky left-[24rem] z-30 bg-gray-100 whitespace-nowrap whitespace-nowrap">Cảnh báo</th>
+                                <th className="border px-4 py-2 sticky left-[29rem] z-30 bg-gray-100 whitespace-nowrap whitespace-nowrap">Nguy hiểm</th>
                                 {dataColumns.map((time, idx) => (
                                     <th
                                         key={idx}
@@ -438,35 +410,33 @@ const BM_LBMTDuoiMay1: React.FC = () => {
                             </tr>
                         </thead>
                         <tbody className="text-gray-800 even:bg-gray-50">
-                            {renderNestedRows(sectionPhoiLieuRowData, "Khu Phối Liệu", 18)}
-                            {renderNestedRows(sectionBanLuocRowData, "Khu Đuôi Máy #1", 18)}
+                            {renderNestedRows()}
                         </tbody>
                     </table>
-                </div>
+                </div>}
+                {visible.chart && <FlowDashboardChart
+                    rawData={dataRows}
+                    TAG_CONFIG={QUATGIO1_CONFIG}
+                />}
             </div>
             {loading && (
                 <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center">
-                    <Loading />
+                    <div className="bg-white px-6 py-4 rounded shadow text-lg font-semibold">
+                        Đang tải dữ liệu, vui lòng chờ...
+                    </div>
                 </div>
             )}
             {(loading || exporting) && (
                 <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center">
-                    {loading
-                        ?
-                        <Loading />
-                        :
-                        <Loading />
-                    }
+                    <div className="bg-white px-6 py-4 rounded shadow text-lg font-semibold">
+                        {loading ? "Đang tải dữ liệu, vui lòng chờ..." : "Đang xuất file Excel..."}
+                    </div>
                 </div>
             )}
 
-            {warning &&
-                <div className="fixed inset-0 z-50 flex items-start justify-end mt-12">
-                    <AlertMessage type="Vui lòng" message={warning} />
-                </div>
-            }
+
         </section>
     );
 }
 
-export default BM_LBMTDuoiMay1;
+export default QGC1ThieuKet1;

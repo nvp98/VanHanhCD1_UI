@@ -35,7 +35,6 @@ const sectionPhoiLieuRowData = [
         rows: [
             { label: "Đầu vào" },
             { label: "Đầu ra" },
-            { label: "Chuyên áp" },
         ],
     },
     {
@@ -43,6 +42,9 @@ const sectionPhoiLieuRowData = [
         rows: [
             { label: "Gối đỡ quạt gió", children: ["Trước x", "Trước y", "Sau x", "Sau y"] },
         ],
+    },
+    {
+        section: "Dòng điện (A)"
     },
     {
         section: "Nồng độ bụi (mg/Nm3)",
