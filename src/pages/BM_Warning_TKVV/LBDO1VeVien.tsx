@@ -181,14 +181,14 @@ const LBDO1VeVien: React.FC = () => {
             tag
                 ? tagMinValue.find(
                     d => d.tagName === tag
-                )?.giaTri ?? ""
-                : "";
+                )?.giaTri ?? "⏳"
+                : "⏳";
 
         const rowCells = [
-            <td key={`${label}-symbol`} className="sticky left-[14rem] bg-white border px-2 py-1 text-xs">{display}</td>,
-            <td key={`${label}`} className="sticky left-[18rem] bg-white border px-2 py-1 text-xs">{values}</td>,
-            <td key={`${label}-warning`} className="sticky left-[25rem] bg-white border px-2 py-1 text-xs">{tagWarning}</td>,
-            <td key={`${label}-risky`} className="sticky left-[30rem] bg-white border px-2 py-1 text-xs">{tagRisky}</td>,
+            <td key={`${label || "unknown"}-symbol`} className="sticky left-[14rem] bg-white border px-2 py-1 text-xs">{display}</td>,
+            <td key={`${label || "unknown"}-value`} className="sticky left-[19rem] bg-white border px-2 py-1 text-xs">{values}</td>,
+            <td key={`${label || "unknown"}-warning`} className="sticky left-[25rem] bg-white border px-2 py-1 text-xs">{tagWarning}</td>,
+            <td key={`${label || "unknown"}-risky`} className="sticky left-[30rem] bg-white border px-2 py-1 text-xs">{tagRisky}</td>,
         ];
 
         const result: { [key: string]: any } = {
@@ -358,7 +358,7 @@ const LBDO1VeVien: React.FC = () => {
                     {/* Tiêu đề và bộ lọc thời gian ở giữa */}
                     <div className="flex flex-col items-center gap-3">
                         <h1 className="text-2xl font-bold text-gray-800 text-center">
-                            Nhật ký vận hành Lọc Bụi Đa Ống 1
+                           Lọc Bụi Đa Ống 1
                         </h1>
 
                         <div className="flex flex-wrap justify-center items-end gap-4">
@@ -401,10 +401,10 @@ const LBDO1VeVien: React.FC = () => {
                                 <th className="border px-4 py-2 sticky left-[62px] z-30 bg-gray-100 whitespace-nowrap" colSpan={2}>
                                     Vị trí đo / Thời gian
                                 </th>
-                                <th className="border px-4 py-2 sticky left-[14rem] z-30 bg-gray-100 whitespace-nowrap">Đơn Vị</th>
-                                <th className="border px-4 py-2 sticky left-[18rem] z-30 bg-gray-100  whitespace-nowrap">MIN 3 Tháng</th>
-                                <th className="border px-4 py-2 sticky left-[25rem] z-30 bg-gray-100 whitespace-nowrap">Cảnh báo</th>
-                                <th className="border px-4 py-2 sticky left-[30rem] z-30 bg-gray-100 whitespace-nowrap">Nguy hiểm</th>
+                                <th className="border px-4 py-2 sticky left-[14.1rem] z-30 bg-gray-100 whitespace-nowrap">Đơn Vị</th>
+                                <th className="border px-4 py-2 sticky left-[19rem] z-30 bg-gray-100  whitespace-nowrap">MIN 3 Tháng</th>
+                                <th className="border px-4 py-2 sticky left-[25.5rem] z-30 bg-gray-100 whitespace-nowrap">Cảnh báo</th>
+                                <th className="border px-4 py-2 sticky left-[30.5rem] z-30 bg-gray-100 whitespace-nowrap">Nguy hiểm</th>
                                 {/* th time */}
                                 {/* th time */}
                                 {dataColumns.map((time, idx) => (

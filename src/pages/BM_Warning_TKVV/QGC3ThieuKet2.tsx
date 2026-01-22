@@ -163,12 +163,12 @@ const QGC3ThieuKet2: React.FC = () => {
             tag
                 ? tagMinValue.find(
                     d => d.tagName === tag
-                )?.giaTri ?? ""
-                : "";
+                )?.giaTri ?? "⏳"
+                : "⏳";
 
         const rowCells = [
             <td key={`${label}-symbol`} className="sticky left-[12.7rem] bg-white border px-2 py-1 text-xs">{display}</td>,
-            <td key={`${label}`} className="sticky left-[17.2rem] bg-white border px-2 py-1 text-xs">{values}</td>,
+            <td key={`${label}-value`} className="sticky left-[17.2rem] bg-white border px-2 py-1 text-xs">{values}</td>,
             <td key={`${label}-warning`} className="sticky left-[24rem] bg-white border px-2 py-1 text-xs">{tagWarning}</td>,
             <td key={`${label}-risky`} className="sticky left-[29rem] bg-white border px-2 py-1 text-xs">{tagRisky}</td>
         ];

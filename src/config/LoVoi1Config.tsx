@@ -33,7 +33,7 @@ export const LOVOI1_CONFIG: ChartGroup[] = [
             { key: "1#_Kiln_Front_bearing_temperature_of_the_cooling_blower_motor", label: "Nhiệt độ bi trước động cơ", color: "#1652f9ff" },
             { key: "1#_Kiln_Behind_bearing_temperature_of_the_cooling_blower_motor", label: "Nhiệt độ bi sau động cơ", color: "#f93816ff" },
             { key: "1#_Kiln_Front_bearing_temperature_of_the_cooling_blower", label: "Nhiệt độ gối trước quạt", color: "#0638c4ff" },
-            { key: "1#_Kiln_behind_bearing_temperature_of_the_cooling_blower", label: "Nhiệt độ gối sau quạt", color: "#f93816ff" },
+            { key: "1#_Kiln_behind_bearing_temperature_of_the_cooling_blower", label: "Nhiệt độ gối sau quạt", color: "rgb(141, 22, 1)" },
             { key: "1#_Kiln_cooling_blower_1#_vibration", label: "Độ rung 1", color: "#16f9a2ff" },
             { key: "1#_Kiln_cooling_blower_2#_vibration", label: "Độ rung 2", color: "#050E3C" },
         ]

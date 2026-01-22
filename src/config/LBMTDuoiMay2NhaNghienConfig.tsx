@@ -61,7 +61,7 @@ export const DUOIMAY2_SECTION: SectionType[] = [
         section: "Nhiệt độ",
         rows: [
             { label: "Đầu khói vào" },
-            { label: "Cuộn dây" },
+            { label: "Cuộn dây" , children: ["Pha A", "Pha B", "Pha C"]},
             { label: "Gối đỡ động cơ", children: ["Trước", "Sau"] },
             { label: "Gối đỡ quạt", children: ["Trước", "Sau"] }
         ],
@@ -69,16 +69,17 @@ export const DUOIMAY2_SECTION: SectionType[] = [
     {
         section: "Độ rung",
         rows: [
-            { label: "Gối đỡ quạt gió", children: ["Trước x/y", "Sau x/y"] },
+            { label: "Gối đỡ quạt gió", children: ["Trước x", "Trước y", "Sau x", "Sau y"] },
         ],
     },
 ]
 
 export const NHANGHIEN_SECTION = [
-    {
+   {
         section: "Nhiệt độ",
         rows: [
-            { label: "Cuộn dây" },
+            { label: "Đầu khói vào" },
+            { label: "Cuộn dây" , children: ["Pha A", "Pha B", "Pha C"]},
             { label: "Gối đỡ động cơ", children: ["Trước", "Sau"] },
             { label: "Gối đỡ quạt", children: ["Trước", "Sau"] }
         ],
@@ -86,7 +87,7 @@ export const NHANGHIEN_SECTION = [
     {
         section: "Độ rung",
         rows: [
-            { label: "Gối đỡ quạt gió", children: ["Trước x/y", "Sau x/y"] },
+            { label: "Gối đỡ quạt gió", children: ["Trước x", "Trước y", "Sau x", "Sau y"] },
         ],
     },
 ]

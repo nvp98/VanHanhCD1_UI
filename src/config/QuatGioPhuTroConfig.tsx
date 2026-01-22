@@ -121,7 +121,7 @@ export const QUATGIO3_CONFIG: ChartGroup[] = [
             { key: "Motor_vibration_in_X", label: "Độ rung động cơ gối 1 ngang TISA207X", color: "#FF0000" },
             { key: "Motor_vibration_in_Y", label: "Độ rung động cơ gối 1 dọc TISA207Y", color: "#5900ffff" },
             { key: "Motor_vibration_OUT_x", label: "Độ rung động cơ gối 2 ngang TISA208X", color: "#ff00c8ff" },
-            { key: "Motor_vibration_OUT_Y", label: "Độ rung động cơ gối 2 dọc TISA208Y", color: "#0044ffff" },
+            { key: "Motor_vibration_OUT_y", label: "Độ rung động cơ gối 2 dọc TISA208Y", color: "#0044ffff" },
             { key: "Blower_vibration_in_X", label: "Độ rung quạt gió gối 1 ngang TISA205X", color: "#9E2A3A" },
             { key: "Blower_vibration_in_Y", label: "Độ rung quạt gió gối 1 dọc TISA205Y", color: "#06005eff" },
             { key: "Blower_vibration_out_X", label: "Độ rung quạt gió gối 2 ngang TISA206X", color: "#9e1729ff" },

@@ -230,15 +230,15 @@ const LBMT_PhoiLieuDuoiMay1: React.FC = () => {
             tag
                 ? dataMaxValue.find(
                     d => d.tagName === tag
-                )?.giaTri ?? ""
-                : "";
+                )?.giaTri ?? "⏳"
+                : "⏳";
 
 
         const rowCells = [
-            <td key={`${label}-symbol`} className="sticky left-[12.4rem] bg-white border px-2 py-1 text-xs">{tag}</td>,
+            <td key={`${label}-symbol`} className="sticky left-[12.4rem] bg-white border px-2 py-1 text-xs">{tagUnit}</td>,
             <td key={`${label}-nguyHiem`} className="sticky left-[17rem] bg-white border px-2 py-1 text-xs">{values}</td>,
             <td key={`${label}-tagBao`} className="sticky left-[24rem] bg-white border px-2 py-1 text-xs">{tagBao}</td>,
-            <td key={`${label}-nguyHiem`} className="sticky left-[29rem] bg-white border px-2 py-1 text-xs">{nguyHiem}</td>,
+            <td key={`${label}-value`} className="sticky left-[29rem] bg-white border px-2 py-1 text-xs">{nguyHiem}</td>,
         ];
         const result: { [key: string]: any } = {
             [tag]: tagBao

@@ -185,12 +185,12 @@ const QHCVeVien: React.FC = () => {
             tag
                 ? tagMinValue.find(
                     d => d.tagName === tag
-                )?.giaTri ?? ""
-                : "";
+                )?.giaTri ?? "⏳"
+                : "⏳";
 
         const rowCells = [
             <td key={`${label}-symbol`} className="sticky left-[13.5rem] bg-white border px-2 py-1 text-xs">{display}</td>,
-            <td key={`${label}`} className="sticky left-[17.6rem] bg-white border px-2 py-1 text-xs">{values}</td>,
+            <td key={`${label}-value`} className="sticky left-[17.6rem] bg-white border px-2 py-1 text-xs">{values}</td>,
             <td key={`${label}-warning`} className="sticky left-[24rem] bg-white border px-2 py-1 text-xs">{tagWarning}</td>,
             <td key={`${label}-risky`} className="sticky left-[29rem] bg-white border px-2 py-1 text-xs">{tagRisky}</td>
         ];
@@ -363,7 +363,7 @@ const QHCVeVien: React.FC = () => {
                     {/* Tiêu đề và bộ lọc thời gian ở giữa */}
                     <div className="flex flex-col items-center gap-3">
                         <h1 className="text-2xl font-bold text-gray-800 text-center">
-                            Nhật ký vận hành Quạt Hút Chính Vê Viên
+                            Quạt Hút Chính Vê Viên
                         </h1>
 
                         <div className="flex flex-wrap justify-center items-end gap-4">

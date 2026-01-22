@@ -138,12 +138,12 @@ const DongCoDolomit2: React.FC = () => {
             tag
                 ? tagMinValue.find(
                     d => d.tagName === tag
-                )?.giaTri ?? ""
-                : "";
+                )?.giaTri ?? "⏳"
+                : "⏳";
 
         const rowCells = [
             <td key={`${label}-symbol`} className="sticky left-[13rem] bg-white border px-2 py-1 text-xs">{display}</td>,
-            <td key={`${label}`} className="sticky left-[17.2rem] bg-white border px-2 py-1 text-xs">{values}</td>,
+            <td key={`${label}-value`} className="sticky left-[17.2rem] bg-white border px-2 py-1 text-xs">{values}</td>,
             <td key={`${label}-warning`} className="sticky left-[24rem] bg-white border px-2 py-1 text-xs">{tagWarning}</td>,
             <td key={`${label}-risky`} className="sticky left-[29rem] bg-white border px-2 py-1 text-xs">{tagRisky}</td>
         ];
@@ -281,7 +281,7 @@ const DongCoDolomit2: React.FC = () => {
                     {/* Tiêu đề và bộ lọc thời gian ở giữa */}
                     <div className="flex flex-col items-center gap-3">
                         <h1 className="text-2xl font-bold text-gray-800 text-center">
-                            Động Cơ Lò DOLOMIT 1
+                            Động Cơ Lò DOLOMIT 2
                         </h1>
 
                         <div className="flex flex-wrap justify-center items-end gap-4">
