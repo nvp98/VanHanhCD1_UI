@@ -9,6 +9,7 @@ type SidebarProps = {
 };
 
 type SidebarItemProps = {
+  id?:string;
   to: string;
   label: string;
   iconActive: string;
@@ -49,6 +50,7 @@ const Sidebar = ({ isOpen, onMouseLeaveSidebar }: SidebarProps) => {
   };
   const menuList = [
     {
+      id:"thieuket",
       to: "",
       label: "Thiêu Kết Vê Viên",
       iconActive: iconDocumentWhite,
@@ -69,6 +71,7 @@ const Sidebar = ({ isOpen, onMouseLeaveSidebar }: SidebarProps) => {
       ],
     },
     {
+      id:"nguyenlieu",
       to: "",
       label: "Nguyên Liệu",
       iconActive: iconDocumentWhite,
@@ -83,6 +86,7 @@ const Sidebar = ({ isOpen, onMouseLeaveSidebar }: SidebarProps) => {
       ],
     },
     {
+      id:"luyencoc",
       to: "",
       label: "Luyện Cốc",
       iconActive: iconDocumentWhite,
@@ -124,7 +128,7 @@ const Sidebar = ({ isOpen, onMouseLeaveSidebar }: SidebarProps) => {
         {/* DANH MỤC */}
         <ul className="space-y-3 text-sm font-extrabold">
           {menuList.map((item) => (
-            <li key={item.to}>
+            <li key={item.id}>
               {item.subMenu ? (
                 <>
                   <button

@@ -74,6 +74,12 @@ import DongCoDolomit1 from "../pages/BM_Warning_TKVV/DongCoDolomit1";
 import DongCoDolomit2 from "../pages/BM_Warning_TKVV/DongCoDolomit2"; 
 import DongCoLoVoiQuay from "../pages/BM_Warning_TKVV/DongCoLoVoiQuay";
 
+import DongCoLocBuiC1 from "../pages/BM_BaiLieu/DongCoLocBuiC1";
+import DongCoLocBuiC2 from "../pages/BM_BaiLieu/DongCoLocBuiC2";
+import DongCoLocBuiC3 from "../pages/BM_BaiLieu/DongCoLocBuiC3";
+import DongCoLocBuiC4 from "../pages/BM_BaiLieu/DongCoLocBuiC4";
+import DongCoLocBuiC5 from "../pages/BM_BaiLieu/DongCoLocBuiC5";
+import DongCoTrungThe from "../pages/BM_BaiLieu/DongCoTrungThe";
 
 import Operate from "../pages/Operate/Operate";
 import OperateNguyenLieu from "../pages/Operate/OperateNguyenLieu";
@@ -168,6 +174,12 @@ const AppRoutes = () => {
           <Route path="DongCoLoVoiQuay" element={<DongCoLoVoiQuay />} />
           <Route path="DongCoDolomit1" element={<DongCoDolomit1 />} />
           <Route path="DongCoDolomit2" element={<DongCoDolomit2 />}/>
+          <Route path="DongCoLocBuiC1" element={<DongCoLocBuiC1 />}/>
+          <Route path="DongCoLocBuiC2" element={<DongCoLocBuiC2 />}/>
+          <Route path="DongCoLocBuiC3" element={<DongCoLocBuiC3 />}/>
+          <Route path="DongCoLocBuiC4" element={<DongCoLocBuiC4 />}/>
+          <Route path="DongCoLocBuiC5" element={<DongCoLocBuiC5 />}/>
+          <Route path="DongCoTrungThe" element={<DongCoTrungThe />}/>
           <Route path="equipment" element={<EquipmentPage />} />
         </Route>
 

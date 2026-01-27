@@ -4,10 +4,26 @@ import { useOutletContext } from "react-router-dom";
 import clsx from "clsx";
 import AlertMessage from "../../components/AlertMessage";
 import Loading from "../../components/Loading";
-import { DOLOMIT1_CONFIG, DOLOMIT1_SECTION } from "../../config/Dolomit1Config";
+import { 
+    BANGTAI_2BC_SECTION, BANGTAI_3BC_SECTION, TRUNGTHE_CONFIG, BANGTAI_5BC_SECTION,
+    BANGTAI_Q101_SECTION, BANGT_AIQ205_SECTION, BANGTAI_A303_SECTION, BANGTAI_A304_SECTION,
+    BANGTAI_A305_SECTION, BANGTAI_AN402_SECTION, BANGTAI_AN404_SECTION, BANGTAI_AN406_SECTION,
+    BANGTAI_AN502_SECTION,BANGTAI_AN504_SECTION, BANGTAI_AN506_SECTION, BANGTAI_A601_SECTION, BANGTAI_A602_SECTION,
+    BANGTAI_C101_SECTION, BANGTAI_C201_SECTION, BANGTAI_N402_SECTION, BANGTAI_N501_SECTION,
+    BANGTAI_B301_SECTION
+} from "../../config/BaiLieuDongCoTrungThe";
 import FlowDashboardChart from "../../components/DashboardChart";
 
 type OutletContextType = { isSidebarOpen: boolean };
+type RowType = {
+    label: string;
+    children?: string[];
+};
+
+type SectionType = {
+    section: string;
+    rows?: RowType[];
+};
 
 type MinValue = {
     id: number;
@@ -16,9 +32,8 @@ type MinValue = {
     giaTri: number;
 };
 
-const DongCoDolomit1: React.FC = () => {
+const DongCoTrungThe: React.FC = () => {
     const baseURL = import.meta.env.VITE_API_BASE_URL;
-    const apiURL = baseURL + "/api/DongCoVoiXiMang";
     const { isSidebarOpen } = useOutletContext<OutletContextType>();
     const [tagSymbolMap, setTagSymbolMap] = useState<Map<string, string>>(new Map());
     const [tagUnitMap, setTagUnitMap] = useState<Map<string, string>>(new Map());
@@ -29,31 +44,32 @@ const DongCoDolomit1: React.FC = () => {
     const [fromDate, setFromDate] = useState("");
     const [toDate, setToDate] = useState("");
     const [loading, setLoading] = useState(false);
-    const [tagMinValue, setTagMinValue] = useState<MinValue[]>([]);
+    const [exporting, setExporting] = useState(false);
     const [warning, setWarning] = useState<string | null>(null);
+    const [tagMinValue, setTagMinValue] = useState<MinValue[]>([]);
     const tagIndex = { current: 0 };
     const [visible, setVisible] = useState({
-            table: true,
-            chart: false,
-        });
+        table: true,
+        chart: false,
+    });
 
     useEffect(() => {
-        fetch("/TagDongCoVoi.xlsx")
+        fetch("/TagWarningBaiLieu.xlsx")
             .then(res => res.arrayBuffer())
             .then(buffer => {
                 const workbook = XLSX.read(buffer, { type: "buffer" });
-                const sheet = workbook.Sheets[workbook.SheetNames[3]];
+                const sheet = workbook.Sheets[workbook.SheetNames[5]];
                 const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 }) as string[][];
                 const map = new Map<string, string>();
                 const mapUnit = new Map<string, string>();
                 const mapWarning = new Map<string, number>();
                 const mapRiskly = new Map<string, number>();
                 rows.forEach(row => {
-                    const tag = row[2];
-                    const symbol = row[3];
-                    const unit = row[4];
-                    const warning = row[5];
-                    const riskly = row[6];
+                    const tag = row[4];
+                    const symbol = row[5];
+                    const unit = row[6];
+                    const warning = row[7];
+                    const riskly = row[8];
                     if (tag && symbol) map.set(tag.trim(), symbol.trim());
                     if (tag && unit) mapUnit.set(tag.trim(), unit.trim());
                     if (tag && warning) mapWarning.set(tag, parseFloat(warning));
@@ -67,7 +83,7 @@ const DongCoDolomit1: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        fetch(`${apiURL}/last-24h`)
+        fetch(`${baseURL}/api/TrungThe/last-24h`)
             .then(res => res.json())
             .then(data => {
                 setDataRows(data);
@@ -80,7 +96,7 @@ const DongCoDolomit1: React.FC = () => {
     }, [])
 
     useEffect(() => {
-        fetch(`${apiURL}/min-value`)
+        fetch(`${baseURL}/api/TrungThe/min-value`)
             .then(res => res.json())
             .then(data => {
                 setTagMinValue(data);
@@ -117,7 +133,7 @@ const DongCoDolomit1: React.FC = () => {
         setLoading(true);
 
         try {
-            const res = await fetch(`${apiURL}/search?from=${from}&to=${to}`);
+            const res = await fetch(`${baseURL}/api/TrungThe/search?from=${from}&to=${to}`);
             const data = await res.json();
             setDataRows(data);
             const times = data.map((time: any) => time.ThoiGian).filter(Boolean);
@@ -128,6 +144,49 @@ const DongCoDolomit1: React.FC = () => {
             setLoading(false);
         }
     };
+
+    const handleExportExcel = async () => {
+        if (!fromDate || !toDate) {
+            setWarning("⚠️Chọn đầy đủ thời gian");
+            return;
+        }
+        else if (fromDate >= toDate) {
+            setWarning("❌ Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
+            return;
+        }
+        setWarning(null);
+        setExporting(true);
+
+        try {
+            const res = await fetch(`${baseURL}/api/TrungThe/export?from=${fromDate}&to=${toDate}`);
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+
+            const formatDate = (dateStr: string) => {
+                const datetime = new Date(dateStr);
+                const dd = datetime.getDate().toString().padStart(2, "0");
+                const mm = (datetime.getMonth() + 1).toString().padStart(2, "0");
+                const yyyy = datetime.getFullYear();
+                return `${dd}-${mm}-${yyyy}`;
+            }
+
+            const fromStr = formatDate(fromDate);
+            const toStr = formatDate(toDate);
+
+            link.href = url;
+            link.download = `BM.13-QT.05.03_NKVH_LocBuiMangQuangVeVien_${fromStr}_đến_${toStr}.xlsx`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        } catch (error) {
+            console.error("Lỗi khi xuất Excel:", error);
+            alert("Có lỗi khi xuất Excel");
+        } finally {
+            setExporting(false);
+        }
+    };
+
     const renderTagCellWithData = (label: string) => {
         const tag = tagSymbolMap.get(label) as string;
         const tagUnit = tagUnitMap.get(label);
@@ -140,12 +199,11 @@ const DongCoDolomit1: React.FC = () => {
                     d => d.tagName === tag
                 )?.giaTri ?? "⏳"
                 : "⏳";
-
         const rowCells = [
-            <td key={`${label}-symbol`} className="sticky left-[13rem] bg-white border px-2 py-1 text-xs">{display}</td>,
-            <td key={`${label}-value`} className="sticky left-[17.2rem] bg-white border px-2 py-1 text-xs">{values}</td>,
+            <td key={`${label}-symbol`} className="sticky left-[12.7rem] bg-white border px-2 py-1 text-xs">{display}</td>,
+            <td key={`${label}-value`} className="sticky left-[17.6rem] bg-white border px-2 py-1 text-xs">{values}</td>,
             <td key={`${label}-warning`} className="sticky left-[24rem] bg-white border px-2 py-1 text-xs">{tagWarning}</td>,
-            <td key={`${label}-risky`} className="sticky left-[29rem] bg-white border px-2 py-1 text-xs">{tagRisky}</td>
+            <td key={`${label}-risky`} className="sticky left-[29rem] bg-white border px-2 py-1 text-xs">{tagRisky}</td>,
         ];
 
         const result: { [key: string]: any } = {
@@ -154,8 +212,7 @@ const DongCoDolomit1: React.FC = () => {
         const resultNguyHiem: { [key: string]: any } = {
             [tag]: tagRisky
         }
-
-    
+        //console.log(result);
         // them du lieu vao
         for (const time of dataColumns) {
             const row = dataRows.find(r => r.ThoiGian == time);
@@ -189,19 +246,48 @@ const DongCoDolomit1: React.FC = () => {
         return rowCells;
     };
 
-    const renderNestedRows = (): React.ReactNode[] => {
-        const rows: React.ReactNode[] = [];
+    const countSectionRows = (section: SectionType): number => {
+        if (!section.rows || section.rows.length === 0) return 1;
 
-        DOLOMIT1_SECTION.forEach(sec => {
-            const sectionRowCount = sec.rows?.length || 0;
-            let rowIndex = 0;
+        return section.rows.reduce((sum, row) => {
+            if (row.children && row.children.length > 0) {
+                return sum + row.children.length;
+            }
+            return sum + 1;
+        }, 0);
+    };
+
+    const countGroupRows = (sections: SectionType[]): number => {
+        return sections.reduce((sum, section) => {
+            return sum + countSectionRows(section);
+        }, 0);
+    };
+
+
+
+    const renderNestedRows = (sections: SectionType[], name: string): React.ReactNode[] => {
+        const rows: React.ReactNode[] = [];
+        let didRenderName = false;
+        const rowNumber = countGroupRows(sections);
+        sections.forEach(sec => {
+            const tempRowCounter = { current: 0 };
+            const rowsWithChildren = sec.rows?.filter(r => r.children) || [];
+            const rowsWithoutChildren = sec.rows?.filter(r => !r.children) || [];
+            const sectionRowCount = rowsWithChildren.reduce((sum, row) => sum + (row.children?.length || 1), 0) +
+                rowsWithoutChildren.length;
+
+
+
             if (!sec.rows || sec.rows.length === 0) {
                 const tag = `Tag${tagIndex.current++}`;
                 rows.push(
                     <tr key={sec.section} className="text-center text-xs">
+                        {!didRenderName && (<td rowSpan={rowNumber} className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle">
+                            {name}
+                        </td>)}
                         <td
-                            className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle"
-                            colSpan={4}
+                            className="sticky left-[4rem] bg-white border px-2 py-1 font-semibold align-middle"
+                            colSpan={3}
                         >
                             {sec.section}
                         </td>
@@ -209,44 +295,97 @@ const DongCoDolomit1: React.FC = () => {
                         {renderTagCellWithData(tag)}
                     </tr>
                 );
+                if (!didRenderName) didRenderName = true;
                 return;
             }
 
-            sec.rows?.forEach(row => {
-                const tag = `Tag${tagIndex.current++}`;
 
-                rows.push(
-                    <tr key={`${sec.section}-${row.label}`} className="text-center text-xs">
-                        {/* Chỉ render section 1 lần với rowSpan */}
-                        {rowIndex === 0 && (
-                            <td
-                                rowSpan={sectionRowCount}
-                                className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
+
+            sec.rows.forEach((row) => {
+                if (row.children && Array.isArray(row.children)) {
+                    row.children.forEach((label, index) => {
+                        const tag = `Tag${tagIndex.current++}`;
+                        rows.push(
+                            <tr
+                                key={`${sec.section}-${row.label}-${index}`}
+                                className="text-center text-xs hover:bg-white-50"
                             >
-                                {sec.section}
-                            </td>
-                        )}
+                                {/* Luôn hiện name ở dòng đầu tiên */}
+                                {!didRenderName && (
+                                    <td
+                                        rowSpan={rowNumber}
+                                        className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle"
+                                    >
+                                        {name}
+                                    </td>
+                                )}
+                                {tempRowCounter.current === 0 && (
+                                    <td
+                                        rowSpan={sectionRowCount}
 
-                        {/* Cột label */}
-                        <td
-                            className="sticky left-[3.6rem] bg-white font-semibold border px-2 py-1"
-                            colSpan={3}
+                                        className="sticky left-[3.9rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
+                                    >
+                                        {sec.section}
+                                    </td>
+                                )}
+                                {index === 0 && (
+                                    <td
+
+                                        rowSpan={row.children?.length}
+                                        className="sticky left-[6.9rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
+                                    >
+                                        {row.label}
+                                    </td>
+                                )}
+                                <td className="sticky left-[9.8rem] bg-white border px-2 py-1">{label}</td>
+                                {renderTagCellWithData(tag)}
+                            </tr>
+                        );
+                        tempRowCounter.current++;
+                        if (!didRenderName) didRenderName = true;
+                    });
+                } else {
+                    const tag = `Tag${tagIndex.current++}`;
+                    rows.push(
+                        <tr
+                            key={`${sec.section}-${row.label}`}
+                            className="text-center text-xs"
                         >
-                            {row.label}
-                        </td>
+                            {!didRenderName && (
+                                <td
+                                    rowSpan={rowNumber}
+                                    className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle"
+                                >
+                                    {name}
+                                </td>
+                            )}
 
-                        {/* Render dữ liệu */}
-                        {renderTagCellWithData(tag)}
-                    </tr>
-                );
-
-                rowIndex++;
+                            {tempRowCounter.current === 0 && (
+                                <td
+                                    rowSpan={sectionRowCount}
+                                    className="sticky left-[3.9rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
+                                >
+                                    {sec.section}
+                                </td>
+                            )}
+                            <td
+                                className="sticky left-[6.9rem] bg-white font-semibold border px-2 py-1"
+                                colSpan={2}
+                            >
+                                {row.label}
+                            </td>
+                            {renderTagCellWithData(tag)}
+                        </tr>
+                    );
+                    tempRowCounter.current++;
+                    if (!didRenderName) didRenderName = true;
+                }
             });
-        });
+        })
 
         return rows;
-    };
 
+    };
 
     return (
         <section
@@ -264,24 +403,24 @@ const DongCoDolomit1: React.FC = () => {
                 <div className="flex flex-wrap justify-center items-center gap-4 relative">
                     {/* Nút xuất file bên phải */}
                     <div className="absolute right-0 top-1/2 -translate-y-1/2 flex gap-2">
-                         <button 
-                                className="bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow hover:shadow-md transition"
-                                onClick={() =>
-                                    setVisible(prev => ({
-                                        table: !prev.table,
-                                        chart: !prev.chart,
-                                    }))
-                                }
-                            >
-                                {visible.chart ? "Xem Bảng" : "Xem Đồ Thị"}
-                            </button>
+                        <button
+                            className="bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow hover:shadow-md transition"
+                            onClick={() =>
+                                setVisible(prev => ({
+                                    table: !prev.table,
+                                    chart: !prev.chart,
+                                }))
+                            }
+                        >
+                            {visible.chart ? "Xem Bảng" : "Xem Đồ Thị"}
+                        </button>
                     </div>
                     {/* Nút xuất file bên phải */}
 
                     {/* Tiêu đề và bộ lọc thời gian ở giữa */}
                     <div className="flex flex-col items-center gap-3">
                         <h1 className="text-2xl font-bold text-gray-800 text-center">
-                            Động Cơ Lò DOLOMIT 1
+                           Động Cơ Trung Thế Bãi Liệu
                         </h1>
 
                         <div className="flex flex-wrap justify-center items-end gap-4">
@@ -316,16 +455,16 @@ const DongCoDolomit1: React.FC = () => {
                 {/* Tiêu đề + filter + nút export */}
 
                 {/* Bảng dữ liệu */}
-               {visible.table && <div className="border rounded-xl overflow-x-auto max-w-full  max-h-[60vh]">
+                {visible.table && <div className="border rounded-xl overflow-x-auto max-w-full  max-h-[60vh]">
                     <table className="min-w-full table-auto text-sm border-collapse border border-gray-300 bg-white">
                         <thead className="bg-gray-100 text-gray-800 text-center sticky top-0 z-20">
                             <tr>
                                 <th className="border px-4 py-2 sticky left-0 z-30 bg-gray-100">Mục</th>
-                                <th className="border px-4 py-2 sticky left-[4rem] z-30 bg-gray-100 whitespace-nowrap" colSpan={3}>
+                                <th className="border px-4 py-2 sticky left-[62px] z-30 bg-gray-100 " colSpan={3}>
                                     Vị trí đo / Thời gian
                                 </th>
-                                <th className="border px-4 py-2 sticky left-[13rem] z-30 bg-gray-100 whitespace-nowrap">Đơn vị</th>
-                                <th className="border px-4 py-2 sticky left-[17.2rem] z-30 bg-gray-100  whitespace-nowrap">MIN 3 Tháng</th>
+                                <th className="border px-4 py-2 sticky left-[12.4rem] z-30 bg-gray-100 whitespace-nowrap">Đơn Vị</th>
+                                <th className="border px-4 py-2 sticky left-[17.6rem] z-30 bg-gray-100  whitespace-nowrap">MIN 3 Tháng</th>
                                 <th className="border px-4 py-2 sticky left-[24rem] z-30 bg-gray-100 whitespace-nowrap">Cảnh báo</th>
                                 <th className="border px-4 py-2 sticky left-[29rem] z-30 bg-gray-100 whitespace-nowrap">Nguy hiểm</th>
                                 {/* th time */}
@@ -355,22 +494,51 @@ const DongCoDolomit1: React.FC = () => {
                             </tr>
                         </thead>
                         <tbody className="text-gray-800 even:bg-gray-50">
-                            {renderNestedRows()}
+                            {renderNestedRows(BANGTAI_2BC_SECTION, "Băng tải 2#BC")}
+                            {renderNestedRows(BANGTAI_3BC_SECTION, "Băng tải 3#BC")}
+                            {renderNestedRows(BANGTAI_5BC_SECTION, "Băng tải 5#BC")}
+                            {renderNestedRows(BANGTAI_Q101_SECTION, "Băng tải Q101")}
+                            {renderNestedRows(BANGT_AIQ205_SECTION, "Băng tải A205")}
+                            {renderNestedRows(BANGTAI_A303_SECTION, "Băng tải A303")}
+                            {renderNestedRows(BANGTAI_A304_SECTION, "Băng tải A304")}
+                            {renderNestedRows(BANGTAI_A305_SECTION, "Băng tải A305")}
+                            {renderNestedRows(BANGTAI_AN402_SECTION, "Băng tải AN402")}
+                            {renderNestedRows(BANGTAI_AN404_SECTION, "Băng tải AN404")}
+                            {renderNestedRows(BANGTAI_AN406_SECTION, "Băng tải AN406")}
+                            {renderNestedRows(BANGTAI_AN502_SECTION, "Băng tải AN502")}
+                            {renderNestedRows(BANGTAI_AN504_SECTION, "Băng tải AN504")}
+                            {renderNestedRows(BANGTAI_AN506_SECTION, "Băng tải AN506")}
+                            {renderNestedRows(BANGTAI_A601_SECTION, "Băng tải A601")}
+                            {renderNestedRows(BANGTAI_A602_SECTION, "Băng tải  A602")}
+                            {renderNestedRows(BANGTAI_C101_SECTION, "Băng tải C101")}
+                            {renderNestedRows(BANGTAI_C201_SECTION, "Băng tải C201")}
+                            {renderNestedRows(BANGTAI_N402_SECTION, "Băng tải N402")}
+                            {renderNestedRows(BANGTAI_N501_SECTION, "Băng tải N501")}
+                            {renderNestedRows(BANGTAI_B301_SECTION, "Băng tải B301")}
                         </tbody>
                     </table>
                 </div>}
-                {/* Bảng dữ liệu */}
-                {visible.chart &&<FlowDashboardChart
-                                    rawData={dataRows}
-                                    TAG_CONFIG={DOLOMIT1_CONFIG}
-                                />}                    
-
+                {visible.chart && <FlowDashboardChart
+                    rawData={dataRows}
+                    TAG_CONFIG={TRUNGTHE_CONFIG}
+                />}
             </div>
             {loading && (
                 <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center">
                     <Loading />
                 </div>
             )}
+            {(loading || exporting) && (
+                <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center">
+                    {loading
+                        ?
+                        <Loading />
+                        :
+                        <Loading />
+                    }
+                </div>
+            )}
+
             {warning &&
                 <div className="fixed inset-0 z-50 flex items-start justify-end mt-12">
                     <AlertMessage type="Vui lòng" message={warning} />
@@ -380,4 +548,4 @@ const DongCoDolomit1: React.FC = () => {
     );
 }
 
-export default DongCoDolomit1;
+export default DongCoTrungThe;
