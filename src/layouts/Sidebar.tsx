@@ -79,6 +79,12 @@ const Sidebar = ({ isOpen, onMouseLeaveSidebar }: SidebarProps) => {
       subMenu: [
         {
           to: "/nguyenlieus",
+          label: "Biểu mẫu",
+          iconActive: iconDocumentWhite,
+          iconInactive: iconDocument,
+        },
+        {
+          to: "/equimentnguyenlieus",
           label: "Thiết bị",
           iconActive: iconDocumentWhite,
           iconInactive: iconDocument,
@@ -95,6 +101,12 @@ const Sidebar = ({ isOpen, onMouseLeaveSidebar }: SidebarProps) => {
         {
           to: "/luyencocs",
           label: "Biểu Mẫu",
+          iconActive: iconDocumentWhite,
+          iconInactive: iconDocument,
+        },
+        {
+          to: "/equipmentsluyencoc",
+          label: "Thiết Bị",
           iconActive: iconDocumentWhite,
           iconInactive: iconDocument,
         },

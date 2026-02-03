@@ -43,7 +43,7 @@ export const LOVOIQUAY_CONFIG: ChartGroup[] = [
             { key: "AI_4#_small_kiln_bearing_bush_temperature_display", label: "Nhiệt độ bạc ổ trục 4", color: "#1652f9ff" },
             { key: "AI_1#_small_kiln_pier_lubricant_temperature_display", label: "Nhiệt độ dầu bôi trơn gối đỡ 1", color: "#f93816ff" },
             { key: "AI_2#_small_kiln_pier_lubricant_temperature_display", label: "Nhiệt độ dầu bôi trơn gối đỡ 2", color: "#0638c4ff" },
-            { key: "AI_3#_small_kiln_pier_lubricant_temperature_displa", label: "Nhiệt độ dầu bôi trơn gối đỡ 3", color: "#f93816ff" },
+            { key: "AI_3#_small_kiln_pier_lubricant_temperature_display", label: "Nhiệt độ dầu bôi trơn gối đỡ 3", color: "#f93816ff" },
             { key: "AI_4#_small_kiln_pier_lubricant_temperature_display", label: "Nhiệt độ dầu bôi trơn gối đỡ 4", color: "#16f9a2ff" },
         ]
     },

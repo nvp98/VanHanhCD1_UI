@@ -290,12 +290,12 @@ const BM_LBMTPLieuBLuocVeVien: React.FC = () => {
                                     <td
 
                                         rowSpan={row.children?.length}
-                                        className="sticky left-[8rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
+                                        className="sticky left-[8.6rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
                                     >
                                         {row.label}
                                     </td>
                                 )}
-                                <td className="sticky left-[10.9rem] bg-white border px-2 py-1">{label}</td>
+                                <td className="sticky left-[11.5rem] bg-white border px-2 py-1">{label}</td>
                                 {renderTagCellWithData(tag)}
                             </tr>
                         );
@@ -318,7 +318,7 @@ const BM_LBMTPLieuBLuocVeVien: React.FC = () => {
                                 </td>
                             )}
                             <td
-                                className="sticky left-[8rem] bg-white font-semibold border px-2 py-1"
+                                className="sticky left-[8.6rem] bg-white font-semibold border px-2 py-1"
                                 colSpan={2}
                             >
                                 {row.label}
@@ -400,7 +400,7 @@ const BM_LBMTPLieuBLuocVeVien: React.FC = () => {
 
                 {/* Bảng dữ liệu */}
                 <div className="border rounded-xl overflow-x-auto max-w-full  max-h-[60vh]">
-                    <table className="min-w-full table-auto text-sm border-collapse border border-gray-300 bg-white">
+                    <table className="min-w-full table-auto text-sm border-separate border border-gray-300 bg-white">
                         <thead className="bg-gray-100 text-gray-800 text-center sticky top-0 z-20">
                             <tr>
                                 <th className="border px-4 py-2 sticky left-0 z-30 bg-gray-100">Mục</th>

@@ -146,7 +146,7 @@ export const TRUNGTHE_CONFIG: ChartGroup[] = [
         area: "Băng tải  AN504",
         tags: [
             { key: "AN504BC.PV_TA", label: "Nhiệt độ cuộn dây Pha A", color: "#9f2debff" },
-            { key: "AN504BC.PV_TB", label: "Nhiệt độ cuộn dây Pha B", color: "rgb(66, 7, 7)" },
+            { key: "AN504BC.PV_TB", label: "Nhiệt độ cuộn dây Pha B", color: "#420707" },
             { key: "AN504BC.PV_TC", label: "Nhiệt độ cuộn dây Pha C", color: "#0c5a29" },
             { key: "AN504BC.PV_TD1", label: "Nhiệt độ trục động cơ trước", color: "#f97316" },
             { key: "AN504BC.PV_TD2", label: "Nhiệt độ trục động cơ sau", color: "#0245aaff" },

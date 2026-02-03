@@ -76,7 +76,7 @@ export const DOLOMIT2_CONFIG: ChartGroup[] = [
             { key: "Temperature-of-front-bearing-of-standby-2#-gas-booster-fan", label: "Nhiệt độ gối trước quạt", color: "#f91674ff" },
             { key: "Rear-bearing-temperature-of-standby-2#-gas-booster-fan", label: "Nhiệt độ gối sau quạt", color: "#f93816ff" },
             { key: "Standby-2#-gas-booster-fan-1#-vibration", label: "Độ rung 1", color: "#fc6b03ff" },
-            { key: "Standby-2#-gas-booster-fan-2#-vibration", label: "Độ rung 2", color: "#fc6b03ff" },
+            { key: "Standby-2#-gas-booster-fan-2#-vibration", label: "Độ rung 2", color: "rgb(102, 45, 3)" },
         ]
     },
 ];

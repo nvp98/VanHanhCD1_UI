@@ -161,11 +161,11 @@ const BM_QGTH1LuyenCoc: React.FC = () => {
 
     const renderTagCellWithData = (label: string) => {
         const tag = tagSymbolMap.get(label);
-        const tagUnit = tagUnitMap.get(label);
+        const tagUnit = tagUnitMap.get(label)?? "⏳";
         const display = tagUnit || label;
 
         const rowCells = [
-            <td key={`${label}-symbol`} className="sticky left-[13rem] bg-white border px-2 py-1 text-xs">{display}</td>
+            <td key={`${label}-symbol`} className="sticky left-[14rem] bg-white border px-2 py-1 text-xs">{display}</td>
         ];
 
         // them du lieu vao
@@ -221,7 +221,7 @@ const BM_QGTH1LuyenCoc: React.FC = () => {
 
                         {/* Cột label */}
                         <td
-                            className="sticky left-[3.6rem] bg-white font-semibold border px-2 py-1"
+                            className="sticky left-[4rem] bg-white font-semibold border px-2 py-1"
                             colSpan={3}
                         >
                             {row.label}
@@ -305,14 +305,14 @@ const BM_QGTH1LuyenCoc: React.FC = () => {
 
                 {/* Bảng dữ liệu */}
                 <div className="border rounded-xl overflow-x-auto max-w-full  max-h-[60vh]">
-                    <table className="min-w-full table-auto text-sm border-collapse border border-gray-300 bg-white">
+                    <table className="min-w-full table-auto text-sm border-separate border border-gray-300 bg-white">
                         <thead className="bg-gray-100 text-gray-800 text-center sticky top-0 z-20">
                             <tr>
                                 <th className="border px-4 py-2 sticky left-0 z-30 bg-gray-100">Mục</th>
                                 <th className="border px-4 py-2 sticky left-[4rem] z-30 bg-gray-100 whitespace-nowrap" colSpan={3}>
                                     Vị trí đo / Thời gian
                                 </th>
-                                <th className="border px-4 py-2 sticky left-[13rem] z-30 bg-gray-100 whitespace-nowrap">Đơn vị</th>
+                                <th className="border px-4 py-2 sticky left-[14rem] z-30 bg-gray-100 whitespace-nowrap">Đơn vị</th>
                                 {/* th time */}
                                 {dataColumns.map((time, idx) => (
                                     <th

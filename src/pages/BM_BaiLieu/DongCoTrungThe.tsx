@@ -200,10 +200,10 @@ const DongCoTrungThe: React.FC = () => {
                 )?.giaTri ?? "⏳"
                 : "⏳";
         const rowCells = [
-            <td key={`${label}-symbol`} className="sticky left-[12.7rem] bg-white border px-2 py-1 text-xs">{display}</td>,
-            <td key={`${label}-value`} className="sticky left-[17.6rem] bg-white border px-2 py-1 text-xs">{values}</td>,
-            <td key={`${label}-warning`} className="sticky left-[24rem] bg-white border px-2 py-1 text-xs">{tagWarning}</td>,
-            <td key={`${label}-risky`} className="sticky left-[29rem] bg-white border px-2 py-1 text-xs">{tagRisky}</td>,
+            <td key={`${label}-symbol`} className="sticky left-[14rem] bg-white border px-2 py-1 text-xs">{display}</td>,
+            <td key={`${label}-value`} className="sticky left-[18.7rem] bg-white border px-2 py-1 text-xs">{values}</td>,
+            <td key={`${label}-warning`} className="sticky left-[26rem] bg-white border px-2 py-1 text-xs">{tagWarning}</td>,
+            <td key={`${label}-risky`} className="sticky left-[32rem] bg-white border px-2 py-1 text-xs">{tagRisky}</td>,
         ];
 
         const result: { [key: string]: any } = {
@@ -332,12 +332,12 @@ const DongCoTrungThe: React.FC = () => {
                                     <td
 
                                         rowSpan={row.children?.length}
-                                        className="sticky left-[6.9rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
+                                        className="sticky left-[7.2rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
                                     >
                                         {row.label}
                                     </td>
                                 )}
-                                <td className="sticky left-[9.8rem] bg-white border px-2 py-1">{label}</td>
+                                <td className="sticky left-[10.9rem] bg-white border px-2 py-1">{label}</td>
                                 {renderTagCellWithData(tag)}
                             </tr>
                         );
@@ -456,17 +456,17 @@ const DongCoTrungThe: React.FC = () => {
 
                 {/* Bảng dữ liệu */}
                 {visible.table && <div className="border rounded-xl overflow-x-auto max-w-full  max-h-[60vh]">
-                    <table className="min-w-full table-auto text-sm border-collapse border border-gray-300 bg-white">
+                    <table className="min-w-full table-auto text-sm border-separate border border-gray-300 bg-white">
                         <thead className="bg-gray-100 text-gray-800 text-center sticky top-0 z-20">
                             <tr>
                                 <th className="border px-4 py-2 sticky left-0 z-30 bg-gray-100">Mục</th>
-                                <th className="border px-4 py-2 sticky left-[62px] z-30 bg-gray-100 " colSpan={3}>
+                                <th className="border px-4 py-2 sticky left-[62px] z-30 bg-gray-100 whitespace-nowrap" colSpan={3}>
                                     Vị trí đo / Thời gian
                                 </th>
-                                <th className="border px-4 py-2 sticky left-[12.4rem] z-30 bg-gray-100 whitespace-nowrap">Đơn Vị</th>
-                                <th className="border px-4 py-2 sticky left-[17.6rem] z-30 bg-gray-100  whitespace-nowrap">MIN 3 Tháng</th>
-                                <th className="border px-4 py-2 sticky left-[24rem] z-30 bg-gray-100 whitespace-nowrap">Cảnh báo</th>
-                                <th className="border px-4 py-2 sticky left-[29rem] z-30 bg-gray-100 whitespace-nowrap">Nguy hiểm</th>
+                                <th className="border px-4 py-2 sticky left-[14rem] z-30 bg-gray-100 whitespace-nowrap">Đơn Vị</th>
+                                <th className="border px-4 py-2 sticky left-[18.7rem] z-30 bg-gray-100  whitespace-nowrap">MIN 3 Tháng</th>
+                                <th className="border px-4 py-2 sticky left-[26rem] z-30 bg-gray-100 whitespace-nowrap">Cảnh báo</th>
+                                <th className="border px-4 py-2 sticky left-[32rem] z-30 bg-gray-100 whitespace-nowrap">Nguy hiểm</th>
                                 {/* th time */}
                                 {dataColumns.map((time, idx) => (
                                     <th

@@ -74,6 +74,11 @@ import DongCoDolomit1 from "../pages/BM_Warning_TKVV/DongCoDolomit1";
 import DongCoDolomit2 from "../pages/BM_Warning_TKVV/DongCoDolomit2"; 
 import DongCoLoVoiQuay from "../pages/BM_Warning_TKVV/DongCoLoVoiQuay";
 
+import BM_LocBuiC1 from "../pages/BM_BaiLieu/BM_LocBuiC1";
+import BM_LocBuiC2 from "../pages/BM_BaiLieu/BM_LocBuiC2";
+import BM_LocBuiC3 from "../pages/BM_BaiLieu/BM_LocBuiC3";
+import BM_LocBuiC4 from "../pages/BM_BaiLieu/BM_LocBuiC4";
+import BM_LocBuiC5 from "../pages/BM_BaiLieu/BM_LocBuiC5";
 import DongCoLocBuiC1 from "../pages/BM_BaiLieu/DongCoLocBuiC1";
 import DongCoLocBuiC2 from "../pages/BM_BaiLieu/DongCoLocBuiC2";
 import DongCoLocBuiC3 from "../pages/BM_BaiLieu/DongCoLocBuiC3";
@@ -81,10 +86,21 @@ import DongCoLocBuiC4 from "../pages/BM_BaiLieu/DongCoLocBuiC4";
 import DongCoLocBuiC5 from "../pages/BM_BaiLieu/DongCoLocBuiC5";
 import DongCoTrungThe from "../pages/BM_BaiLieu/DongCoTrungThe";
 
+import DongCoNhaNghienLuyenCoc from "../pages/BM_LuyenCoc/DongCoNhaNghienLuyenCoc";
+import DongCoLBMT1LuyenCoc from "../pages/BM_LuyenCoc/DongCoLBMT1LuyenCoc";
+import DongCoLBMT2LuyenCoc from "../pages/BM_LuyenCoc/DongCoLBMT2LuyenCoc";
+import DongCoQGTH1LuyenCoc from "../pages/BM_LuyenCoc/DongCoQGTH1LuyenCoc";
+import DongCoQGTH2LuyenCoc from "../pages/BM_LuyenCoc/DongCoQGTH2LuyenCoc"; 
+import DongCoQGTH3LuyenCoc from "../pages/BM_LuyenCoc/DongCoQGTH3LuyenCoc";
+import DongCoLocBuiNhaSang2LuyenCoc from "../pages/BM_LuyenCoc/DongCoLocBuiNhaSang2LuyenCoc";
+
 import Operate from "../pages/Operate/Operate";
-import OperateNguyenLieu from "../pages/Operate/OperateNguyenLieu";
-import OperateLuyenCoc from "../pages/Operate/OperateLuyenCoc";
 import EquipmentPage from "../pages/Operate/EquipmentPage";
+import OperateNguyenLieu from "../pages/Operate/OperateNguyenLieu";
+import EquipmentNguyenLieu from "../pages/Operate/EquipmentNguyenLieu";
+import OperateLuyenCoc from "../pages/Operate/OperateLuyenCoc";
+import EquipmentLuyenCoc from "../pages/Operate/EquipmentLuyenCoc";
+
 
 
 
@@ -138,9 +154,6 @@ const AppRoutes = () => {
           <Route path="LoVoiDung2" element={<BM_VoiDung2 />} />
           <Route path="LoVoiDung3" element={<BM_VoiDung3 />} />
           <Route path="LoVoiQuay" element={<BM_LoVoiQuay />} />
-          <Route path="thieuketveviens" element={<Operate />} />
-          <Route path="nguyenlieus" element={<OperateNguyenLieu />} />
-          <Route path="luyencocs" element={<OperateLuyenCoc />} />
           <Route path="CDQ1LuyenCoc" element={<BM_CDQ1LuyenCoc />} />
           <Route path="CDQ2LuyenCoc" element={<BM_CDQ2LuyenCoc />} />
           <Route path="CDQ3LuyenCoc" element={<BM_CDQ3LuyenCoc />} />
@@ -152,6 +165,11 @@ const AppRoutes = () => {
           <Route path="QGTH3LuyenCoc" element={<BM_QGTH3LuyenCoc />} />
           <Route path="LBLuyenCoc" element={<BM_LBLuyenCoc />} />
           <Route path="MayNghienLuyenCoc" element={<BM_MayNghienLuyenCoc />} />
+          <Route path="BMLocBuiC1" element={<BM_LocBuiC1 />}/>
+          <Route path="BMLocBuiC2" element={<BM_LocBuiC2 />}/>
+          <Route path="BMLocBuiC3" element={<BM_LocBuiC3 />}/>
+          <Route path="BMLocBuiC4" element={<BM_LocBuiC4 />}/>
+          <Route path="BMLocBuiC5" element={<BM_LocBuiC5 />}/>
           <Route path="LBMTMangQuangVeVien2" element={<LBMT_MangQuangVeVien />} />
           <Route path="LBMTPLieuBLuocVeVien2" element={<LBMT_PLieuBLuocVeVien />} />
           <Route path="LBMTDuoiMayHai" element={<LBMT_DuoiMayHaiNhaNghien />} />
@@ -180,7 +198,20 @@ const AppRoutes = () => {
           <Route path="DongCoLocBuiC4" element={<DongCoLocBuiC4 />}/>
           <Route path="DongCoLocBuiC5" element={<DongCoLocBuiC5 />}/>
           <Route path="DongCoTrungThe" element={<DongCoTrungThe />}/>
+          <Route path="DongCoNhaNghienLuyenCoc" element={<DongCoNhaNghienLuyenCoc />}/>
+          <Route path="DongCoLBMT1LuyenCoc" element={<DongCoLBMT1LuyenCoc />}/>
+          <Route path="DongCoLBMT2LuyenCoc" element={<DongCoLBMT2LuyenCoc />}/>
+          <Route path="DongCoQGTH1LuyenCoc" element={<DongCoQGTH1LuyenCoc />}/>
+          <Route path="DongCoQGTH2LuyenCoc" element={<DongCoQGTH2LuyenCoc />}/>
+          <Route path="DongCoQGTH3LuyenCoc" element={<DongCoQGTH3LuyenCoc />}/>
+          <Route path="DongCoLocBuiNhaSang2LuyenCoc" element={<DongCoLocBuiNhaSang2LuyenCoc />}/>
+
           <Route path="equipment" element={<EquipmentPage />} />
+          <Route path="equipmentsluyencoc" element={<EquipmentLuyenCoc />} /> 
+          <Route path="thieuketveviens" element={<Operate />} />
+          <Route path="nguyenlieus" element={<OperateNguyenLieu />} />
+          <Route path="equimentnguyenlieus" element={<EquipmentNguyenLieu />} />
+          <Route path="luyencocs" element={<OperateLuyenCoc />} />
         </Route>
 
         {/* Redirect và fallback */}
