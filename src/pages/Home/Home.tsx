@@ -27,7 +27,7 @@ const Home = () => {
         <div className="relative mx-auto text-start py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-extrabold text-skin-base sm:text-4xl">
             <span className="block">Nhà máy cơ điện 1</span>
-            <span className="block">Đối với Hòa Phát, quan trọng là bền vững</span>
+            <span className="block">An toàn là nền tảng – Hiệu suất là mục tiêu – Cải tiến là văn hóa – Giá trị là đích đến</span>
           </h2>
           <p className="mt-4 text-lg leading-6 text-skin-muted">Hòa Phát là Tập đoàn sản xuất công nghiệp hàng đầu Việt Nam. Khởi đầu từ một Công ty chuyên buôn bán các loại máy xây dựng từ tháng 8/1992.</p>
           <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-start">

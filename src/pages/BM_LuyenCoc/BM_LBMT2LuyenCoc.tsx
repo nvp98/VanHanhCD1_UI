@@ -4,67 +4,10 @@ import { useOutletContext } from "react-router-dom";
 import clsx from "clsx";
 import AlertMessage from "../../components/AlertMessage";
 import Loading from "../../components/Loading";
+import { LUYENCOC_LBMT2_SECTION } from "../../config/LuyenCocLBMT2";
 
 type OutletContextType = { isSidebarOpen: boolean };
 
-
-const sectionRowData = [
-    {
-        section: "Nhiệt độ trước bộ giảm nhiệt A",
-    },
-    {
-        section: "Nhiệt độ trước bộ giảm nhiệt B",
-    },
-    {
-        section: "Nhiệt độ sau bộ giảm nhiệt",
-    },
-    {
-        section: "Áp suất khí nén",
-    },
-    {
-        section: "Áp suất đầu vào lọc bụi",
-    },
-     {
-        section: "Áp suất đầu ra lọc bụi túi vải",
-    },
-    {
-        section: "Tốc độ quạt",
-        rows: [
-            { label: "vòng/phút" },
-            { label: "%" },
-        ]
-    },
-    {
-        section: "Dòng điện động cơ QLB",
-    },
-    {
-        section: "Độ rung gối đỡ trước QLB",
-    },
-    {
-        section: "Độ rung gối đỡ sau QLB",
-    },
-    {
-        section: "Nhiệt độ gối đỡ trước QLB",
-    },
-    {
-        section: "Nhiệt độ gối đỡ sau QLB",
-    },
-    {
-        section: "Nhiệt độ vòng bi trước QLB",
-    },
-    {
-        section: "Nhiệt độ vòng bi sau QLB",
-    },
-    {
-        section: "Nhiệt độ cuộn dây U QLB",
-    },
-    {
-        section: "Nhiệt độ cuộn dây V QLB",
-    },
-    {
-        section: "Nhiệt độ cuộn dây W QLB",
-    },
-]
 
 
 const BM_LBMT2LuyenCoc: React.FC = () => {
@@ -220,7 +163,7 @@ const BM_LBMT2LuyenCoc: React.FC = () => {
     const renderNestedRows = (): React.ReactNode[] => {
         const rows: React.ReactNode[] = [];
 
-        sectionRowData.forEach(sec => {
+        LUYENCOC_LBMT2_SECTION.forEach(sec => {
             const sectionRowCount = sec.rows?.length || 0;
             let rowIndex = 0;
             if (!sec.rows || sec.rows.length === 0) {

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import { useOutletContext } from "react-router-dom";
 import clsx from "clsx";
-import { QUATGIO2_CONFIG, QUATGIO2_SECTION } from "../../config/QuatGioPhuTroConfig";
+import AlertMessage from "../../components/AlertMessage";
+import Loading from "../../components/Loading";
+import { DONGCOCHEBIEN_CONFIG, DONGCOCHEBIEN_SECTION } from "../../config/CheBienDongCoConfig";
 import FlowDashboardChart from "../../components/DashboardChart";
 
 type OutletContextType = { isSidebarOpen: boolean };
@@ -14,8 +16,7 @@ type MinValue = {
     giaTri: number;
 };
 
-
-const QGC2ThieuKet1: React.FC = () => {
+const DongCoCheBien: React.FC = () => {
     const baseURL = import.meta.env.VITE_API_BASE_URL;
     const { isSidebarOpen } = useOutletContext<OutletContextType>();
     const [tagSymbolMap, setTagSymbolMap] = useState<Map<string, string>>(new Map());
@@ -29,28 +30,30 @@ const QGC2ThieuKet1: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [exporting, setExporting] = useState(false);
     const [tagMinValue, setTagMinValue] = useState<MinValue[]>([]);
+    const [warning, setWarning] = useState<string | null>(null);
     const tagIndex = { current: 0 };
-     const [visible, setVisible] = useState({
+    const [visible, setVisible] = useState({
             table: true,
             chart: false,
         });
+
     useEffect(() => {
-        fetch("/TagWarning.xlsx")
+        fetch("/TagWarningBaiLieu.xlsx")
             .then(res => res.arrayBuffer())
             .then(buffer => {
                 const workbook = XLSX.read(buffer, { type: "buffer" });
-                const sheet = workbook.Sheets[workbook.SheetNames[9]];
+                const sheet = workbook.Sheets[workbook.SheetNames[6]];
                 const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 }) as string[][];
                 const map = new Map<string, string>();
                 const mapUnit = new Map<string, string>();
                 const mapWarning = new Map<string, number>();
                 const mapRiskly = new Map<string, number>();
                 rows.forEach(row => {
-                    const tag = row[3];
-                    const symbol = row[4];
-                    const unit = row[5];
-                    const warning = row[6];
-                    const riskly = row[7];
+                    const tag = row[2];
+                    const symbol = row[3];
+                    const unit = row[4];
+                    const warning = row[5];
+                    const riskly = row[6];
                     if (tag && symbol) map.set(tag.trim(), symbol.trim());
                     if (tag && unit) mapUnit.set(tag.trim(), unit.trim());
                     if (tag && warning) mapWarning.set(tag, parseFloat(warning));
@@ -60,12 +63,11 @@ const QGC2ThieuKet1: React.FC = () => {
                 setTagUnitMap(mapUnit);
                 setTagWarningMap(mapWarning);
                 setTagRiskyMap(mapRiskly);
-
             });
     }, []);
 
     useEffect(() => {
-        fetch(`${baseURL}/api/QuatGioHai/last-24h`)
+        fetch(`${baseURL}/api/CheBien/last-24h`)
             .then(res => res.json())
             .then(data => {
                 setDataRows(data);
@@ -78,7 +80,7 @@ const QGC2ThieuKet1: React.FC = () => {
     }, [])
 
     useEffect(() => {
-        fetch(`${baseURL}/api/QuatGioHai/min-value`)
+        fetch(`${baseURL}/api/CheBien/min-value`)
             .then(res => res.json())
             .then(data => {
                 setTagMinValue(data);
@@ -91,18 +93,31 @@ const QGC2ThieuKet1: React.FC = () => {
             })
     }, [])
 
+    useEffect(() => {
+        if (warning) {
+            const timer = setTimeout(() => setWarning(null), 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [warning]);
+
     const handleSearch = async () => {
         if (!fromDate || !toDate) {
-            alert("Vui lòng chọn đầy đủ thời gian");
+            //alert("Vui lòng chọn đầy đủ thời gian");
+            setWarning("⚠️Chọn đầy đủ thời gian");
+            return;
+        }
+        else if (fromDate >= toDate) {
+            setWarning("❌ Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
             return;
         }
 
         const from = fromDate;
         const to = toDate;
+        setWarning(null);
         setLoading(true);
 
         try {
-            const res = await fetch(`${baseURL}/api/QuatGioHai/search?from=${from}&to=${to}`);
+            const res = await fetch(`${baseURL}/api/CheBien/search?from=${from}&to=${to}`);
             const data = await res.json();
             setDataRows(data);
             const times = data.map((time: any) => time.ThoiGian).filter(Boolean);
@@ -113,17 +128,21 @@ const QGC2ThieuKet1: React.FC = () => {
             setLoading(false);
         }
     };
-
     const handleExportExcel = async () => {
         if (!fromDate || !toDate) {
-            alert("Vui lòng chọn thời gian trước khi xuất Excel");
+            setWarning("⚠️Chọn đầy đủ thời gian");
             return;
         }
+        else if (fromDate >= toDate) {
+            setWarning("❌ Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
+            return;
+        }
+        setWarning(null);
 
         setExporting(true);
 
         try {
-            const res = await fetch(`${baseURL}/api/QuatGioHai/export?from=${fromDate}&to=${toDate}`);
+            const res = await fetch(`${baseURL}/api/DongCoCheBien/export?from=${fromDate}&to=${toDate}`);
             const blob = await res.blob();
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement("a");
@@ -140,7 +159,7 @@ const QGC2ThieuKet1: React.FC = () => {
             const toStr = formatDate(toDate);
 
             link.href = url;
-            link.download = `BM.01/HD.05.53-19_NKVH_QuatGioChinh1_${fromStr}_đến_${toStr}.xlsx`;
+            link.download = `BM.01/HD.05.60-19_NKVH_NoiHoiMatVongMot_${fromStr}_đến_${toStr}.xlsx`;
             document.body.appendChild(link);
             link.click();
             link.remove();
@@ -152,11 +171,13 @@ const QGC2ThieuKet1: React.FC = () => {
         }
     };
 
+
+
     const renderTagCellWithData = (label: string) => {
         const tag = tagSymbolMap.get(label) as string;
-        const tagUnit = tagUnitMap.get(label);
-        const tagWarning = tagWarningMap.get(label);
-        const tagRisky = tagRiskyMap.get(label);
+        const tagUnit = tagUnitMap.get(label) || "⏳";
+        const tagWarning = tagWarningMap.get(label) || "⏳";
+        const tagRisky = tagRiskyMap.get(label) || "⏳";
         const display = tagUnit || label;
         const values =
             tag
@@ -179,6 +200,7 @@ const QGC2ThieuKet1: React.FC = () => {
             [tag]: tagRisky
         }
 
+    
         // them du lieu vao
         for (const time of dataColumns) {
             const row = dataRows.find(r => r.ThoiGian == time);
@@ -214,20 +236,17 @@ const QGC2ThieuKet1: React.FC = () => {
 
     const renderNestedRows = (): React.ReactNode[] => {
         const rows: React.ReactNode[] = [];
-        QUATGIO2_SECTION.forEach(sec => {
-            const tempRowCounter = { current: 0 };
-            const rowsWithChildren = sec.rows?.filter(r => r.children) || [];
-            const rowsWithoutChildren = sec.rows?.filter(r => !r.children) || [];
-            const sectionRowCount = rowsWithChildren.reduce((sum, row) => sum + (row.children?.length || 1), 0) +
-                rowsWithoutChildren.length;
 
+        DONGCOCHEBIEN_SECTION.forEach(sec => {
+            const sectionRowCount = sec.rows?.length || 0;
+            let rowIndex = 0;
             if (!sec.rows || sec.rows.length === 0) {
                 const tag = `Tag${tagIndex.current++}`;
                 rows.push(
                     <tr key={sec.section} className="text-center text-xs">
                         <td
                             className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle"
-                            colSpan={3}
+                            colSpan={4}
                         >
                             {sec.section}
                         </td>
@@ -238,73 +257,41 @@ const QGC2ThieuKet1: React.FC = () => {
                 return;
             }
 
+            sec.rows?.forEach(row => {
+                const tag = `Tag${tagIndex.current++}`;
 
-
-            sec.rows.forEach((row) => {
-                if (row.children && Array.isArray(row.children)) {
-                    row.children.forEach((label, index) => {
-                        const tag = `Tag${tagIndex.current++}`;
-                        rows.push(
-                            <tr
-                                key={`${sec.section}-${row.label}-${index}`}
-                                className="text-center text-xs hover:bg-white-50"
-                            >
-                                {tempRowCounter.current === 0 && (
-                                    <td
-                                        rowSpan={sectionRowCount}
-
-                                        className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
-                                    >
-                                        {sec.section}
-                                    </td>
-                                )}
-                                {index === 0 && (
-                                    <td
-
-                                        rowSpan={row.children?.length}
-                                        className="sticky left-[4rem] bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
-                                    >
-                                        {row.label}
-                                    </td>
-                                )}
-                                <td className="sticky left-[9.2rem] bg-white border px-2 py-1">{label}</td>
-                                {renderTagCellWithData(tag)}
-                            </tr>
-                        );
-                        tempRowCounter.current++;
-                    });
-                } else {
-                    const tag = `Tag${tagIndex.current++}`;
-                    rows.push(
-                        <tr
-                            key={`${sec.section}-${row.label}`}
-                            className="text-center text-xs"
-                        >
-                            {tempRowCounter.current === 0 && (
-                                <td
-                                    rowSpan={sectionRowCount}
-                                    className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
-                                >
-                                    {sec.section}
-                                </td>
-                            )}
+                rows.push(
+                    <tr key={`${sec.section}-${row.label}`} className="text-center text-xs">
+                        {/* Chỉ render section 1 lần với rowSpan */}
+                        {rowIndex === 0 && (
                             <td
-                                className="sticky left-[4rem] bg-white font-semibold border px-2 py-1 whitespace-nowrap"
-                                colSpan={2}
+                                rowSpan={sectionRowCount}
+                                className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle whitespace-pre-line"
                             >
-                                {row.label}
+                                {sec.section}
                             </td>
-                            {renderTagCellWithData(tag)}
-                        </tr>
-                    );
-                    tempRowCounter.current++;
-                }
+                        )}
+
+                        {/* Cột label */}
+                        <td
+                            className="sticky left-[4rem] bg-white font-semibold border px-2 py-1"
+                            colSpan={3}
+                        >
+                            {row.label}
+                        </td>
+
+                        {/* Render dữ liệu */}
+                        {renderTagCellWithData(tag)}
+                    </tr>
+                );
+
+                rowIndex++;
             });
-        })
+        });
 
         return rows;
-
     };
+
 
     return (
         <section
@@ -322,24 +309,24 @@ const QGC2ThieuKet1: React.FC = () => {
                 <div className="flex flex-wrap justify-center items-center gap-4 relative">
                     {/* Nút xuất file bên phải */}
                     <div className="absolute right-0 top-1/2 -translate-y-1/2 flex gap-2">
-                         <button
-                            className="bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow hover:shadow-md transition"
-                            onClick={() =>
-                                setVisible(prev => ({
-                                    table: !prev.table,
-                                    chart: !prev.chart,
-                                }))
-                            }
-                        >
-                            {visible.chart ? "Xem Bảng" : "Xem Đồ Thị"}
-                        </button>
+                         <button 
+                                className="bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow hover:shadow-md transition"
+                                onClick={() =>
+                                    setVisible(prev => ({
+                                        table: !prev.table,
+                                        chart: !prev.chart,
+                                    }))
+                                }
+                            >
+                                {visible.chart ? "Xem Bảng" : "Xem Đồ Thị"}
+                            </button>
                     </div>
                     {/* Nút xuất file bên phải */}
 
                     {/* Tiêu đề và bộ lọc thời gian ở giữa */}
                     <div className="flex flex-col items-center gap-3">
                         <h1 className="text-2xl font-bold text-gray-800 text-center">
-                            Quạt Gió 2 Thiêu Kết 1
+                            Động Cơ Chế Biến
                         </h1>
 
                         <div className="flex flex-wrap justify-center items-end gap-4">
@@ -374,18 +361,19 @@ const QGC2ThieuKet1: React.FC = () => {
                 {/* Tiêu đề + filter + nút export */}
 
                 {/* Bảng dữ liệu */}
-                {visible.table &&<div className="border rounded-xl overflow-x-auto max-w-full  max-h-[60vh]">
+               {visible.table && <div className="border rounded-xl overflow-x-auto max-w-full  max-h-[60vh]">
                     <table className="min-w-full table-auto text-sm border-separate border border-gray-300 bg-white">
                         <thead className="bg-gray-100 text-gray-800 text-center sticky top-0 z-20">
                             <tr>
                                 <th className="border px-4 py-2 sticky left-0 z-30 bg-gray-100">Mục</th>
-                                <th className="border px-4 py-2 sticky left-[62px] z-30 bg-gray-100 whitespace-nowrap" colSpan={2}>
+                                <th className="border px-4 py-2 sticky left-[4rem] z-30 bg-gray-100 whitespace-nowrap" colSpan={3}>
                                     Vị trí đo / Thời gian
                                 </th>
-                                <th className="border px-4 py-2 sticky left-[14rem] z-30 bg-gray-100 whitespace-nowrap">Đơn Vị</th>
+                                <th className="border px-4 py-2 sticky left-[14rem] z-30 bg-gray-100 whitespace-nowrap">Đơn vị</th>
                                 <th className="border px-4 py-2 sticky left-[18.6rem] z-30 bg-gray-100  whitespace-nowrap">MIN 3 Tháng</th>
                                 <th className="border px-4 py-2 sticky left-[26rem] z-30 bg-gray-100 whitespace-nowrap">Cảnh báo</th>
                                 <th className="border px-4 py-2 sticky left-[32rem] z-30 bg-gray-100 whitespace-nowrap">Nguy hiểm</th>
+                                {/* th time */}
                                 {dataColumns.map((time, idx) => (
                                     <th
                                         key={idx}
@@ -416,29 +404,36 @@ const QGC2ThieuKet1: React.FC = () => {
                         </tbody>
                     </table>
                 </div>}
-                  {visible.chart &&<FlowDashboardChart
-                                                                    rawData={dataRows}
-                                                                    TAG_CONFIG={QUATGIO2_CONFIG}
-                                                                />}   
+                {/* Bảng dữ liệu */}
+                {visible.chart &&<FlowDashboardChart
+                                    rawData={dataRows}
+                                    TAG_CONFIG={DONGCOCHEBIEN_CONFIG}
+                                />}                    
+
             </div>
             {loading && (
                 <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center">
-                    <div className="bg-white px-6 py-4 rounded shadow text-lg font-semibold">
-                        Đang tải dữ liệu, vui lòng chờ...
-                    </div>
+                    <Loading />
                 </div>
             )}
             {(loading || exporting) && (
                 <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center">
-                    <div className="bg-white px-6 py-4 rounded shadow text-lg font-semibold">
-                        {loading ? "Đang tải dữ liệu, vui lòng chờ..." : "Đang xuất file Excel..."}
-                    </div>
+                    {loading
+                        ?
+                        <Loading />
+                        :
+                        <Loading />
+                    }
                 </div>
             )}
 
-
+            {warning &&
+                <div className="fixed inset-0 z-50 flex items-start justify-end mt-12">
+                    <AlertMessage type="Vui lòng" message={warning} />
+                </div>
+            }
         </section>
     );
 }
 
-export default QGC2ThieuKet1;
+export default DongCoCheBien;

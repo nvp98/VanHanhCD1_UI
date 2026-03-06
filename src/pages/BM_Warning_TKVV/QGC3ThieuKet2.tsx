@@ -383,7 +383,7 @@ const QGC3ThieuKet2: React.FC = () => {
                                 <th className="border px-4 py-2 sticky left-[62px] z-30 bg-gray-100 whitespace-nowrap" colSpan={2}>
                                     Vị trí đo / Thời gian
                                 </th>
-                                <th className="border px-4 py-2 sticky left-[4rem] z-30 bg-gray-100 whitespace-nowrap">Đơn Vị</th>
+                                <th className="border px-4 py-2 sticky left-[14rem] z-30 bg-gray-100 whitespace-nowrap">Đơn Vị</th>
                                 <th className="border px-4 py-2 sticky left-[18.6rem] z-30 bg-gray-100  whitespace-nowrap">MIN 3 Tháng</th>
                                 <th className="border px-4 py-2 sticky left-[26rem] z-30 bg-gray-100 whitespace-nowrap">Cảnh báo</th>
                                 <th className="border px-4 py-2 sticky left-[32rem] z-30 bg-gray-100 whitespace-nowrap">Nguy hiểm</th>

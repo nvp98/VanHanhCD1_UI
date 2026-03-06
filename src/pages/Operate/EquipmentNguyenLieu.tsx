@@ -8,9 +8,17 @@ function EquipmentNguyenLieu() {
         return (
                 <div className="theme-swiss sm:m-6 sm:ml-10 space-y-10 h-full px-6  pt-4 pb-20 bg-white " >
                         <h2 className="text-xl font-extrabold text-skin-inverted sm:text-xl">
-                                <span className="block">THIẾT BỊ BÃI LIỆU</span>
+                                <span className="block">THIẾT BỊ NGUYÊN LIỆU</span>
                         </h2>
-                      
+                        <div >
+                                <h2 className="text-sm font-extrabold text-skin-inverted sm:text-sm">
+                                        <span className="block">CHẾ BIẾN</span>
+                                </h2>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+
+                                        <ComponentEquipment primary title="1. Động Cơ Chế Biến" to="/DongCoCheBien" />
+                                </div>
+                        </div>
                         <div >
                                 <h2 className="text-sm font-extrabold text-skin-inverted sm:text-sm">
                                         <span className="block">BÃI LIỆU - BIẾN TẦN TRUNG THẾ</span>

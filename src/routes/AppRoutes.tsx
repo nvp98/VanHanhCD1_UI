@@ -85,6 +85,7 @@ import DongCoLocBuiC3 from "../pages/BM_BaiLieu/DongCoLocBuiC3";
 import DongCoLocBuiC4 from "../pages/BM_BaiLieu/DongCoLocBuiC4";
 import DongCoLocBuiC5 from "../pages/BM_BaiLieu/DongCoLocBuiC5";
 import DongCoTrungThe from "../pages/BM_BaiLieu/DongCoTrungThe";
+import DongCoCheBien from "../pages/BM_BaiLieu/DongCoCheBien";
 
 import DongCoNhaNghienLuyenCoc from "../pages/BM_LuyenCoc/DongCoNhaNghienLuyenCoc";
 import DongCoLBMT1LuyenCoc from "../pages/BM_LuyenCoc/DongCoLBMT1LuyenCoc";
@@ -198,6 +199,7 @@ const AppRoutes = () => {
           <Route path="DongCoLocBuiC4" element={<DongCoLocBuiC4 />}/>
           <Route path="DongCoLocBuiC5" element={<DongCoLocBuiC5 />}/>
           <Route path="DongCoTrungThe" element={<DongCoTrungThe />}/>
+          <Route path="DongCoCheBien" element={<DongCoCheBien />}/>
           <Route path="DongCoNhaNghienLuyenCoc" element={<DongCoNhaNghienLuyenCoc />}/>
           <Route path="DongCoLBMT1LuyenCoc" element={<DongCoLBMT1LuyenCoc />}/>
           <Route path="DongCoLBMT2LuyenCoc" element={<DongCoLBMT2LuyenCoc />}/>

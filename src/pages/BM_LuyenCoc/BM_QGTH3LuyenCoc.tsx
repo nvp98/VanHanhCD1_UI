@@ -4,31 +4,10 @@ import { useOutletContext } from "react-router-dom";
 import clsx from "clsx";
 import AlertMessage from "../../components/AlertMessage";
 import Loading from "../../components/Loading";
+import { LUYENCOC_QGTH3_SECTION } from "../../config/LuyenCocQGTH3";
 
 type OutletContextType = { isSidebarOpen: boolean };
 
-
-const sectionRowData = [
-    {
-        section: "Quạt tuần hoàn",
-        rows: [
-            { label: "Độ rung  gối đỡ trước 2VT-14101A" },
-            { label: "Độ rung  gối đỡ sau 2VT-14102A" },
-            { label: "Nhiệt độ gối đỡ trước 2TE-14114A" },
-            { label: "Nhiệt độ gối đỡ sau 2TE-14114B" },
-            { label: "Nhiệt độ vòng bi trước 2TE-14115A" },
-            { label: "Nhiệt độ vòng bi sau 2TE-14115B" },
-            { label: "Nhiệt độ cuộn dây U 2TE-14113A" },
-            { label: "Nhiệt độ cuộn dây V 2TE-14113B" },
-            { label: "Nhiệt độ cuộn dây W 2TE-14113C" },
-            { label: "Tốc độ động cơ" },
-            { label: "Dòng điện động cơ" },
-        ]
-    },
-    { section: "Nhiệt độ thiết bị đo mức radar 2TT-14118" },
-    { section: "Áp suất khí nito cấp vào thiết bị đo mức điện dung LBL1 PIA-14110" },
-    { section: "Áp suất khí nito cấp vào thiết bị đo mức điện dung LBL2 PIA-14111" },
-]
 
 
 const BM_QGTH3LuyenCoc: React.FC = () => {
@@ -185,7 +164,7 @@ const BM_QGTH3LuyenCoc: React.FC = () => {
     const renderNestedRows = (): React.ReactNode[] => {
         const rows: React.ReactNode[] = [];
 
-        sectionRowData.forEach(sec => {
+        LUYENCOC_QGTH3_SECTION.forEach(sec => {
             const sectionRowCount = sec.rows?.length || 0;
             let rowIndex = 0;
             if (!sec.rows || sec.rows.length === 0) {

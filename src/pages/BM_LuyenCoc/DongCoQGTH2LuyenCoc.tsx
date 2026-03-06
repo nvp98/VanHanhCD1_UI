@@ -274,7 +274,7 @@ const DongCoQGTH2LuyenCoc: React.FC = () => {
 
                         {/* Cột label */}
                         <td
-                            className="sticky left-[rem] bg-white font-semibold border px-2 py-1"
+                            className="sticky left-[4rem] bg-white font-semibold border px-2 py-1"
                             colSpan={3}
                         >
                             {row.label}
@@ -369,7 +369,7 @@ const DongCoQGTH2LuyenCoc: React.FC = () => {
                                 <th className="border px-4 py-2 sticky left-[4rem] z-30 bg-gray-100 whitespace-nowrap" colSpan={3}>
                                     Vị trí đo / Thời gian
                                 </th>
-                                <th className="border px-4 py-2 sticky left-[13rem] z-30 bg-gray-100 whitespace-nowrap">Đơn vị</th>
+                                <th className="border px-4 py-2 sticky left-[14rem] z-30 bg-gray-100 whitespace-nowrap">Đơn vị</th>
                                 <th className="border px-4 py-2 sticky left-[18.6rem] z-30 bg-gray-100  whitespace-nowrap">MIN 3 Tháng</th>
                                 <th className="border px-4 py-2 sticky left-[26rem] z-30 bg-gray-100 whitespace-nowrap">Cảnh báo</th>
                                 <th className="border px-4 py-2 sticky left-[32rem] z-30 bg-gray-100 whitespace-nowrap">Nguy hiểm</th>
