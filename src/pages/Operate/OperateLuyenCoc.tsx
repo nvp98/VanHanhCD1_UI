@@ -5,14 +5,13 @@ function OperateLuyenCoc() {
         return (
                 <div className="theme-swiss sm:m-6 sm:ml-10 space-y-10 h-full px-6  pt-4 pb-20 bg-white " >
                         <h2 className="text-xl font-extrabold text-skin-inverted sm:text-xl">
-                                <span className="block">Biểu mẫu vận hành</span>
+                                <span className="block">BIỂU MẪU VẬN HÀNH</span>
                         </h2>
                         <div >
                                 <h2 className="text-sm font-extrabold text-skin-inverted sm:text-sm">
                                         <span className="block">Nhà Máy Luyện Cốc</span>
                                 </h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-
                                         <ComponentOperate primary title="1. CDQ1" to="/CDQ1LuyenCoc" />
                                         <ComponentOperate primary title="2. CDQ2" to="/CDQ2LuyenCoc" />
                                         <ComponentOperate primary title="3. CDQ3" to="/CDQ3LuyenCoc" />

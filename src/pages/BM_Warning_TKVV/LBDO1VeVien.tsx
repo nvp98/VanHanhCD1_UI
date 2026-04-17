@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { useOutletContext } from "react-router-dom";
 import clsx from "clsx";
@@ -6,6 +6,8 @@ import AlertMessage from "../../components/AlertMessage";
 import Loading from "../../components/Loading";
 import { LBDO1VEVIEN_CONFIG, LBDO1VEVIEN_SECTION } from "../../config/LBDO1VeVienConfig";
 import FlowDashboardChart from "../../components/DashboardChart";
+import usePosts from "../../hooks/usePosts";
+import type { WarningHistoryConfig } from "../../config/WarningHistoryConfig";
 
 type OutletContextType = { isSidebarOpen: boolean };
 
@@ -21,6 +23,7 @@ const LBDO1VeVien: React.FC = () => {
     const { isSidebarOpen } = useOutletContext<OutletContextType>();
     const [tagSymbolMap, setTagSymbolMap] = useState<Map<string, string>>(new Map());
     const [tagUnitMap, setTagUnitMap] = useState<Map<string, string>>(new Map());
+    const [nameMap, setNameMap] = useState<Map<string, string>>(new Map());
     const [tagWarningMap, setTagWarningMap] = useState<Map<string, number>>(new Map());
     const [tagRiskyMap, setTagRiskyMap] = useState<Map<string, number>>(new Map());
     const [dataRows, setDataRows] = useState<any[]>([]);
@@ -32,10 +35,25 @@ const LBDO1VeVien: React.FC = () => {
     const [warning, setWarning] = useState<string | null>(null);
     const [tagMinValue, setTagMinValue] = useState<MinValue[]>([]);
     const tagIndex = { current: 0 };
+    const sentWarningsRef = useRef<Set<string>>(new Set());
+    const { createWarning } = usePosts();
     const [visible, setVisible] = useState({
         table: true,
         chart: false,
     });
+    const triggerWarning = async (payload: WarningHistoryConfig, key: string) => {
+        if (sentWarningsRef.current.has(key)) return;
+
+        sentWarningsRef.current.add(key);
+
+        try {
+            await createWarning(payload);
+        } catch (err: any) {
+            // 🔥 Nếu bị duplicate từ backend (409) → ignore
+            if (err?.message?.includes("409")) return;
+            //console.error(err);
+        }
+    };
     useEffect(() => {
         fetch("/TagWarning.xlsx")
             .then(res => res.arrayBuffer())
@@ -47,17 +65,21 @@ const LBDO1VeVien: React.FC = () => {
                 const mapUnit = new Map<string, string>();
                 const mapWarning = new Map<string, number>();
                 const mapRiskly = new Map<string, number>();
+                const mapName = new Map<string, string>();
                 rows.forEach(row => {
+                    const name = row[0];
                     const tag = row[3];
                     const symbol = row[4];
                     const unit = row[5];
                     const warning = row[6];
                     const riskly = row[7];
+                    if (tag && name) mapName.set(tag.trim(), name.trim());
                     if (tag && symbol) map.set(tag.trim(), symbol.trim());
                     if (tag && unit) mapUnit.set(tag.trim(), unit.trim());
                     if (tag && warning) mapWarning.set(tag, parseFloat(warning));
                     if (tag && riskly) mapRiskly.set(tag, parseFloat(riskly));
                 });
+                setNameMap(mapName);
                 setTagSymbolMap(map);
                 setTagUnitMap(mapUnit);
                 setTagWarningMap(mapWarning);
@@ -172,11 +194,11 @@ const LBDO1VeVien: React.FC = () => {
 
     const renderTagCellWithData = (label: string) => {
         const tag = tagSymbolMap.get(label) as string;
-        const tagUnit = tagUnitMap.get(label);
+        const tagUnit = tagUnitMap.get(label) as string;
         const tagWarning = tagWarningMap.get(label);
         const tagRisky = tagRiskyMap.get(label);
         const display = tagUnit || label;
-
+        const tagName = nameMap.get(label) as string;
         const values =
             tag
                 ? tagMinValue.find(
@@ -215,10 +237,36 @@ const LBDO1VeVien: React.FC = () => {
 
             // Logic để áp dụng lớp CSS
             if (isNguyeHiem) {
-                cellClass += " bg-red-100 text-red-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+                cellClass += "bg-red-100 text-red-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+                const key = `${tag}-${time}`;
+                const payload: WarningHistoryConfig = {
+                    thoiGian: time,
+                    tagName: tag,
+                    khuVuc: "Vê viên Lọc bụi đa ống 1", // chỉnh theo logic của bạn
+                    tenThongSo: tagName,
+                    giaTri: Number(value),
+                    trangThai: 2,
+                    donVi: tagUnit
+                };
+
+                // gọi async nhưng không làm ảnh hưởng render
+                triggerWarning(payload, key);
             }
             else if (isEqual) {
                 cellClass += " bg-yellow-100 text-yellow-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+                const key = `${tag}-${time}`;
+                const payload: WarningHistoryConfig = {
+                    thoiGian: time,
+                    tagName: tag,
+                    khuVuc: "Vê viên Lọc bụi đa ống 1", // chỉnh theo logic của bạn
+                    tenThongSo: tagName,
+                    giaTri: Number(value),
+                    trangThai: 1,
+                    donVi: tagUnit
+                };
+
+                // gọi async nhưng không làm ảnh hưởng render
+                triggerWarning(payload, key);
             } else if (isEmpty) {
                 cellClass += " bg-gray-100"; // Nếu value trống (ví dụ: màu xám)
             }
@@ -358,7 +406,7 @@ const LBDO1VeVien: React.FC = () => {
                     {/* Tiêu đề và bộ lọc thời gian ở giữa */}
                     <div className="flex flex-col items-center gap-3">
                         <h1 className="text-2xl font-bold text-gray-800 text-center">
-                           Lọc Bụi Đa Ống 1
+                            Lọc Bụi Đa Ống 1
                         </h1>
 
                         <div className="flex flex-wrap justify-center items-end gap-4">

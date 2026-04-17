@@ -179,7 +179,19 @@ const Sidebar = ({ isOpen, onMouseLeaveSidebar }: SidebarProps) => {
             </li>
           ))}
         </ul>
+        <div className="tracking-wide border-b pb-1">
+          
+        </div>
+        <NavLink
+          to="/warning-history"
+          className={({ isActive }) =>
+            `text-xs font-extrabold uppercase ${isActive ? "text-[#05428c]" : "text-gray-800 hover:text-blue-600"
+            }`
+          }
+        >
 
+          Lịch sử cảnh báo
+        </NavLink>
       </nav>
 
     </aside>

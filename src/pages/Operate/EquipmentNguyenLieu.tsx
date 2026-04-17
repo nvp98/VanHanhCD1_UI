@@ -16,7 +16,7 @@ function EquipmentNguyenLieu() {
                                 </h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
 
-                                        <ComponentEquipment primary title="1. Động Cơ Chế Biến" to="/DongCoCheBien" />
+                                        <ComponentEquipment primary title="1. Nghiền Xỉ S95 số 1" to="/DongCoCheBien" />
                                 </div>
                         </div>
                         <div >
@@ -44,7 +44,7 @@ function EquipmentNguyenLieu() {
                         </div>
                         <div >
                                 <h2 className="text-sm font-extrabold text-skin-inverted sm:text-sm">
-                                        <span className="block">HỆ THỐNG PHỤ TRỢ</span>
+                                        <span className="block">BÃI LIỆU - HỆ THỐNG PHỤ TRỢ</span>
                                 </h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
 
@@ -57,7 +57,7 @@ function EquipmentNguyenLieu() {
                         </div>
                           <div >
                                 <h2 className="text-sm font-extrabold text-skin-inverted sm:text-sm">
-                                        <span className="block">THIẾT BỊ CHÍNH</span>
+                                        <span className="block">BÃI LIỆU - THIẾT BỊ CHÍNH</span>
                                 </h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 

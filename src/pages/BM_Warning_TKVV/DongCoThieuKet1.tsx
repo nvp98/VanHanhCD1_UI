@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { useOutletContext } from "react-router-dom";
 import clsx from "clsx";
@@ -6,6 +6,8 @@ import AlertMessage from "../../components/AlertMessage";
 import Loading from "../../components/Loading";
 import { DONGCOTHIEUKET1_CONFIG, DONGCOTHIEUKET1_SECTION } from "../../config/DongCoThieuKet1Config";
 import FlowDashboardChart from "../../components/DashboardChart";
+import usePosts from "../../hooks/usePosts";
+import type { WarningHistoryConfig } from "../../config/WarningHistoryConfig";
 
 type OutletContextType = { isSidebarOpen: boolean };
 
@@ -16,11 +18,14 @@ type MinValue = {
     giaTri: number;
 };
 
+
 const DongCoThieuKet1: React.FC = () => {
     const baseURL = import.meta.env.VITE_API_BASE_URL;
     const { isSidebarOpen } = useOutletContext<OutletContextType>();
     const [tagSymbolMap, setTagSymbolMap] = useState<Map<string, string>>(new Map());
     const [tagUnitMap, setTagUnitMap] = useState<Map<string, string>>(new Map());
+    const [tagNameMap, setTagNameMap] = useState<Map<string, string>>(new Map());
+    const [locationMap, setLocationMap] = useState<Map<string, string>>(new Map());
     const [tagWarningMap, setTagWarningMap] = useState<Map<string, number>>(new Map());
     const [tagRiskyMap, setTagRiskyMap] = useState<Map<string, number>>(new Map());
     const [dataRows, setDataRows] = useState<any[]>([]);
@@ -32,10 +37,27 @@ const DongCoThieuKet1: React.FC = () => {
     const [tagMinValue, setTagMinValue] = useState<MinValue[]>([]);
     const [warning, setWarning] = useState<string | null>(null);
     const tagIndex = { current: 0 };
+    const sentWarningsRef = useRef<Set<string>>(new Set());
+    const { createWarning } = usePosts();
+
     const [visible, setVisible] = useState({
-            table: true,
-            chart: false,
-        });
+        table: true,
+        chart: false,
+    });
+
+    const triggerWarning = async (payload: WarningHistoryConfig, key: string) => {
+        if (sentWarningsRef.current.has(key)) return;
+
+        sentWarningsRef.current.add(key);
+
+        try {
+            await createWarning(payload);
+        } catch (err: any) {
+            // 🔥 Nếu bị duplicate từ backend (409) → ignore
+            if (err?.message?.includes("409")) return;
+            //console.error(err);
+        }
+    };
 
     useEffect(() => {
         fetch("/TagWarning.xlsx")
@@ -48,17 +70,25 @@ const DongCoThieuKet1: React.FC = () => {
                 const mapUnit = new Map<string, string>();
                 const mapWarning = new Map<string, number>();
                 const mapRiskly = new Map<string, number>();
+                const mapName = new Map<string, string>();
+                const mapLocation = new Map<string, string>();
                 rows.forEach(row => {
+                    const location = row[0];
+                    const name = row[1];
                     const tag = row[2];
                     const symbol = row[3];
                     const unit = row[4];
                     const warning = row[5];
                     const riskly = row[6];
+                    if (tag && location) mapLocation.set(tag.trim(), location.trim());
+                    if (tag && name) mapName.set(tag.trim(), name.trim());
                     if (tag && symbol) map.set(tag.trim(), symbol.trim());
                     if (tag && unit) mapUnit.set(tag.trim(), unit.trim());
                     if (tag && warning) mapWarning.set(tag, parseFloat(warning));
                     if (tag && riskly) mapRiskly.set(tag, parseFloat(riskly));
                 });
+                setLocationMap(mapLocation);
+                setTagNameMap(mapName);
                 setTagSymbolMap(map);
                 setTagUnitMap(mapUnit);
                 setTagWarningMap(mapWarning);
@@ -175,10 +205,14 @@ const DongCoThieuKet1: React.FC = () => {
 
     const renderTagCellWithData = (label: string) => {
         const tag = tagSymbolMap.get(label) as string;
-        const tagUnit = tagUnitMap.get(label);
+        const tagUnit = tagUnitMap.get(label) as string;
         const tagWarning = tagWarningMap.get(label);
         const tagRisky = tagRiskyMap.get(label);
+        const tagName = tagNameMap.get(label) as string;
+        const tagLocation = locationMap.get(label) as string;
         const display = tagUnit || label;
+       
+
         const values =
             tag
                 ? tagMinValue.find(
@@ -200,7 +234,7 @@ const DongCoThieuKet1: React.FC = () => {
             [tag]: tagRisky
         }
 
-    
+
         // them du lieu vao
         for (const time of dataColumns) {
             const row = dataRows.find(r => r.ThoiGian == time);
@@ -216,12 +250,40 @@ const DongCoThieuKet1: React.FC = () => {
             // Áp dụng các lớp CSS tùy thuộc vào kết quả so sánh
             let cellClass = "border px-2 py-1 text-xs text-center ";
 
-            // Logic để áp dụng lớp CSS
+
             if (isNguyeHiem) {
-                cellClass += " bg-red-100 text-red-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+                cellClass += "bg-red-100 text-red-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+                const key = `${tag}-${time}`;
+                const payload: WarningHistoryConfig = {
+                    thoiGian: time,
+                    tagName: tag,
+                    khuVuc: "Thiêu Kết 1 " + tagLocation, // chỉnh theo logic của bạn
+                    tenThongSo: tagName,
+                    giaTri: Number(value),
+                    trangThai: 2,
+                    donVi: tagUnit
+                };
+
+                // gọi async nhưng không làm ảnh hưởng render
+                triggerWarning(payload, key);
+                
             }
+            // }
             else if (isEqual) {
                 cellClass += " bg-yellow-100 text-yellow-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+                const key = `${tag}-${time}`;
+                const payload: WarningHistoryConfig = {
+                    thoiGian: time,
+                    tagName: tag,
+                    khuVuc: "Thiêu Kết 1 " + tagLocation, // chỉnh theo logic của bạn
+                    tenThongSo: tagName,
+                    giaTri: Number(value),
+                    trangThai: 1,
+                    donVi: tagUnit
+                };
+
+                // gọi async nhưng không làm ảnh hưởng render
+                triggerWarning(payload, key);
             } else if (isEmpty) {
                 cellClass += " bg-gray-100"; // Nếu value trống (ví dụ: màu xám)
             }
@@ -231,6 +293,7 @@ const DongCoThieuKet1: React.FC = () => {
                 </td>
             );
         }
+
         return rowCells;
     };
 
@@ -309,17 +372,20 @@ const DongCoThieuKet1: React.FC = () => {
                 <div className="flex flex-wrap justify-center items-center gap-4 relative">
                     {/* Nút xuất file bên phải */}
                     <div className="absolute right-0 top-1/2 -translate-y-1/2 flex gap-2">
-                         <button 
-                                className="bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow hover:shadow-md transition"
-                                onClick={() =>
-                                    setVisible(prev => ({
-                                        table: !prev.table,
-                                        chart: !prev.chart,
-                                    }))
-                                }
-                            >
-                                {visible.chart ? "Xem Bảng" : "Xem Đồ Thị"}
-                            </button>
+                        <button
+                            className="bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow hover:shadow-md transition"
+                            onClick={() =>
+                                setVisible(prev => ({
+                                    table: !prev.table,
+                                    chart: !prev.chart,
+                                }))
+                            }
+                        >
+                            {visible.chart ? "Xem Bảng" : "Xem Đồ Thị"}
+                        </button>
+                        {/* <button onClick={handleSubmit}>
+                            Submit
+                        </button> */}
                     </div>
                     {/* Nút xuất file bên phải */}
 
@@ -361,7 +427,7 @@ const DongCoThieuKet1: React.FC = () => {
                 {/* Tiêu đề + filter + nút export */}
 
                 {/* Bảng dữ liệu */}
-               {visible.table && <div className="border rounded-xl overflow-x-auto max-w-full  max-h-[60vh]">
+                {visible.table && <div className="border rounded-xl overflow-x-auto max-w-full  max-h-[60vh]">
                     <table className="min-w-full table-auto text-sm border-separate border border-gray-300 bg-white">
                         <thead className="bg-gray-100 text-gray-800 text-center sticky top-0 z-20">
                             <tr>
@@ -405,10 +471,10 @@ const DongCoThieuKet1: React.FC = () => {
                     </table>
                 </div>}
                 {/* Bảng dữ liệu */}
-                {visible.chart &&<FlowDashboardChart
-                                    rawData={dataRows}
-                                    TAG_CONFIG={DONGCOTHIEUKET1_CONFIG}
-                                />}                    
+                {visible.chart && <FlowDashboardChart
+                    rawData={dataRows}
+                    TAG_CONFIG={DONGCOTHIEUKET1_CONFIG}
+                />}
 
             </div>
             {loading && (

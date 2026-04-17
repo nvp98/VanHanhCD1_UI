@@ -6,14 +6,13 @@ function Operate() {
         return (
                 <div className="theme-swiss sm:m-6 sm:ml-10 space-y-10 h-full px-6  pt-4 pb-20 bg-white " >
                         <h2 className="text-xl font-extrabold text-skin-inverted sm:text-xl">
-                                <span className="block">Biểu mẫu vận hành</span>
+                                <span className="block">BIỂU MẪU VẬN HÀNH</span>
                         </h2>
                         <div >
                                 <h2 className="text-sm font-extrabold text-skin-inverted sm:text-sm">
                                         <span className="block">Phân Xưởng Vê Viên</span>
                                 </h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-
                                         <ComponentOperate primary title="1. Lò Nung" to="/Lovevien" />
                                         <ComponentOperate primary title="2. Lọc Bụi Đa Ống 1" to="/LBDO1vevien" />
                                         <ComponentOperate primary title="3. Lọc Bụi Đa Ống 2" to="/LBDO2vevien" />

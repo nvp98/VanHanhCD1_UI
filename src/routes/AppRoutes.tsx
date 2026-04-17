@@ -102,7 +102,7 @@ import EquipmentNguyenLieu from "../pages/Operate/EquipmentNguyenLieu";
 import OperateLuyenCoc from "../pages/Operate/OperateLuyenCoc";
 import EquipmentLuyenCoc from "../pages/Operate/EquipmentLuyenCoc";
 
-
+import WarningHistoryPage from "../pages/WarningHistory/WarningHistoryPage";
 
 
 const AppRoutes = () => {
@@ -214,6 +214,8 @@ const AppRoutes = () => {
           <Route path="nguyenlieus" element={<OperateNguyenLieu />} />
           <Route path="equimentnguyenlieus" element={<EquipmentNguyenLieu />} />
           <Route path="luyencocs" element={<OperateLuyenCoc />} />
+
+          <Route path="warning-history" element={<WarningHistoryPage />} />
         </Route>
 
         {/* Redirect và fallback */}

@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useState } from "react";
+import React, { Children, useEffect, useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { useOutletContext } from "react-router-dom";
 import clsx from "clsx";
@@ -6,6 +6,8 @@ import AlertMessage from "../../components/AlertMessage";
 import Loading from "../../components/Loading";
 import { PHOILIEU_VEVIEN_SECTION, DUOIMAY1_SECTION, PHOILIEU_DUOIMAY1_CONFIG } from "../../config/LBMTPhoiLieuDuoiMay1Config";
 import FlowDashboardChart from "../../components/DashboardChart";
+import usePosts from "../../hooks/usePosts";
+import type { WarningHistoryConfig } from "../../config/WarningHistoryConfig";
 
 
 type OutletContextType = { isSidebarOpen: boolean };
@@ -33,6 +35,8 @@ const LBMT_PhoiLieuDuoiMay1: React.FC = () => {
     const { isSidebarOpen } = useOutletContext<OutletContextType>();
     const [tagSymbolMap, setTagSymbolMap] = useState<Map<string, string>>(new Map());
     const [tagUnitMap, setTagUnitMap] = useState<Map<string, string>>(new Map());
+    const [nameMap, setNameMap] = useState<Map<string, string>>(new Map());
+    const [locationMap, setLocationMap] = useState<Map<string, string>>(new Map());
     const [tagBaoMap, setTagBaoMap] = useState<Map<string, number>>(new Map());
     const [tagNguyHiemMap, setTagNguyHiemMap] = useState<Map<string, number>>(new Map());
     const [dataRows, setDataRows] = useState<any[]>([]);
@@ -44,10 +48,26 @@ const LBMT_PhoiLieuDuoiMay1: React.FC = () => {
     const [warning, setWarning] = useState<string | null>(null);
     const [exporting, setExporting] = useState(false);
     const tagIndex = { current: 0 };
+    const sentWarningsRef = useRef<Set<string>>(new Set());
+    const { createWarning } = usePosts();
     const [visible, setVisible] = useState({
         table: true,
         chart: false,
     });
+
+    const triggerWarning = async (payload: WarningHistoryConfig, key: string) => {
+        if (sentWarningsRef.current.has(key)) return;
+
+        sentWarningsRef.current.add(key);
+
+        try {
+            await createWarning(payload);
+        } catch (err: any) {
+            // 🔥 Nếu bị duplicate từ backend (409) → ignore
+            if (err?.message?.includes("409")) return;
+            //console.error(err);
+        }
+    };
 
     useEffect(() => {
         fetch("/TagWarning.xlsx")
@@ -60,18 +80,26 @@ const LBMT_PhoiLieuDuoiMay1: React.FC = () => {
                 const mapUnit = new Map<string, string>();
                 const mapBao = new Map<string, number>();
                 const mapNguyHiem = new Map<string, number>();
+                const mapName = new Map<string, string>();
+                const mapLocation = new Map<string, string>();
                 rows.forEach(row => {
+                    const location = row[0];
+                    const name = row[1];
                     const tag = row[4];
                     const symbol = row[5];
                     const unit = row[6];
                     const bao = row[7];
                     const nguyHiem = row[8];
+                    if (tag && location) mapLocation.set(tag.trim(), location.trim());
+                    if (tag && name) mapName.set(tag.trim(), name.trim());
                     if (tag && symbol) map.set(tag.trim(), symbol.trim());
                     if (tag && unit) mapUnit.set(tag.trim(), unit.trim());
                     if (tag && bao) mapBao.set(tag, parseFloat(bao));
                     if (tag && nguyHiem) mapNguyHiem.set(tag, parseFloat(nguyHiem));
 
                 });
+                setLocationMap(mapLocation);
+                setNameMap(mapName);
                 setTagSymbolMap(map);
                 setTagUnitMap(mapUnit);
                 setTagBaoMap(mapBao);
@@ -221,9 +249,11 @@ const LBMT_PhoiLieuDuoiMay1: React.FC = () => {
 
     const renderTagCellWithData = (label: string) => {
         const tag = tagSymbolMap.get(label) as string;
-        const tagUnit = tagUnitMap.get(label);
+        const tagUnit = tagUnitMap.get(label) as string;
         const tagBao = tagBaoMap.get(label);
         const nguyHiem = tagNguyHiemMap.get(label);
+        const tagName = nameMap.get(label) as string;
+        const tagLocation = locationMap.get(label) as string;
 
         const display = tagUnit || label;
         const values =
@@ -267,10 +297,36 @@ const LBMT_PhoiLieuDuoiMay1: React.FC = () => {
 
             // Logic để áp dụng lớp CSS
             if (isNguyeHiem) {
-                cellClass += " bg-red-100 text-red-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+                cellClass += "bg-red-100 text-red-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+                const key = `${tag}-${time}`;
+                const payload: WarningHistoryConfig = {
+                    thoiGian: time,
+                    tagName: tag,
+                    khuVuc: "Thiêu Kết 1 " + tagLocation, // chỉnh theo logic của bạn
+                    tenThongSo: tagName,
+                    giaTri: Number(value),
+                    trangThai: 2,
+                    donVi: tagUnit
+                };
+
+                // gọi async nhưng không làm ảnh hưởng render
+                triggerWarning(payload, key);
             }
             else if (isEqual) {
                 cellClass += " bg-yellow-100 text-yellow-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+                const key = `${tag}-${time}`;
+                const payload: WarningHistoryConfig = {
+                    thoiGian: time,
+                    tagName: tag,
+                    khuVuc: "Thiêu Kết 1 " + tagLocation, // chỉnh theo logic của bạn
+                    tenThongSo: tagName,
+                    giaTri: Number(value),
+                    trangThai: 1,
+                    donVi: tagUnit
+                };
+
+                // gọi async nhưng không làm ảnh hưởng render
+                triggerWarning(payload, key);
             } else if (isEmpty) {
                 cellClass += " bg-gray-100"; // Nếu value trống (ví dụ: màu xám)
             }

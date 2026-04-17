@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { useOutletContext } from "react-router-dom";
 import clsx from "clsx";
 import AlertMessage from "../../components/AlertMessage";
 import Loading from "../../components/Loading";
-import { 
+import {
     BANGTAI_2BC_SECTION, BANGTAI_3BC_SECTION, TRUNGTHE_CONFIG, BANGTAI_5BC_SECTION,
     BANGTAI_Q101_SECTION, BANGT_AIQ205_SECTION, BANGTAI_A303_SECTION, BANGTAI_A304_SECTION,
     BANGTAI_A305_SECTION, BANGTAI_AN402_SECTION, BANGTAI_AN404_SECTION, BANGTAI_AN406_SECTION,
-    BANGTAI_AN502_SECTION,BANGTAI_AN504_SECTION, BANGTAI_AN506_SECTION, BANGTAI_A601_SECTION, BANGTAI_A602_SECTION,
+    BANGTAI_AN502_SECTION, BANGTAI_AN504_SECTION, BANGTAI_AN506_SECTION, BANGTAI_A601_SECTION, BANGTAI_A602_SECTION,
     BANGTAI_C101_SECTION, BANGTAI_C201_SECTION, BANGTAI_N402_SECTION, BANGTAI_N501_SECTION,
     BANGTAI_B301_SECTION
 } from "../../config/BaiLieuDongCoTrungThe";
 import FlowDashboardChart from "../../components/DashboardChart";
+import usePosts from "../../hooks/usePosts";
+import type { WarningHistoryConfig } from "../../config/WarningHistoryConfig";
 
 type OutletContextType = { isSidebarOpen: boolean };
 type RowType = {
@@ -37,6 +39,8 @@ const DongCoTrungThe: React.FC = () => {
     const { isSidebarOpen } = useOutletContext<OutletContextType>();
     const [tagSymbolMap, setTagSymbolMap] = useState<Map<string, string>>(new Map());
     const [tagUnitMap, setTagUnitMap] = useState<Map<string, string>>(new Map());
+    const [tagNameMap, setTagNameMap] = useState<Map<string, string>>(new Map());
+    const [locationMap, setLocationMap] = useState<Map<string, string>>(new Map());
     const [tagWarningMap, setTagWarningMap] = useState<Map<string, number>>(new Map());
     const [tagRiskyMap, setTagRiskyMap] = useState<Map<string, number>>(new Map());
     const [dataRows, setDataRows] = useState<any[]>([]);
@@ -48,10 +52,26 @@ const DongCoTrungThe: React.FC = () => {
     const [warning, setWarning] = useState<string | null>(null);
     const [tagMinValue, setTagMinValue] = useState<MinValue[]>([]);
     const tagIndex = { current: 0 };
+    const sentWarningsRef = useRef<Set<string>>(new Set());
+    const { createWarning } = usePosts();
     const [visible, setVisible] = useState({
         table: true,
         chart: false,
     });
+
+    const triggerWarning = async (payload: WarningHistoryConfig, key: string) => {
+        if (sentWarningsRef.current.has(key)) return;
+
+        sentWarningsRef.current.add(key);
+
+        try {
+            await createWarning(payload);
+        } catch (err: any) {
+            // 🔥 Nếu bị duplicate từ backend (409) → ignore
+            if (err?.message?.includes("409")) return;
+            //console.error(err.message);
+        }
+    };
 
     useEffect(() => {
         fetch("/TagWarningBaiLieu.xlsx")
@@ -64,17 +84,25 @@ const DongCoTrungThe: React.FC = () => {
                 const mapUnit = new Map<string, string>();
                 const mapWarning = new Map<string, number>();
                 const mapRiskly = new Map<string, number>();
+                const mapName = new Map<string, string>();
+                const mapLocation = new Map<string, string>();
                 rows.forEach(row => {
+                    const location = row[0];
+                    const name = row[1];
                     const tag = row[4];
                     const symbol = row[5];
                     const unit = row[6];
                     const warning = row[7];
                     const riskly = row[8];
+                    if (tag && location) mapLocation.set(tag.trim(), location.trim());
+                    if (tag && name) mapName.set(tag.trim(), name.trim());
                     if (tag && symbol) map.set(tag.trim(), symbol.trim());
                     if (tag && unit) mapUnit.set(tag.trim(), unit.trim());
                     if (tag && warning) mapWarning.set(tag, parseFloat(warning));
                     if (tag && riskly) mapRiskly.set(tag, parseFloat(riskly));
                 });
+                setLocationMap(mapLocation);
+                setTagNameMap(mapName);
                 setTagSymbolMap(map);
                 setTagUnitMap(mapUnit);
                 setTagWarningMap(mapWarning);
@@ -189,9 +217,11 @@ const DongCoTrungThe: React.FC = () => {
 
     const renderTagCellWithData = (label: string) => {
         const tag = tagSymbolMap.get(label) as string;
-        const tagUnit = tagUnitMap.get(label);
+        const tagUnit = tagUnitMap.get(label) as string;
         const tagWarning = tagWarningMap.get(label);
         const tagRisky = tagRiskyMap.get(label);
+        const tagName = tagNameMap.get(label) as string;
+        const tagLocation = locationMap.get(label) as string;
         const display = tagUnit || label;
         const values =
             tag
@@ -230,10 +260,36 @@ const DongCoTrungThe: React.FC = () => {
 
             // Logic để áp dụng lớp CSS
             if (isNguyeHiem) {
-                cellClass += " bg-red-100 text-red-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+                cellClass += "bg-red-100 text-red-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+                const key = `${tag}-${time}`;
+                const payload: WarningHistoryConfig = {
+                    thoiGian: time,
+                    tagName: tag,
+                    khuVuc: "Bãi Liệu Trung Thế " + tagLocation, // chỉnh theo logic của bạn
+                    tenThongSo: tagName,
+                    giaTri: Number(value),
+                    trangThai: 2,
+                    donVi: tagUnit
+                };
+
+                // gọi async nhưng không làm ảnh hưởng render
+                //triggerWarning(payload, key);
             }
             else if (isEqual) {
                 cellClass += " bg-yellow-100 text-yellow-600"; // Giá trị trùng khớp (ví dụ: màu xanh lá)
+                const key = `${tag}-${time}`;
+                const payload: WarningHistoryConfig = {
+                    thoiGian: time,
+                    tagName: tag,
+                    khuVuc: "Bãi Liệu Trung Thế " + tagLocation, // chỉnh theo logic của bạn
+                    tenThongSo: tagName,
+                    giaTri: Number(value),
+                    trangThai: 1,
+                    donVi: tagUnit
+                };
+
+                // gọi async nhưng không làm ảnh hưởng render
+                //triggerWarning(payload, key);
             } else if (isEmpty) {
                 cellClass += " bg-gray-100"; // Nếu value trống (ví dụ: màu xám)
             }
@@ -420,7 +476,7 @@ const DongCoTrungThe: React.FC = () => {
                     {/* Tiêu đề và bộ lọc thời gian ở giữa */}
                     <div className="flex flex-col items-center gap-3">
                         <h1 className="text-2xl font-bold text-gray-800 text-center">
-                           Động Cơ Trung Thế Bãi Liệu
+                            Động Cơ Trung Thế Bãi Liệu
                         </h1>
 
                         <div className="flex flex-wrap justify-center items-end gap-4">
