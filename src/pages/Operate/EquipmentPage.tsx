@@ -18,6 +18,7 @@ function EquipmentPage() {
                     <ComponentEquipment primary title="3. Lọc Bụi Đa Ống 1" to="/LBDO1VeVien2" />
                     <ComponentEquipment primary title="4. Lọc Bụi Đa Ống 2" to="/LBDO2VeVien2" />
                     <ComponentEquipment primary title="5. Quạt Hút Chính Vê Viên" to="/QHCVeVien2" />
+                    <ComponentEquipment primary title="6. Làm Mát Vòng Vê Viên" to="/DongCoLamMatVongVeVien" />
                 </div>
             </div>
             <div >
@@ -63,6 +64,7 @@ function EquipmentPage() {
                     <ComponentEquipment primary title="4. Lò Vôi Quay" to="/DongCoLoVoiQuay" />
                     <ComponentEquipment primary title="5. Lò Dolomit 1" to="/DongCoDolomit1" />
                     <ComponentEquipment primary title="6. Lò Dolomit 2" to="/DongCoDolomit2" />
+                    <ComponentEquipment primary title="7. Thành Phẩm" to="/DongCoThanhPhamVoi" />
                 </div>
             </div>
         </div>

@@ -250,7 +250,8 @@ const DongCoLocBuiNhaSang2LuyenCoc: React.FC = () => {
                     tenThongSo: tagName,
                     giaTri: Number(value),
                     trangThai: 2,
-                    donVi: tagUnit
+                    donVi: tagUnit,
+                    xuong: "Luyện Cốc"
                 };
 
                 // gọi async nhưng không làm ảnh hưởng render
@@ -263,11 +264,12 @@ const DongCoLocBuiNhaSang2LuyenCoc: React.FC = () => {
                 const payload: WarningHistoryConfig = {
                     thoiGian: time,
                     tagName: tag,
-                    khuVuc: "Luyện Cốc Lọc Bụi Nhà Sàng 2", // chỉnh theo logic của bạn
+                    khuVuc: "Lọc Bụi Nhà Sàng 2", // chỉnh theo logic của bạn
                     tenThongSo: tagName,
                     giaTri: Number(value),
                     trangThai: 1,
-                    donVi: tagUnit
+                    donVi: tagUnit,
+                    xuong: "Luyện Cốc"
                 };
 
                 // gọi async nhưng không làm ảnh hưởng render

@@ -250,7 +250,8 @@ const DongCoLocBuiC1: React.FC = () => {
                     tenThongSo: tagName,
                     giaTri: Number(value),
                     trangThai: 2,
-                    donVi: tagUnit
+                    donVi: tagUnit,
+                     xuong: "Nguyên Liệu"
                 };
 
                 // gọi async nhưng không làm ảnh hưởng render
@@ -266,10 +267,12 @@ const DongCoLocBuiC1: React.FC = () => {
                     tenThongSo: tagName,
                     giaTri: Number(value),
                     trangThai: 1,
-                    donVi: tagUnit
+                    donVi: tagUnit, 
+                    xuong: "Nguyên Liệu"
+
                 };
 
-                // gọi async nhưng không làm ảnh hưởng render
+                //gọi async nhưng không làm ảnh hưởng render
                 triggerWarning(payload, key);
             } else if (isEmpty) {
                 cellClass += " bg-gray-100"; // Nếu value trống (ví dụ: màu xám)

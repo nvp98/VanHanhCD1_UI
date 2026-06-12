@@ -89,6 +89,12 @@ const Sidebar = ({ isOpen, onMouseLeaveSidebar }: SidebarProps) => {
           iconActive: iconDocumentWhite,
           iconInactive: iconDocument,
         },
+        {
+          to: "/tramdiennguyenlieus",
+          label: "Trạm điện",
+          iconActive: iconDocumentWhite,
+          iconInactive: iconDocument,
+        },
       ],
     },
     {

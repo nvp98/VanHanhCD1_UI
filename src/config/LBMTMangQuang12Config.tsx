@@ -28,7 +28,7 @@ export const MANGQUANG12_CONFIG: ChartGroup[] = [
             { key: "TI1411BM", label: "Nhiệt độ gối đỡ quạt gió trước", color: "#7132CA" },
             { key: "TI1412BM", label: "Nhiệt độ gối đỡ quạt gió sau", color: "#301CA0" },
             { key: "ZI1411aBM", label: "Độ rung gối đỡ quạt gió trước X", color: "#842A3B" },
-            { key: "ZI1411bBM", label: "Độ rung gối đỡ quạt gió trước Y", color: "#00b95dff" },
+            { key: "ZI1411bBM", label: "Độ rung gối đỡ quạt gió trước Y", color: "#842A3B" },
             { key: "ZI1412aBM", label: "Độ rung gối đỡ quạt gió sau X", color: "#800017ff" },
             { key: "ZI1412bBM", label: "Độ rung gối đỡ quạt gió sau Y", color: "#FF0000" },
         ]

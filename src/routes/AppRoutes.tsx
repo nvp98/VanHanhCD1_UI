@@ -67,12 +67,14 @@ import DongCoThieuKet1 from "../pages/BM_Warning_TKVV/DongCoThieuKet1";
 import DongCoThieuKet2 from "../pages/BM_Warning_TKVV/DongCoThieuKet2"; 
 import NoiHoiOngKhoiThieuKet1 from "../pages/BM_Warning_TKVV/NoiHoiOngKhoiThieuKet1"; 
 import NoiHoiOngKhoiThieuKet2 from "../pages/BM_Warning_TKVV/NoiHoiOngKhoiThieuKet2"; 
+import DongCoLamMatVongVeVien from "../pages/BM_Warning_TKVV/DongCoLamMatVongVeVien";
 import DongCoLoVoi1 from "../pages/BM_Warning_TKVV/DongCoLoVoi1"; 
 import DongCoLoVoi2 from "../pages/BM_Warning_TKVV/DongCoLoVoi2"; 
 import DongCoLoVoi3 from "../pages/BM_Warning_TKVV/DongCoLoVoi3"; 
 import DongCoDolomit1 from "../pages/BM_Warning_TKVV/DongCoDolomit1"; 
 import DongCoDolomit2 from "../pages/BM_Warning_TKVV/DongCoDolomit2"; 
 import DongCoLoVoiQuay from "../pages/BM_Warning_TKVV/DongCoLoVoiQuay";
+import DongCoThanhPhamVoi from "../pages/BM_Warning_TKVV/DongCoThanhPhamVoi";
 
 import BM_LocBuiC1 from "../pages/BM_BaiLieu/BM_LocBuiC1";
 import BM_LocBuiC2 from "../pages/BM_BaiLieu/BM_LocBuiC2";
@@ -94,6 +96,28 @@ import DongCoQGTH1LuyenCoc from "../pages/BM_LuyenCoc/DongCoQGTH1LuyenCoc";
 import DongCoQGTH2LuyenCoc from "../pages/BM_LuyenCoc/DongCoQGTH2LuyenCoc"; 
 import DongCoQGTH3LuyenCoc from "../pages/BM_LuyenCoc/DongCoQGTH3LuyenCoc";
 import DongCoLocBuiNhaSang2LuyenCoc from "../pages/BM_LuyenCoc/DongCoLocBuiNhaSang2LuyenCoc";
+
+import Mba35NguyenLieu from "../pages/Power/Mba35NguyenLieu";
+import Tram35NguyenLieu from "../pages/Power/Tram35NguyenLieu"; 
+import Tram10NLOT from "../pages/Power/Tram10NLOT";
+import Tram10Sub4  from "../pages/Power/Tram10Sub4";
+import Tram10KhiNen from "../pages/Power/Tram10KhiNen";
+import Tram10KhoThan from "../pages/Power/Tram10KhoThan";
+import Tram10DKTT from "../pages/Power/Tram10DKTT";
+import Tram10Sub5 from "../pages/Power/Tram10Sub5";
+import TuDien35NguyenLieu from "../pages/Power/TuDien35NguyenLieu";
+import TuDienBaiLieuMot from "../pages/Power/TuDienBaiLieu1";
+import TuDienBaiLieuHai from "../pages/Power/TuDienBaiLieu2";
+import TuDienCauCang from "../pages/Power/TuDienCauCang";
+import TuDienCangMoRong from "../pages/Power/TuDienCangMoRong";
+import MayCatBaiLieuMot from "../pages/Power/MayCatBaiLieu1";
+import MayCatBaiLieuHai from "../pages/Power/MayCatBaiLieu2";
+import MayCatCauCang from "../pages/Power/MayCatCauCang";
+import MayCatCangMoRong from "../pages/Power/MayCatCangMoRong";
+import MayCat35NguyenLieu from "../pages/Power/MayCat35NguyenLieu";
+import TuXuatTuyenS95 from "../pages/Power/TuXuatTuyenS95";
+import TuDCKhiNen from "../pages/Power/TuDcKhiNen";
+import OperateTramDien from "../pages/Operate/OperateTramDien";
 
 import Operate from "../pages/Operate/Operate";
 import EquipmentPage from "../pages/Operate/EquipmentPage";
@@ -187,10 +211,12 @@ const AppRoutes = () => {
           <Route path="DongCoThieuKet2" element={<DongCoThieuKet2 />} />
           <Route path="NoiHoiOngKhoiThieuKetMot" element={<NoiHoiOngKhoiThieuKet1 />} />
           <Route path="NoiHoiOngKhoiThieuKetHai" element={<NoiHoiOngKhoiThieuKet2 />} />
+          <Route path="DongCoLamMatVongVeVien" element={<DongCoLamMatVongVeVien />} />
           <Route path="DongCoLoVoi1" element={<DongCoLoVoi1 />} />
           <Route path="DongCoLoVoi2" element={<DongCoLoVoi2 />} />
           <Route path="DongCoLoVoi3" element={<DongCoLoVoi3 />} />
           <Route path="DongCoLoVoiQuay" element={<DongCoLoVoiQuay />} />
+          <Route path="DongCoThanhPhamVoi" element={<DongCoThanhPhamVoi />} />
           <Route path="DongCoDolomit1" element={<DongCoDolomit1 />} />
           <Route path="DongCoDolomit2" element={<DongCoDolomit2 />}/>
           <Route path="DongCoLocBuiC1" element={<DongCoLocBuiC1 />}/>
@@ -208,12 +234,36 @@ const AppRoutes = () => {
           <Route path="DongCoQGTH3LuyenCoc" element={<DongCoQGTH3LuyenCoc />}/>
           <Route path="DongCoLocBuiNhaSang2LuyenCoc" element={<DongCoLocBuiNhaSang2LuyenCoc />}/>
 
+          <Route path="Mba35NguyenLieu" element={<Mba35NguyenLieu/>} />
+          <Route path="Tram35NguyenLieu" element={<Tram35NguyenLieu/>} />
+          <Route path="Tram10NLOT" element={<Tram10NLOT/>} />
+          <Route path="Tram10Sub4" element={<Tram10Sub4/>} />
+          <Route path="Tram10KhiNen" element={<Tram10KhiNen/>}/>
+          <Route path="Tram10KhoThan" element={<Tram10KhoThan/>}/>
+          <Route path="Tram10DKTT" element={<Tram10DKTT/>}/>
+          <Route path="Tram10Sub5" element={<Tram10Sub5/>}/>
+          <Route path="TuDien35NguyenLieu" element={<TuDien35NguyenLieu/>}/>
+          <Route path="TuDienBaiLieuMot" element={<TuDienBaiLieuMot/>}/>
+          <Route path="TuDienBaiLieuHai" element={<TuDienBaiLieuHai/>}/>
+          <Route path="TuDienCauCang" element={<TuDienCauCang/>}/>
+          <Route path="TuDienCangMoRong" element={<TuDienCangMoRong/>}/>
+          <Route path="MayCatBaiLieuMot" element={<MayCatBaiLieuMot/>}/>
+          <Route path="MayCatBaiLieuHai" element={<MayCatBaiLieuHai/>}/>
+          <Route path="MayCatCauCang" element={<MayCatCauCang/>}/>
+          <Route path="MayCatCangMoRong" element={<MayCatCangMoRong/>}/>
+          <Route path="MayCat35NguyenLieu" element={<MayCat35NguyenLieu/>}/>
+          <Route path="TuXuatTuyenS95" element={<TuXuatTuyenS95/>}/>
+          <Route path="TuDCKhiNen" element={<TuDCKhiNen/>}/>
+          
+          
+ 
           <Route path="equipment" element={<EquipmentPage />} />
           <Route path="equipmentsluyencoc" element={<EquipmentLuyenCoc />} /> 
           <Route path="thieuketveviens" element={<Operate />} />
           <Route path="nguyenlieus" element={<OperateNguyenLieu />} />
           <Route path="equimentnguyenlieus" element={<EquipmentNguyenLieu />} />
           <Route path="luyencocs" element={<OperateLuyenCoc />} />
+          <Route path="tramdiennguyenlieus" element={<OperateTramDien/>}/>
 
           <Route path="warning-history" element={<WarningHistoryPage />} />
         </Route>

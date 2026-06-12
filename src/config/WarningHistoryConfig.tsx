@@ -6,4 +6,5 @@ export type WarningHistoryConfig = {
     giaTri: number,
     trangThai: number,
     donVi: string,
+    xuong: string 
 }

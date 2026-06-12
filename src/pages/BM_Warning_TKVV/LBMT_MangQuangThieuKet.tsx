@@ -263,7 +263,8 @@ const LBMT_MangQuangThieuKet: React.FC = () => {
                     tenThongSo: tagName,
                     giaTri: Number(value),
                     trangThai: 2,
-                    donVi: tagUnit
+                    donVi: tagUnit,
+                    xuong: "TKVV"
                 };
 
                 // gọi async nhưng không làm ảnh hưởng render
@@ -279,7 +280,8 @@ const LBMT_MangQuangThieuKet: React.FC = () => {
                     tenThongSo: tagName,
                     giaTri: Number(value),
                     trangThai: 1,
-                    donVi: tagUnit
+                    donVi: tagUnit,
+                    xuong: "TKVV"
                 };
 
                 // gọi async nhưng không làm ảnh hưởng render

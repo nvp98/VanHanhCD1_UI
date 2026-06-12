@@ -29,7 +29,8 @@ export default function usePosts() {
                     tenThongSo: payload.tenThongSo,
                     giaTri: payload.giaTri,
                     trangThai: payload.trangThai,
-                    donVi: payload.donVi
+                    donVi: payload.donVi,
+                    xuong: payload.xuong
                 })
             });
 
