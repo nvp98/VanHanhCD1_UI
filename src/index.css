@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  .theme-swiss {
+    --color-text-base: #ffffff;
+    --color-text-muted: #c7d2f2;
+    --color-text-inverted: #2a65ad;
+    --color-fill: #05428c;
+    --color-button-accent: #ffffff;
+    --color-button-accent-hover: #eef2ff;
+    --color-button-muted: #6366f1;
+  }
+  .theme-about {
+    --color-text-base: #2273d6;
+    --color-text-muted: #c7d2f2;
+    --color-text-inverted: #2a65ad;
+    --color-fill: #05428c;
+    --color-button-accent: #2a65ad;
+    --color-button-accent-hover: #6a6cf8;
+    --color-button-muted: #eef2ff; 
+  }
+}
