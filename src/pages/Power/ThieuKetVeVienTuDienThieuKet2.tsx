@@ -4,7 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import clsx from "clsx";
 import AlertMessage from "../../components/AlertMessage";
 import Loading from "../../components/Loading";
-import { MAYCAT_CANGMORONG_CONFIG, MAYCAT_CANGMORONG_SECTION } from "../../config/TuDienNguyenLieuConfig";
+import { TRAMDIEN35KV_THIEUKET2_CONFIG,  TRAMDIEN35KV_THIEUKET2_SECTION } from "../../config/TramDienThieuKetVeVienConfig";
 import FlowDashboardChart from "../../components/DashboardChart";
 import usePosts from "../../hooks/usePosts";
 import type { WarningHistoryConfig } from "../../config/WarningHistoryConfig";
@@ -19,9 +19,9 @@ type MinValue = {
 };
 
 
-const MayCatCangMoRong: React.FC = () => {
+const TuDienThieuKet2: React.FC = () => {
     const baseURL = import.meta.env.VITE_API_BASE_URL;
-    const apiURL = baseURL + "/api/TuDienBaiLieu";
+    const apiURL = baseURL + "/api/TramDienThieuKet";
     const { isSidebarOpen } = useOutletContext<OutletContextType>();
     const [tagSymbolMap, setTagSymbolMap] = useState<Map<string, string>>(new Map());
     const [tagUnitMap, setTagUnitMap] = useState<Map<string, string>>(new Map());
@@ -61,11 +61,11 @@ const MayCatCangMoRong: React.FC = () => {
     };
 
     useEffect(() => {
-        fetch("/TagTramDien.xlsx")
+        fetch("/TagTramDienTKVV.xlsx")
             .then(res => res.arrayBuffer())
             .then(buffer => {
                 const workbook = XLSX.read(buffer, { type: "buffer" });
-                const sheet = workbook.Sheets[workbook.SheetNames[15]];
+                const sheet = workbook.Sheets[workbook.SheetNames[6]];
                 const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 }) as string[][];
                 const map = new Map<string, string>();
                 const mapUnit = new Map<string, string>();
@@ -173,7 +173,7 @@ const MayCatCangMoRong: React.FC = () => {
         setExporting(true);
 
         try {
-            const res = await fetch(`${apiURL}/export?from=${fromDate}&to=${toDate}`);
+            const res = await fetch(`${apiURL}/MBABaiLieu/export?from=${fromDate}&to=${toDate}`);
             const blob = await res.blob();
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement("a");
@@ -301,7 +301,7 @@ const MayCatCangMoRong: React.FC = () => {
     const renderNestedRows = (): React.ReactNode[] => {
         const rows: React.ReactNode[] = [];
 
-        MAYCAT_CANGMORONG_SECTION.forEach(sec => {
+        TRAMDIEN35KV_THIEUKET2_SECTION.forEach(sec => {
             const sectionRowCount = sec.rows?.length || 0;
             let rowIndex = 0;
             if (!sec.rows || sec.rows.length === 0) {
@@ -393,7 +393,7 @@ const MayCatCangMoRong: React.FC = () => {
                     {/* Tiêu đề và bộ lọc thời gian ở giữa */}
                     <div className="flex flex-col items-center gap-3">
                         <h1 className="text-2xl font-bold text-gray-800 text-center">
-                            Tủ Máy Cắt Liên Lạc Cầu Mở Rộng
+                           Tủ Điện Thiêu Kết 2 Trạm 35kV Thiêu Kết Vê Viên
                         </h1>
 
                         <div className="flex flex-wrap justify-center items-end gap-4">
@@ -474,7 +474,7 @@ const MayCatCangMoRong: React.FC = () => {
                 {/* Bảng dữ liệu */}
                 {visible.chart && <FlowDashboardChart
                     rawData={dataRows}
-                    TAG_CONFIG={MAYCAT_CANGMORONG_CONFIG}
+                    TAG_CONFIG={TRAMDIEN35KV_THIEUKET2_CONFIG}
                 />}
 
             </div>
@@ -503,4 +503,4 @@ const MayCatCangMoRong: React.FC = () => {
     );
 }
 
-export default MayCatCangMoRong;
+export default TuDienThieuKet2;

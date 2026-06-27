@@ -248,6 +248,21 @@ export const LUYENCOC_MAYNGHIEN_SECTION: Sections[] = [
         ]
     },
     {
+        section: "Máy nghiền 3A",
+        rows: [
+            { label: "Nhiệt độ gối đỡ trước" },
+            { label: "Nhiệt độ gối đỡ sau" },
+            { label: "Nhiệt độ cuộn dây A" },
+            { label: "Nhiệt độ cuộn dây B" },
+            { label: "Nhiệt độ cuộn dây C" },
+            { label: "Nhiệt độ vòng bi trước" },
+            { label: "Nhiệt độ vòng bi sau" },
+            { label: "Dòng điện" },
+            { label: "Độ rung dọc" },
+            { label: "Độ rung ngang" },
+        ]
+    },
+    {
         section: "Máy nghiền 3B",
         rows: [
             { label: "Nhiệt độ gối đỡ trước" },

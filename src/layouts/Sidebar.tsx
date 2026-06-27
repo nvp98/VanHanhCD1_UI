@@ -68,6 +68,12 @@ const Sidebar = ({ isOpen, onMouseLeaveSidebar }: SidebarProps) => {
           iconActive: iconDocumentWhite,
           iconInactive: iconDocument,
         },
+         {
+          to: "/tramdienthieketveviens",
+          label: "Trạm Điện",
+          iconActive: iconDocumentWhite,
+          iconInactive: iconDocument,
+        },
       ],
     },
     {

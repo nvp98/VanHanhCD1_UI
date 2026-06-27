@@ -45,7 +45,7 @@ export const LAMMATVONG_VEVIEN_CONFIG: ChartGroup[] = [
             { key: "VI821bM", label: "Độ rung gối trước quạt  (Y)", color: "#F96E5B" },
             { key: "VI822aM", label: "Độ rung gối sau quạt  (X)", color: "#4D2B8C" },
             { key: "VI822bM", label: "Độ rung gối sau  quạt  (Y)", color: "#f91616dc" },
-            { key: "CT-HF2", label: "Dòng điện", color: "#831814c5" },
+            { key: "CT_HF2", label: "Dòng điện", color: "#831814c5" },
         ]
     },
     {
@@ -64,7 +64,7 @@ export const LAMMATVONG_VEVIEN_CONFIG: ChartGroup[] = [
             { key: "VI831bM", label: "Độ rung gối trước quạt (Y)", color: "#16f9a2cb" },
             { key: "VI832aM", label: "Độ rung gối sau quạt (X)", color: "#FDB5CE" },
             { key: "VI832bM", label: "Độ rung gối sau quạt (Y)", color: "#28f755ff" },
-            { key: "CT-HF3", label: "Dòng điện", color: "#0dce94ff" },
+            { key: "CT_HF3", label: "Dòng điện", color: "#0dce94ff" },
         ]
     },
     {
@@ -83,7 +83,7 @@ export const LAMMATVONG_VEVIEN_CONFIG: ChartGroup[] = [
             { key: "VI841bM", label: "Độ rung gối trước quạt (Y)", color: "#63f17b62" },
             { key: "VI842aM", label: "Độ rung gối sau quạt (X)", color: "#2263c5ff" },
             { key: "VI842aM", label: "Độ rung gối sau  quạt (Y)", color: "#1652f9ff" },
-            { key: "CT-HF4", label: "Dòng điện", color: "#008cffff" },
+            { key: "CT_HF4", label: "Dòng điện", color: "#008cffff" },
         ]
     },
 ];

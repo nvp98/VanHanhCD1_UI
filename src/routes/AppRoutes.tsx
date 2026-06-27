@@ -119,6 +119,29 @@ import TuXuatTuyenS95 from "../pages/Power/TuXuatTuyenS95";
 import TuDCKhiNen from "../pages/Power/TuDcKhiNen";
 import OperateTramDien from "../pages/Operate/OperateTramDien";
 
+import TuDoLuong35kVThieuKetVeVien from "../pages/Power/ThieuKetVeVienTuDoLuong35kV";
+import TuDauVao10kVThieuKetVeVien from "../pages/Power/ThieuKetVeVienTuDauVao10kV";
+import TuDoLuongVaTuLienLacThieuKetVeVien from "../pages/Power/ThieuKetVeVienTuDoLuongVaTuLienLac";
+import TuDauVaoMBA35kVThieuKetVeVien from "../pages/Power/ThieuKetVeVienTuDauVaoMBA35kV";
+import TiepDiaMBAThieuKetVeVien from "../pages/Power/ThieuKetVeVienTiepDiaMBA";
+import TuDienThieuKet1 from "../pages/Power/ThieuKetVeVienTuDienThieuKet1";
+import TuDienThieuKet2 from "../pages/Power/ThieuKetVeVienTuDienThieuKet2";
+import TuDienVeVien from "../pages/Power/ThieuKetVeVienTuDienVeVien";
+import TuDienKhuS from "../pages/Power/ThieuKetVeVienTuDienKhuS";
+import TuDienKhuKhiKhoi from "../pages/Power/ThieuKetVeVienTuDienKhuKhiKho";
+import TuDienSub1 from "../pages/Power/ThieuKetVeVienTuDienSub1";
+import TuDienDuPhong from "../pages/Power/ThieuKetVeVienTuDienDuPhong";
+
+import TuDauVaoDoLuongDUL from "../pages/Power/DULDauVaoDoLuong";
+import TuDauVaoMBADUL from "../pages/Power/DULDauVaoMBA";
+import TuDauVao10kVDUL from "../pages/Power/DULDauVao10kV";
+import MayCatDUL from "../pages/Power/DULMayCat";
+import TuVoiDUL from "../pages/Power/DULVoi";
+import TuNMNLDUL from "../pages/Power/DULNMNL";
+import TuNghienXi2DUL from "../pages/Power/DULNghienXi2";
+import TuDungPhongDUL from "../pages/Power/DULTuDuPhong";
+import OperateTramDienTKVV from "../pages/Operate/OperateTramDienThieuKet";
+
 import Operate from "../pages/Operate/Operate";
 import EquipmentPage from "../pages/Operate/EquipmentPage";
 import OperateNguyenLieu from "../pages/Operate/OperateNguyenLieu";
@@ -255,8 +278,28 @@ const AppRoutes = () => {
           <Route path="TuXuatTuyenS95" element={<TuXuatTuyenS95/>}/>
           <Route path="TuDCKhiNen" element={<TuDCKhiNen/>}/>
           
-          
- 
+          <Route path="TuDoLuong35kVThieuKetVeVien" element={<TuDoLuong35kVThieuKetVeVien/>} />
+          <Route path="TuDauVao10kVThieuKetVeVien" element={<TuDauVao10kVThieuKetVeVien/>}/>
+          <Route path="TuDoLuongVaTuLienLacThieuKetVeVien" element={<TuDoLuongVaTuLienLacThieuKetVeVien/>}/>
+          <Route path="TuDauVaoMBA35kVThieuKetVeVien" element={<TuDauVaoMBA35kVThieuKetVeVien/>}/>
+          <Route path="TiepDiaMBAThieuKetVeVien" element={<TiepDiaMBAThieuKetVeVien/>}/>
+          <Route path="TuDienThieuKet1" element={<TuDienThieuKet1/>}/>
+          <Route path="TuDienThieuKet2" element={<TuDienThieuKet2/>}/>
+          <Route path="TuDienVeVien" element={<TuDienVeVien/>}/>
+          <Route path="TuDienKhuS" element={<TuDienKhuS/>}/>
+          <Route path="TuDienKhuKhiKhoi" element={<TuDienKhuKhiKhoi/>}/>
+          <Route path="TuDienSub1" element={<TuDienSub1/>}/>
+          <Route path="TuDienDuPhong" element={<TuDienDuPhong/>}/>
+
+          <Route path="TuDauVaoDoLuongDUL" element={<TuDauVaoDoLuongDUL/>}/>
+          <Route path="TuDauVaoMBADUL" element={<TuDauVaoMBADUL/>}/>
+          <Route path="TuDauVao10kVDUL" element={<TuDauVao10kVDUL/>}/>
+          <Route path="MayCatDUL" element={<MayCatDUL/>}/>
+          <Route path="TuVoiDUL" element={<TuVoiDUL/>}/>
+          <Route path="TuNMNLDUL" element={<TuNMNLDUL/>}/>
+          <Route path="TuNghienXi2DUL" element={<TuNghienXi2DUL/>}/>
+          <Route path="TuDungPhongDUL" element={<TuDungPhongDUL/>}/>
+
           <Route path="equipment" element={<EquipmentPage />} />
           <Route path="equipmentsluyencoc" element={<EquipmentLuyenCoc />} /> 
           <Route path="thieuketveviens" element={<Operate />} />
@@ -264,6 +307,7 @@ const AppRoutes = () => {
           <Route path="equimentnguyenlieus" element={<EquipmentNguyenLieu />} />
           <Route path="luyencocs" element={<OperateLuyenCoc />} />
           <Route path="tramdiennguyenlieus" element={<OperateTramDien/>}/>
+          <Route path="tramdienthieketveviens" element={<OperateTramDienTKVV/>}/>
 
           <Route path="warning-history" element={<WarningHistoryPage />} />
         </Route>

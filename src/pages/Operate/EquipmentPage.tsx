@@ -55,7 +55,7 @@ function EquipmentPage() {
             </div>
             <div >
                 <h2 className="text-sm font-extrabold text-skin-inverted sm:text-sm">
-                    <span className="block">Phân xưởng Vôi Xi Măng</span>
+                    <span className="block">Phân xưởng Vôi</span>
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                     <ComponentEquipment primary title="1. Lò Vôi Đứng 1" to="/DongCoLoVoi1" />

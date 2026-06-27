@@ -393,7 +393,7 @@ const MayCat35NguyenLieu: React.FC = () => {
                     {/* Tiêu đề và bộ lọc thời gian ở giữa */}
                     <div className="flex flex-col items-center gap-3">
                         <h1 className="text-2xl font-bold text-gray-800 text-center">
-                            Tủ máy cắt liên lạc 35kV Nguyên Liệu
+                            Tủ Máy Cắt Liên Lạc 35kV Nguyên Liệu
                         </h1>
 
                         <div className="flex flex-wrap justify-center items-end gap-4">
