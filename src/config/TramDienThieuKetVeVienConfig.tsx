@@ -21,23 +21,23 @@ export const TUDOLUONGDAUVAO_35KV_CONFIG: ChartGroup[] = [
     {
         area: "Tủ đo lường đầu vào 35kV-SA02",
         tags: [
-            { key: "TK_TK35_YC091", label: "Dòng điện pha A", color: "#6366f1" },
-            { key: "TK_TK35_YC092", label: "Dòng điện pha B", color: "#8b5cf6" },
-            { key: "TK_TK35_YC093", label: "Dòng điện pha C", color: "#9333ea" },
-            { key: "TK_TK35_YC094", label: "Công suất tác dụng", color: "#0ea5e9" },
-            { key: "TK_TK35_YC095", label: "Công suất phản kháng", color: "#0891b2" },
-            { key: "TK_TK35_YC096", label: "Cosphi", color: "#84cc16" },
+            { key: "TK_TK35_YC127", label: "Điện Áp pha A", color: "#6366f1" },
+            { key: "TK_TK35_YC128", label: "Điện Áp pha B", color: "#8b5cf6" },
+            { key: "TK_TK35_YC129", label: "Điện Áp pha C", color: "#9333ea" },
+            { key: "TK_TK35_YC130", label: "Điện Áp AB", color: "#0ea5e9" },
+            { key: "TK_TK35_YC131", label: "Điện Áp BC", color: "#0891b2" },
+            { key: "TK_TK35_YC132", label: "Điện Áp CA", color: "#84cc16" },
         ]
     },
     {
         area: "Tủ đo lường đầu vào 35kV-SB02",
         tags: [
-            { key: "TK_TK35_YC127", label: "Dòng điện pha A", color: "#ec4899" },
-            { key: "TK_TK35_YC128", label: "Dòng điện pha B", color: "#be123c" },
-            { key: "TK_TK35_YC129", label: "Dòng điện pha C", color: "#dc2626" },
-            { key: "TK_TK35_YC130", label: "Điện Áp AB", color: "#ef4444" },
-            { key: "TK_TK35_YC131", label: "Điện Áp BC", color: "#f97316" },
-            { key: "TK_TK35_YC132", label: "Điện Áp CA", color: "#f59e0b" },
+            { key: "TK_TK35_YC139", label: "Điện Áp pha A", color: "#ec4899" },
+            { key: "TK_TK35_YC140", label: "Điện Áp pha B", color: "#be123c" },
+            { key: "TK_TK35_YC141", label: "Dòng điện pha C", color: "#dc2626" },
+            { key: "TK_TK35_YC142", label: "Điện Áp AB", color: "#ef4444" },
+            { key: "TK_TK35_YC143", label: "Điện Áp BC", color: "#f97316" },
+            { key: "TK_TK35_YC144", label: "Điện Áp CA", color: "#f59e0b" },
         ]
     },
 ]
@@ -46,20 +46,20 @@ export const TUDOLUONGDAUVAO_35KV_SECTION: Sections[] = [
     {
         section: "Tủ đo lường đầu vào 35kV-SA02",
         rows: [
-            { label: "Dòng điện pha A" },
-            { label: "Dòng điện pha B" },
-            { label: "Dòng điện pha C" },
-            { label: "Công suất tác dụng" },
-            { label: "Công suất phản kháng" },
-            { label: "Cosphi" },
+            { label: "Điện Áp pha A" },
+            { label: "Điện Áp pha B" },
+            { label: "Điện Áp pha C" },
+            { label: "Điện Áp AB" },
+            { label: "Điện Áp BC" },
+            { label: "Điện Áp CA" },
         ]
     },
     {
         section: "Tủ đo lường đầu vào 35kV-SB02",
         rows: [
-            { label: "Dòng điện pha A" },
-            { label: "Dòng điện pha B" },
-            { label: "Dòng điện pha C" },
+            { label: "Điện Áp pha A" },
+            { label: "Điện Áp pha B" },
+            { label: "Điện Áp pha C" },
             { label: "Điện Áp AB" },
             { label: "Điện Áp BC" },
             { label: "Điện Áp CA" },
@@ -77,9 +77,6 @@ export const TUDAUVAO_TC_10KV_CONFIG: ChartGroup[] = [
             { key: "TK_TK35_YC034", label: "Công suất tác dụng", color: "#0ea5e9" },
             { key: "TK_TK35_YC035", label: "Công suất phản kháng", color: "#0891b2" },
             { key: "TK_TK35_YC036", label: "Cosphi", color: "#84cc16" },
-            { key: "TK_TK35_YC151", label: "Nhiệt độ cuộn dây", color: "#ef4444" },
-            { key: "TK_TK35_YC152", label: "Nhiệt độ dầu 1", color: "#f97316" },
-            { key: "TK_TK35_YC153", label: "Nhiệt độ dầu 2", color: "#f59e0b" },
         ]
     },
     {
@@ -91,9 +88,6 @@ export const TUDAUVAO_TC_10KV_CONFIG: ChartGroup[] = [
             { key: "TK_TK35_YC082", label: "Công suất tác dụng", color: "#eab308" },
             { key: "TK_TK35_YC083", label: "Công suất phản kháng", color: "#a855f7" },
             { key: "TK_TK35_YC084", label: "Cosphi", color: "#f59e0b" },
-            { key: "TK_TK35_YC154", label: "Nhiệt độ cuộn dây", color: "#ef4444" },
-            { key: "TK_TK35_YC155", label: "Nhiệt độ dầu 1", color: "#f97316" },
-            { key: "TK_TK35_YC156", label: "Nhiệt độ dầu 2", color: "#eab308" },
         ]
     },
 ]
@@ -108,9 +102,6 @@ export const TUDAUVAO_TC_10KV_SECTION: Sections[] = [
             { label: "Công suất tác dụng" },
             { label: "Công suất phản kháng" },
             { label: "Cosphi" },
-            { label: "Nhiệt độ cuộn dây" },
-            { label: "Nhiệt độ dầu 1" },
-            { label: "Nhiệt độ dầu 2" },
         ]
     },
     {
@@ -122,9 +113,6 @@ export const TUDAUVAO_TC_10KV_SECTION: Sections[] = [
             { label: "Công suất tác dụng" },
             { label: "Công suất phản kháng" },
             { label: "Cosphi" },
-            { label: "Nhiệt độ cuộn dây" },
-            { label: "Nhiệt độ dầu 1" },
-            { label: "Nhiệt độ dầu 2" },
         ]
     },
 ]
@@ -491,25 +479,31 @@ export const TRAMDIEN35KV_SUB1_SECTION: Sections[] = [
 
 export const TUDAUVAO_MBA_CONFIG: ChartGroup[] = [
     {
-        area: "Tủ đầu vào MBA T1 35/10kV-SB01",
+        area: "Tủ đầu vào MBA T1 35/10kV-SA01",
         tags: [
-            { key: "TK_TK35_YC097", label: "Dòng điện pha A", color: "#6366f1" },
-            { key: "TK_TK35_YC098", label: "Dòng điện pha B", color: "#8b5cf6" },
-            { key: "TK_TK35_YC099", label: "Dòng điện pha C", color: "#9333ea" },
-            { key: "TK_TK35_YC100", label: "Công suất tác dụng", color: "#0ea5e9" },
-            { key: "TK_TK35_YC101", label: "Công suất phản kháng", color: "#0891b2" },
-            { key: "TK_TK35_YC102", label: "Cosphi", color: "#84cc16" },
+            { key: "TK_TK35_YC091", label: "Dòng điện pha A", color: "#6366f1" },
+            { key: "TK_TK35_YC092", label: "Dòng điện pha B", color: "#8b5cf6" },
+            { key: "TK_TK35_YC093", label: "Dòng điện pha C", color: "#9333ea" },
+            { key: "TK_TK35_YC094", label: "Công suất tác dụng", color: "#0ea5e9" },
+            { key: "TK_TK35_YC095", label: "Công suất phản kháng", color: "#0891b2" },
+            { key: "TK_TK35_YC096", label: "Cosphi", color: "#84cc16" },
+            { key: "TK_TK35_YC151", label: "Nhiệt độ cuộn dây", color: "#1692cc" },
+            { key: "TK_TK35_YC152", label: "Nhiệt độ dầu 1", color: "#60209b" },
+            { key: "TK_TK35_YC153", label: "Nhiệt độ dầu 2", color: "#168862" },
         ]
     },
     {
-        area: "Tủ đầu vào MBA T2 35/10kV-SB02",
+        area: "Tủ đầu vào MBA T2 35/10kV-SB01",
         tags: [
-            { key: "TK_TK35_YC139", label: "Dòng điện pha A", color: "#ec4899" },
-            { key: "TK_TK35_YC140", label: "Dòng điện pha B", color: "#be123c" },
-            { key: "TK_TK35_YC141", label: "Dòng điện pha C", color: "#dc2626" },
-            { key: "TK_TK35_YC142", label: "Công suất tác dụng", color: "#eab308" },
-            { key: "TK_TK35_YC143", label: "Công suất phản kháng", color: "#a855f7" },
-            { key: "TK_TK35_YC144", label: "Cosphi", color: "#f59e0b" },
+            { key: "TK_TK35_YC097", label: "Dòng điện pha A", color: "#ec4899" },
+            { key: "TK_TK35_YC098", label: "Dòng điện pha B", color: "#be123c" },
+            { key: "TK_TK35_YC099", label: "Dòng điện pha C", color: "#dc2626" },
+            { key: "TK_TK35_YC100", label: "Công suất tác dụng", color: "#eab308" },
+            { key: "TK_TK35_YC101", label: "Công suất phản kháng", color: "#a855f7" },
+            { key: "TK_TK35_YC102", label: "Cosphi", color: "#f59e0b" },
+            { key: "TK_TK35_YC154", label: "Nhiệt độ cuộn dây", color: "#9b1c1c" },
+            { key: "TK_TK35_YC155", label: "Nhiệt độ dầu 1", color: "#e906cb" },
+            { key: "TK_TK35_YC156", label: "Nhiệt độ dầu 2", color: "#0a32e6" },
         ]
     },
 ]
@@ -524,6 +518,9 @@ export const TUDAUVAO_MBA_SECTION: Sections[] = [
             { label: "Công suất tác dụng" },
             { label: "Công suất phản kháng" },
             { label: "Cosphi" },
+            { label: "Nhiệt độ cuộn dây" },
+            { label: "Nhiệt độ dầu 1" },
+            { label: "Nhiệt độ dầu 2" },
         ]
     },
     {
@@ -535,6 +532,9 @@ export const TUDAUVAO_MBA_SECTION: Sections[] = [
             { label: "Công suất tác dụng" },
             { label: "Công suất phản kháng" },
             { label: "Cosphi" },
+            { label: "Nhiệt độ cuộn dây" },
+            { label: "Nhiệt độ dầu 1" },
+            { label: "Nhiệt độ dầu 2" },
         ]
     },
 ]
