@@ -1,46 +1,68 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { useOutletContext } from "react-router-dom";
 import clsx from "clsx";
 import AlertMessage from "../../components/AlertMessage";
 import Loading from "../../components/Loading";
-import { BM_LUYENCOC_LBMT2_SECTION } from "../../config/LuyenCocLBMT2";
+import { VOLOQUAYVEVIEN_SECTION, VOLOQUAYVEVIEN_CONFIG } from "../../config/VoLoQuayVeVienConfig";
+import FlowDashboardChart from "../../components/DashboardChart";
+import usePosts from "../../hooks/usePosts";
+import type { WarningHistoryConfig } from "../../config/WarningHistoryConfig";
 
 type OutletContextType = { isSidebarOpen: boolean };
 
+type MinValue = {
+    id: number;
+    tagName: string;
+    thoiGian: string;
+    giaTri: number;
+};
 
-
-const BM_LBMT2LuyenCoc: React.FC = () => {
+const LoQuayVeVien: React.FC = () => {
     const baseURL = import.meta.env.VITE_API_BASE_URL;
-    const apiURL = baseURL + "/api/LocBuiMoiTruongMatDat2";
+    const apiURL = baseURL + "/api/VeVien";
     const { isSidebarOpen } = useOutletContext<OutletContextType>();
     const [tagSymbolMap, setTagSymbolMap] = useState<Map<string, string>>(new Map());
     const [tagUnitMap, setTagUnitMap] = useState<Map<string, string>>(new Map());
+    const [nameMap, setNameMap] = useState<Map<string, string>>(new Map());
+    const [locationMap, setLocationMap] = useState<Map<string, string>>(new Map());
     const [dataRows, setDataRows] = useState<any[]>([]);
     const [dataColumns, setDataColumns] = useState<string[]>([]);
     const [fromDate, setFromDate] = useState("");
     const [toDate, setToDate] = useState("");
     const [loading, setLoading] = useState(false);
-    const [exporting, setExporting] = useState(false);
+    const [tagMinValue, setTagMinValue] = useState<MinValue[]>([]);
     const [warning, setWarning] = useState<string | null>(null);
     const tagIndex = { current: 0 };
+    const [visible, setVisible] = useState({
+        table: true,
+        chart: false,
+    });
 
     useEffect(() => {
-        fetch("/TagLuyenCoc.xlsx")
+        fetch("/TagWarning.xlsx")
             .then(res => res.arrayBuffer())
             .then(buffer => {
                 const workbook = XLSX.read(buffer, { type: "buffer" });
-                const sheet = workbook.Sheets[workbook.SheetNames[4]];
+                const sheet = workbook.Sheets[workbook.SheetNames[19]];
                 const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 }) as string[][];
                 const map = new Map<string, string>();
                 const mapUnit = new Map<string, string>();
+                const mapLocation = new Map<string, string>();
+                const mapName = new Map<string, string>();
                 rows.forEach(row => {
+                    const location = row[0];
+                    const name = row[1];
                     const tag = row[2];
                     const symbol = row[3];
                     const unit = row[4];
+                    if (tag && location) mapLocation.set(tag.trim(), location.trim());
+                    if (tag && name) mapName.set(tag.trim(), name.trim());
                     if (tag && symbol) map.set(tag.trim(), symbol.trim());
                     if (tag && unit) mapUnit.set(tag.trim(), unit.trim());
                 });
+                setLocationMap(mapLocation);
+                setNameMap(mapName);
                 setTagSymbolMap(map);
                 setTagUnitMap(mapUnit);
             });
@@ -59,12 +81,9 @@ const BM_LBMT2LuyenCoc: React.FC = () => {
             })
     }, [])
 
-    useEffect(() => {
-        if (warning) {
-            const timer = setTimeout(() => setWarning(null), 2000);
-            return () => clearTimeout(timer);
-        }
-    }, [warning]);
+  
+
+
 
     const handleSearch = async () => {
         if (!fromDate || !toDate) {
@@ -94,62 +113,19 @@ const BM_LBMT2LuyenCoc: React.FC = () => {
             setLoading(false);
         }
     };
-    const handleExportExcel = async () => {
-        if (!fromDate || !toDate) {
-            setWarning("⚠️Chọn đầy đủ thời gian");
-            return;
-        }
-        else if (fromDate >= toDate) {
-            setWarning("❌ Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
-            return;
-        }
-        setWarning(null);
-        setExporting(true);
-
-        try {
-            const res = await fetch(`${apiURL}/export?from=${fromDate}&to=${toDate}`);
-            const blob = await res.blob();
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement("a");
-
-            const formatDate = (dateStr: string) => {
-                const datetime = new Date(dateStr);
-                const dd = datetime.getDate().toString().padStart(2, "0");
-                const mm = (datetime.getMonth() + 1).toString().padStart(2, "0");
-                const yyyy = datetime.getFullYear();
-                return `${dd}-${mm}-${yyyy}`;
-            }
-
-            const fromStr = formatDate(fromDate);
-            const toStr = formatDate(toDate);
-
-            link.href = url;
-            link.download = `BM.01/HD.05.59-19_NKVH_TramNuocTuanHoan_${fromStr}_đến_${toStr}.xlsx`;
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-        } catch (error) {
-            console.error("Lỗi khi xuất Excel:", error);
-            alert("Có lỗi khi xuất Excel");
-        } finally {
-            setExporting(false);
-        }
-    };
-
-
-
     const renderTagCellWithData = (label: string) => {
-        const tag = tagSymbolMap.get(label);
-        const tagUnit = tagUnitMap.get(label)?? "⏳";
+        const tag = tagSymbolMap.get(label) as string ?? "⏳";
+        const tagUnit = tagUnitMap.get(label) as string ?? "⏳";
         const display = tagUnit || label;
 
         const rowCells = [
-            <td key={`${label}-symbol`} className="sticky left-[14rem] bg-white border px-2 py-1 text-xs">{display}</td>
+            <td key={`${label}-symbol`} className="sticky left-[14rem] bg-white border px-2 py-1 text-xs">{display}</td>,
+           
         ];
 
         // them du lieu vao
         for (const time of dataColumns) {
-            const row = dataRows.find(r => r.ThoiGian == time);
+            const row = dataRows.find(r => r.ThoiGian === time);
             const value = tag ? row?.[tag] ?? "" : "";
             rowCells.push(
                 <td key={`${tag}-${time}`} className="border px-2 py-1 text-xs text-center">
@@ -163,7 +139,7 @@ const BM_LBMT2LuyenCoc: React.FC = () => {
     const renderNestedRows = (): React.ReactNode[] => {
         const rows: React.ReactNode[] = [];
 
-        BM_LUYENCOC_LBMT2_SECTION.forEach(sec => {
+        VOLOQUAYVEVIEN_SECTION.forEach(sec => {
             const sectionRowCount = sec.rows?.length || 0;
             let rowIndex = 0;
             if (!sec.rows || sec.rows.length === 0) {
@@ -171,7 +147,7 @@ const BM_LBMT2LuyenCoc: React.FC = () => {
                 rows.push(
                     <tr key={sec.section} className="text-center text-xs">
                         <td
-                            className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle"
+                            className="sticky left-0 bg-white border px-2 py-1 font-semibold align-middle whitespace-nowrap"
                             colSpan={4}
                         >
                             {sec.section}
@@ -200,7 +176,7 @@ const BM_LBMT2LuyenCoc: React.FC = () => {
 
                         {/* Cột label */}
                         <td
-                            className="sticky left-[4rem] bg-white font-semibold border px-2 py-1"
+                            className="sticky left-[4rem] bg-white font-semibold border px-2 py-1 whitespace-nowrap"
                             colSpan={3}
                         >
                             {row.label}
@@ -237,10 +213,14 @@ const BM_LBMT2LuyenCoc: React.FC = () => {
                     <div className="absolute right-0 top-1/2 -translate-y-1/2 flex gap-2">
                         <button
                             className="bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow hover:shadow-md transition"
-                            onClick={handleExportExcel}
-                            disabled={exporting}
+                            onClick={() =>
+                                setVisible(prev => ({
+                                    table: !prev.table,
+                                    chart: !prev.chart,
+                                }))
+                            }
                         >
-                            {exporting ? "Đang xuất..." : "📥 Xuất Excel"}
+                            {visible.chart ? "Xem Bảng" : "Xem Đồ Thị"}
                         </button>
                     </div>
                     {/* Nút xuất file bên phải */}
@@ -248,7 +228,7 @@ const BM_LBMT2LuyenCoc: React.FC = () => {
                     {/* Tiêu đề và bộ lọc thời gian ở giữa */}
                     <div className="flex flex-col items-center gap-3">
                         <h1 className="text-2xl font-bold text-gray-800 text-center">
-                            Nhật ký vận hành Lọc Bụi Môi Trường Mặt Đất 2
+                            Lò Quay Vê Viên
                         </h1>
 
                         <div className="flex flex-wrap justify-center items-end gap-4">
@@ -283,7 +263,7 @@ const BM_LBMT2LuyenCoc: React.FC = () => {
                 {/* Tiêu đề + filter + nút export */}
 
                 {/* Bảng dữ liệu */}
-                <div className="border rounded-xl overflow-x-auto max-w-full  max-h-[60vh]">
+                {visible.table && <div className="border rounded-xl overflow-x-auto max-w-full  max-h-[60vh]">
                     <table className="min-w-full table-auto text-sm border-separate border border-gray-300 bg-white">
                         <thead className="bg-gray-100 text-gray-800 text-center sticky top-0 z-20">
                             <tr>
@@ -291,7 +271,7 @@ const BM_LBMT2LuyenCoc: React.FC = () => {
                                 <th className="border px-4 py-2 sticky left-[4rem] z-30 bg-gray-100 whitespace-nowrap" colSpan={3}>
                                     Vị trí đo / Thời gian
                                 </th>
-                                <th className="border px-4 py-2 sticky left-[14rem] z-30 bg-gray-100 whitespace-nowrap">Đơn Vị</th>
+                                <th className="border px-4 py-2 sticky left-[14rem] z-30 bg-gray-100 whitespace-nowrap">Đơn vị</th>
                                 {/* th time */}
                                 {dataColumns.map((time, idx) => (
                                     <th
@@ -322,9 +302,12 @@ const BM_LBMT2LuyenCoc: React.FC = () => {
                             {renderNestedRows()}
                         </tbody>
                     </table>
-                </div>
+                </div>}
                 {/* Bảng dữ liệu */}
-
+                {visible.chart && <FlowDashboardChart
+                    rawData={dataRows}
+                    TAG_CONFIG={VOLOQUAYVEVIEN_CONFIG}
+                />}
 
             </div>
             {loading && (
@@ -332,24 +315,13 @@ const BM_LBMT2LuyenCoc: React.FC = () => {
                     <Loading />
                 </div>
             )}
-            {(loading || exporting) && (
-                <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center">
-                    {loading
-                        ?
-                        <Loading />
-                        :
-                        <Loading />
-                    }
-                </div>
-            )}
             {warning &&
                 <div className="fixed inset-0 z-50 flex items-start justify-end mt-12">
                     <AlertMessage type="Vui lòng" message={warning} />
                 </div>
             }
-
         </section>
     );
 }
 
-export default BM_LBMT2LuyenCoc;
+export default LoQuayVeVien;

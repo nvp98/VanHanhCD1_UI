@@ -11,9 +11,6 @@ export type ChartGroup = {
 
 export const DONGCOCHEBIEN_CONFIG: ChartGroup[] = [
     {
-        
-
-        
         area: "Động cơ chính máy nghiền",
         tags: [
             { key: "S7Program/MillDP_AI22.PV_OUT", label: "Nhiệt độ cuộn dây A", color: "#6366f1" },

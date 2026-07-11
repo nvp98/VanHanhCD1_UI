@@ -87,3 +87,61 @@ export const LUYENCOC_LBMT1_SECTION: Sections[] = [
         section: "Nhiệt độ cuộn dây W",
     },
 ]
+
+export const BM_LUYENCOC_LBMT1_SECTION: Sections[] = [
+    {
+        section: "Nhiệt độ trước bộ giảm nhiệt A",
+    },
+    {
+        section: "Nhiệt độ trước bộ giảm nhiệt B",
+    },
+    {
+        section: "Nhiệt độ sau bộ giảm nhiệt",
+    },
+    {
+        section: "Áp suất khí nén",
+    },
+    {
+        section: "Áp suất đầu vào lọc bụi",
+    },
+    {
+        section: "Áp suất đầu ra lọc bụi túi vải",
+    },
+    {
+        section: "Tốc độ quạt",
+        rows: [
+            { label: "vòng/phút" },
+            { label: "%" },
+        ]
+    },
+    {
+        section: "Dòng điện làm việc",
+    },
+    {
+        section: "Độ rung gối đỡ trước",
+    },
+    {
+        section: "Độ rung gối đỡ sau",
+    },
+    {
+        section: "Nhiệt độ gối đỡ trước",
+    },
+    {
+        section: "Nhiệt độ gối đỡ sau",
+    },
+    {
+        section: "Nhiệt độ vòng bi trước động cơ",
+    },
+    {
+        section: "Nhiệt độ vòng bi sau động cơ",
+    },
+    {
+        section: "Nhiệt độ cuộn dây U",
+    },
+    {
+        section: "Nhiệt độ cuộn dây V",
+    },
+    {
+        section: "Nhiệt độ cuộn dây W",
+    },
+]

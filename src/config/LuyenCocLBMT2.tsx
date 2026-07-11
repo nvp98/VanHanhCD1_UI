@@ -10,11 +10,11 @@ export type ChartGroup = {
 };
 export const LUYENCOC_LBMT2_CONFIG: ChartGroup[] = [
     {
-        area: "Lọc Bụi Môi Trường 1",
+        area: "Lọc Bụi Môi Trường 2",
         tags: [
-            { key: "TE_14601A", label: "Nhiệt độ trước bộ giảm nhiệt A", color: "#6366f1" },
-            { key: "TE_14601B", label: "Nhiệt độ trước bộ giảm nhiệt B", color: "#22c55e" },
-            { key: "TE_14602", label: "Nhiệt độ sau bộ giảm nhiệt", color: "#f97316" },
+            { key: "TE_14601", label: "Nhiệt độ trước bộ giảm nhiệt A", color: "#6366f1" },
+            { key: "TE_14603", label: "Nhiệt độ trước bộ giảm nhiệt B", color: "#22c55e" },
+            { key: "TE_14604", label: "Nhiệt độ sau bộ giảm nhiệt", color: "#f97316" },
             { key: "LB2_TOCDOQUAT", label: "Tốc độ quạt vòng/phút", color: "#000080" },
             { key: "LB2_PHANTRAM", label: "Tốc độ quạt %", color: "#FF0000" },
             { key: "LB2_DONGDIEN", label: "Dòng điện làm việc", color: "#730099" },
@@ -30,6 +30,13 @@ export const LUYENCOC_LBMT2_CONFIG: ChartGroup[] = [
         ]
     },
 ];
+export type Rows = {
+    label: string;
+}
+export type Sections = {
+    section: string;
+    rows?: Rows[];
+}
 
 export const LUYENCOC_LBMT2_SECTION = [
     {
@@ -40,6 +47,64 @@ export const LUYENCOC_LBMT2_SECTION = [
     },
     {
         section: "Nhiệt độ sau bộ giảm nhiệt",
+    },
+    {
+        section: "Tốc độ quạt",
+        rows: [
+            { label: "vòng/phút" },
+            { label: "%" },
+        ]
+    },
+    {
+        section: "Dòng điện làm việc",
+    },
+    {
+        section: "Độ rung gối đỡ trước",
+    },
+    {
+        section: "Độ rung gối đỡ sau",
+    },
+    {
+        section: "Nhiệt độ gối đỡ trước",
+    },
+    {
+        section: "Nhiệt độ gối đỡ sau",
+    },
+    {
+        section: "Nhiệt độ vòng bi trước động cơ",
+    },
+    {
+        section: "Nhiệt độ vòng bi sau động cơ",
+    },
+    {
+        section: "Nhiệt độ cuộn dây U",
+    },
+    {
+        section: "Nhiệt độ cuộn dây V",
+    },
+    {
+        section: "Nhiệt độ cuộn dây W",
+    },
+]
+
+export const BM_LUYENCOC_LBMT2_SECTION: Sections[] = [
+    {
+        section: "Nhiệt độ trước bộ giảm nhiệt A",
+    },
+    {
+        section: "Nhiệt độ trước bộ giảm nhiệt B",
+    },
+    {
+        section: "Nhiệt độ sau bộ giảm nhiệt",
+    },
+    {
+        section: "Áp suất khí nén",
+    },
+    {
+        section: "Áp suất đầu vào lọc bụi",
+    },
+    {
+        section: "Áp suất đầu ra lọc bụi túi vải",
     },
     {
         section: "Tốc độ quạt",

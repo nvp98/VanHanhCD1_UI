@@ -75,6 +75,9 @@ import DongCoDolomit1 from "../pages/BM_Warning_TKVV/DongCoDolomit1";
 import DongCoDolomit2 from "../pages/BM_Warning_TKVV/DongCoDolomit2"; 
 import DongCoLoVoiQuay from "../pages/BM_Warning_TKVV/DongCoLoVoiQuay";
 import DongCoThanhPhamVoi from "../pages/BM_Warning_TKVV/DongCoThanhPhamVoi";
+import DongCoKhuKhiKhoi from "../pages/BM_Warning_TKVV/DongCoKhuKhiKHoi";
+import DongCoKhuS from "../pages/BM_Warning_TKVV/DongCoKhuS";
+import LoQuayVeVien from "../pages/BM_Warning_TKVV/LoQuayVeVien";
 
 import BM_LocBuiC1 from "../pages/BM_BaiLieu/BM_LocBuiC1";
 import BM_LocBuiC2 from "../pages/BM_BaiLieu/BM_LocBuiC2";
@@ -240,6 +243,9 @@ const AppRoutes = () => {
           <Route path="DongCoLoVoi3" element={<DongCoLoVoi3 />} />
           <Route path="DongCoLoVoiQuay" element={<DongCoLoVoiQuay />} />
           <Route path="DongCoThanhPhamVoi" element={<DongCoThanhPhamVoi />} />
+          <Route path="DongCoKhuKhiKhoi" element={<DongCoKhuKhiKhoi/>}/>
+          <Route path="DongCoKhuS" element={<DongCoKhuS/>}/>
+          <Route path="LoQuayVeVien" element={<LoQuayVeVien/>}/>
           <Route path="DongCoDolomit1" element={<DongCoDolomit1 />} />
           <Route path="DongCoDolomit2" element={<DongCoDolomit2 />}/>
           <Route path="DongCoLocBuiC1" element={<DongCoLocBuiC1 />}/>

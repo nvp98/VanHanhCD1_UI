@@ -4,12 +4,9 @@ import { useOutletContext } from "react-router-dom";
 import clsx from "clsx";
 import AlertMessage from "../../components/AlertMessage";
 import Loading from "../../components/Loading";
-import { LUYENCOC_LBMT1_SECTION } from "../../config/LuyenCocLBMT1";
+import { BM_LUYENCOC_LBMT1_SECTION } from "../../config/LuyenCocLBMT1";
 
 type OutletContextType = { isSidebarOpen: boolean };
-
-
-
 
 
 const BM_LBMT1LuyenCoc: React.FC = () => {
@@ -165,7 +162,7 @@ const BM_LBMT1LuyenCoc: React.FC = () => {
     const renderNestedRows = (): React.ReactNode[] => {
         const rows: React.ReactNode[] = [];
 
-        LUYENCOC_LBMT1_SECTION.forEach(sec => {
+        BM_LUYENCOC_LBMT1_SECTION.forEach(sec => {
             const sectionRowCount = sec.rows?.length || 0;
             let rowIndex = 0;
             if (!sec.rows || sec.rows.length === 0) {
